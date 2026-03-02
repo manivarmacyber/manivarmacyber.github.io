@@ -94,6 +94,75 @@
 <body class="scanlines">
   <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
+
+  <!-- Firebase FCM & Firestore Integration -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBqQS_6mg6iFfxtqh9j06W35n4AX1qfoRA",
+      authDomain: "manivarma-blog.firebaseapp.com",
+      projectId: "manivarma-blog",
+      storageBucket: "manivarma-blog.firebasestorage.app",
+      messagingSenderId: "909047480859",
+      appId: "1:909047480859:web:9b31a30606365cb12c6ebe"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+    const db = firebase.firestore();
+
+    function requestPermission() {
+      console.log('Requesting permission...');
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          console.log('Notification permission granted.');
+          messaging.getToken({
+            vapidKey: 'BFCsPxD2__lGdwnA5cozBc9CGhUQhdCxnoq6TsepwT3-xqvo3mR6zQyZDfVs3E8xLdaHSnIg73F1gLSH0mt29eY'
+          }).then((currentToken) => {
+            if (currentToken) {
+              console.log('FCM Token:', currentToken);
+
+              // Store token in Firestore with deduplication
+              db.collection('subscribers').doc(currentToken).set({
+                token: currentToken,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+              }).then(() => {
+                console.log('Token successfully saved to Firestore.');
+                alert("Subscribed successfully 🔔");
+              }).catch((error) => {
+                console.error('Error saving token to Firestore: ', error);
+              });
+
+            } else {
+              console.log('No registration token available. Request permission to generate one.');
+            }
+          }).catch((err) => {
+            console.log('An error occurred while retrieving token. ', err);
+          });
+        } else {
+          console.log('Unable to get permission to notify.');
+        }
+      });
+    }
+
+    // Export to window for access from React components
+    window.requestPermission = requestPermission;
+
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/firebase-messaging-sw.js')
+          .then((registration) => {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch((err) => {
+            console.error('Service Worker registration failed:', err);
+          });
+      });
+    }
+  </script>
 </body>
 
 </html>

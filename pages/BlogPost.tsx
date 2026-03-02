@@ -70,6 +70,9 @@ export const BlogPost: React.FC = () => {
   };
 
   const handleSubscribe = () => {
+    if ((window as any).requestPermission) {
+      (window as any).requestPermission();
+    }
     setSubscribed(true);
     localStorage.setItem(`blog-subscribed`, 'true');
     // Subtle alert for feedback

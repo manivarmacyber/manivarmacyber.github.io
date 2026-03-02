@@ -87,7 +87,7 @@ export const TacticalProjects: React.FC = () => {
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                                className="px-10 py-5 border border-white/10 text-white font-orbitron font-bold text-xs uppercase tracking-[0.3em] rounded-2xl hover:bg-white/5 hover:border-accent-cyan/50 hover:shadow-[0_0_25px_rgba(0,219,233,0.1)] transition-all flex items-center gap-3 active:scale-[0.98]"
+                                className="px-10 py-5 border border-white/10 text-white font-orbitron font-bold text-xs uppercase tracking-[0.3em] rounded-2xl hover:bg-white/5 hover:border-accent-cyan/50 hover:shadow-[0_0_25px_rgba(0,219,233,0.1)] transition-all flex items-center justify-center gap-3 active:scale-[0.98] w-full sm:w-auto"
                             >
                                 <span>ENGAGE NOW</span>
                             </motion.button>

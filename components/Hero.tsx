@@ -23,7 +23,7 @@ export const Hero: React.FC = () => {
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
         style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
-      <div className="container-progressive grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10 w-full text-center lg:text-left">
+      <div className="container-progressive grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10 w-full text-center lg:text-left">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -57,7 +57,7 @@ export const Hero: React.FC = () => {
               whileHover={{ scale: 1.02, boxShadow: '0 0 25px rgba(0,219,233,0.3)' }}
               whileTap={{ scale: 0.98 }}
               href="https://drive.google.com/uc?export=download&id=1YaNxcLwMoInBADwMBoBE_dquYQqFRuKQ"
-              className="px-8 py-4 bg-accent-cyan text-black font-orbitron font-bold text-xs uppercase tracking-[0.2em] transition-all rounded-2xl flex items-center gap-3"
+              className="px-8 py-4 bg-accent-cyan text-black font-orbitron font-bold text-xs uppercase tracking-[0.2em] transition-all rounded-2xl flex items-center justify-center gap-3 w-full sm:w-auto"
             >
               <Download size={18} />
               <span>DOWNLOAD CV</span>
@@ -69,7 +69,7 @@ export const Hero: React.FC = () => {
               href="https://drive.google.com/file/d/1YaNxcLwMoInBADwMBoBE_dquYQqFRuKQ/view?usp=drivesdk"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-4 border border-accent-cyan/20 bg-transparent text-accent-cyan font-orbitron font-bold text-xs uppercase tracking-[0.2em] transition-all rounded-2xl flex items-center gap-3 hover:bg-accent-cyan/5 hover:border-accent-cyan/50 hover:shadow-[0_0_20px_rgba(0,219,233,0.15)]"
+              className="px-8 py-4 border border-accent-cyan/20 bg-transparent text-accent-cyan font-orbitron font-bold text-xs uppercase tracking-[0.2em] transition-all rounded-2xl flex items-center justify-center gap-3 hover:bg-accent-cyan/5 hover:border-accent-cyan/50 hover:shadow-[0_0_20px_rgba(0,219,233,0.15)] w-full sm:w-auto"
             >
               <Terminal size={18} />
               <span>VIEW RESUME</span>
@@ -79,7 +79,7 @@ export const Hero: React.FC = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-4 border border-accent-cyan/20 bg-transparent text-accent-cyan font-orbitron font-bold text-xs uppercase tracking-[0.2em] transition-all rounded-2xl flex items-center gap-3 hover:bg-accent-cyan/5 hover:border-accent-cyan/50 hover:shadow-[0_0_20px_rgba(0,219,233,0.15)]"
+              className="px-8 py-4 border border-accent-cyan/20 bg-transparent text-accent-cyan font-orbitron font-bold text-xs uppercase tracking-[0.2em] transition-all rounded-2xl flex items-center justify-center gap-3 hover:bg-accent-cyan/5 hover:border-accent-cyan/50 hover:shadow-[0_0_20px_rgba(0,219,233,0.15)] w-full sm:w-auto"
             >
               <MessageSquare size={18} />
               <span>CONTACT ME</span>
@@ -103,7 +103,7 @@ export const Hero: React.FC = () => {
             </div>
           </div>
         </motion.div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };

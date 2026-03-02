@@ -56,7 +56,7 @@ export const ProfessionalCertification: React.FC = () => {
               href="https://drive.google.com/drive/folders/1gmcFKsNRS-cTQx5SYgpeBpp_orv0renT?usp=drive_link"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-4 px-10 py-4 border border-accent-cyan/20 bg-accent-cyan/5 text-white font-orbitron font-bold text-xs uppercase tracking-[0.4em] rounded-2xl transition-all hover:bg-accent-cyan/10 hover:border-accent-cyan/50 hover:shadow-[0_0_20px_rgba(0,219,233,0.15)] shadow-xl relative overflow-hidden active:scale-[0.98]"
+              className="group flex items-center justify-center gap-4 px-10 py-4 border border-accent-cyan/20 bg-accent-cyan/5 text-white font-orbitron font-bold text-xs uppercase tracking-[0.4em] rounded-2xl transition-all hover:bg-accent-cyan/10 hover:border-accent-cyan/50 hover:shadow-[0_0_20px_rgba(0,219,233,0.15)] shadow-xl relative overflow-hidden active:scale-[0.98] w-full sm:w-auto"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.05] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 skew-x-[-20deg]" />
               <span>VERIFY LICENSE DATA (SECURE)</span>

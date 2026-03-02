@@ -37,10 +37,10 @@ export const Contact: React.FC = () => {
   };
 
   const channels = [
-    { icon: Mail, label: 'EMAIL PROTOCOL', value: 'mani.varma.3243@gmail.com', iconColor: 'text-accent-cyan', bg: 'bg-accent-cyan/10', border: 'border-accent-cyan/20', hoverBorder: 'hover:border-accent-cyan/40' },
-    { icon: Phone, label: 'DIRECT LINE', value: '+91 93461 59671', iconColor: 'text-accent-cyan', bg: 'bg-accent-cyan/10', border: 'border-accent-cyan/20', hoverBorder: 'hover:border-accent-cyan/40' },
-    { icon: MessageCircle, label: 'WHATSAPP SECURE', value: '+91 93461 59671', iconColor: 'text-accent-cyan', bg: 'bg-accent-cyan/10', border: 'border-accent-cyan/20', hoverBorder: 'hover:border-accent-cyan/40' },
-    { icon: Linkedin, label: 'LINKEDIN NETWORK', value: 'manikantavarmag', iconColor: 'text-accent-violet', bg: 'bg-accent-violet/10', border: 'border-accent-violet/20', hoverBorder: 'hover:border-accent-violet/40' },
+    { icon: Mail, label: 'EMAIL PROTOCOL', value: 'mani.varma.3243@gmail.com', href: 'mailto:mani.varma.3243@gmail.com?subject=Security%20Consultation', iconColor: 'text-accent-cyan', bg: 'bg-accent-cyan/10', border: 'border-accent-cyan/20', hoverBorder: 'hover:border-accent-cyan/40' },
+    { icon: Phone, label: 'DIRECT LINE', value: '+91 93461 59671', href: 'tel:+91-9346159671', iconColor: 'text-accent-cyan', bg: 'bg-accent-cyan/10', border: 'border-accent-cyan/20', hoverBorder: 'hover:border-accent-cyan/40' },
+    { icon: MessageCircle, label: 'WHATSAPP SECURE', value: '+91 93461 59671', href: 'https://wa.me/91-9346159671?text=Hello%20Security%20Consultation', iconColor: 'text-accent-cyan', bg: 'bg-accent-cyan/10', border: 'border-accent-cyan/20', hoverBorder: 'hover:border-accent-cyan/40' },
+    { icon: Linkedin, label: 'LINKEDIN NETWORK', value: 'manikantavarmag', href: 'https://www.linkedin.com/in/manikantavarmag', iconColor: 'text-accent-violet', bg: 'bg-accent-violet/10', border: 'border-accent-violet/20', hoverBorder: 'hover:border-accent-violet/40' },
   ];
 
   return (
@@ -219,14 +219,17 @@ export const Contact: React.FC = () => {
             {/* 2×2 channel card grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {channels.map((item, i) => (
-                <motion.div
+                <motion.a
                   key={i}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   whileHover={{ y: -5, boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.35, delay: i * 0.07 }}
-                  className={`glass-card p-6 border ${item.border} ${item.hoverBorder} bg-white/[0.01] hover:bg-white/[0.03] flex items-center gap-5 group transition-all duration-300 rounded-2xl`}
+                  className={`glass-card p-6 border ${item.border} ${item.hoverBorder} bg-white/[0.01] hover:bg-white/[0.03] flex items-center gap-5 group transition-all duration-300 rounded-2xl block cursor-pointer`}
                 >
                   <div className={`p-3 ${item.bg} rounded-xl border ${item.border} ${item.iconColor} group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
                     <item.icon size={20} />
@@ -235,24 +238,9 @@ export const Contact: React.FC = () => {
                     <span className="block text-[9px] font-mono text-white/40 uppercase tracking-[0.35em] font-black mb-1.5">{item.label}</span>
                     <span className={`block text-sm font-orbitron font-black text-white uppercase tracking-tight group-hover:${item.iconColor} transition-colors duration-300 truncate`}>{item.value}</span>
                   </div>
-                </motion.div>
+                </motion.a>
               ))}
             </div>
-
-            {/* Initiate Secure Consultation CTA */}
-            <motion.button
-              onClick={() => document.querySelector<HTMLInputElement>('#contact input')?.focus()}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -4, boxShadow: '0 0 28px rgba(0,255,255,0.12)' }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.35 }}
-              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-accent-cyan/5 border border-accent-cyan/30 rounded-2xl text-accent-cyan font-orbitron font-black text-xs uppercase tracking-[0.35em] hover:bg-accent-cyan/10 hover:border-accent-cyan/60 transition-all duration-300 relative overflow-hidden group/cta"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent-cyan/[0.06] to-transparent -translate-x-full group-hover/cta:translate-x-full transition-transform duration-700 skew-x-[-20deg]" />
-              <Shield size={14} className="text-accent-cyan group-hover/cta:scale-110 transition-transform duration-300" />
-              <span>Initiate Secure Consultation</span>
-            </motion.button>
 
             {/* Bottom footer tag */}
             <div className="text-center">

@@ -16,7 +16,7 @@ export const CustomCursor: React.FC = () => {
 
     useEffect(() => {
         const checkMobile = () => {
-            setIsMobile(window.matchMedia('(pointer: coarse)').matches);
+            setIsMobile(window.matchMedia('(pointer: coarse)').matches || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
         };
         checkMobile();
 

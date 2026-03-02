@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import emailjs from '@emailjs/browser';
-import { Star, Send, Shield, User, AtSign, MessageSquare, Terminal, Zap, CheckCircle2, Loader2, AlertCircle } from 'lucide-react';
+import { Star, Send, Shield, User, MessageSquare, Terminal, Zap, CheckCircle2, Loader2, AlertCircle } from 'lucide-react';
 
 export const ProfessionalFeedback: React.FC = () => {
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [formData, setFormData] = useState({
         operator_id: '',
-        return_uplink: '',
         assessment_notes: ''
     });
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
     const handleSubmit = async () => {
-        if (!formData.operator_id || !formData.return_uplink || !formData.assessment_notes || rating === 0) {
-            alert("Please complete all evaluation fields and select a rating.");
+        if (!formData.operator_id || !formData.assessment_notes || rating === 0) {
+            alert("Please complete identity and notes fields and select a rating.");
             return;
         }
 
@@ -26,14 +25,13 @@ export const ProfessionalFeedback: React.FC = () => {
                 "template_h7jc06d",
                 {
                     operator_id: formData.operator_id,
-                    return_uplink: formData.return_uplink,
                     assessment_notes: formData.assessment_notes,
                     rating: rating,
                     to_email: "varma.portfolio@gmail.com"
                 }
             );
             setStatus('success');
-            setFormData({ operator_id: '', return_uplink: '', assessment_notes: '' });
+            setFormData({ operator_id: '', assessment_notes: '' });
             setRating(0);
             setTimeout(() => setStatus('idle'), 5000);
         } catch (error) {
@@ -99,33 +97,18 @@ export const ProfessionalFeedback: React.FC = () => {
 
                         {/* Form Fields */}
                         <div className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-4">
-                                    <div className="flex items-center gap-3 text-white/20 font-mono text-[9px] uppercase tracking-[0.4em] font-black">
-                                        <User size={14} className="text-accent-cyan" />
-                                        <span>OPERATOR_ID</span>
-                                    </div>
-                                    <input
-                                        type="text"
-                                        value={formData.operator_id}
-                                        onChange={(e) => setFormData({ ...formData, operator_id: e.target.value })}
-                                        className="w-full bg-black/40 border border-white/5 p-6 rounded-xl text-xs font-mono text-white focus:border-white/20 outline-none transition-all placeholder:text-white/10 shadow-inner"
-                                        placeholder="IDENTITY_TAG"
-                                    />
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-3 text-white/20 font-mono text-[9px] uppercase tracking-[0.4em] font-black">
+                                    <User size={14} className="text-accent-cyan" />
+                                    <span>OPERATOR_ID</span>
                                 </div>
-                                <div className="space-y-4">
-                                    <div className="flex items-center gap-3 text-white/20 font-mono text-[9px] uppercase tracking-[0.4em] font-black">
-                                        <AtSign size={14} className="text-accent-cyan" />
-                                        <span>RETURN_UPLINK</span>
-                                    </div>
-                                    <input
-                                        type="email"
-                                        value={formData.return_uplink}
-                                        onChange={(e) => setFormData({ ...formData, return_uplink: e.target.value })}
-                                        className="w-full bg-black/40 border border-white/5 p-6 rounded-xl text-xs font-mono text-white focus:border-white/20 outline-none transition-all placeholder:text-white/10 shadow-inner"
-                                        placeholder="USER@UPLINK.COM"
-                                    />
-                                </div>
+                                <input
+                                    type="text"
+                                    value={formData.operator_id}
+                                    onChange={(e) => setFormData({ ...formData, operator_id: e.target.value })}
+                                    className="w-full bg-black/40 border border-white/5 p-6 rounded-xl text-xs font-mono text-white focus:border-white/20 outline-none transition-all placeholder:text-white/10 shadow-inner"
+                                    placeholder="IDENTITY_TAG"
+                                />
                             </div>
 
                             <div className="space-y-4">

@@ -36,7 +36,7 @@ export const EducationSection: React.FC = () => {
                 <div className="w-12 h-[1px] bg-accent-cyan/30" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 container mx-auto px-6">
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-8 container-progressive px-0">
                 {education.map((item, i) => (
                     <motion.div
                         key={i}

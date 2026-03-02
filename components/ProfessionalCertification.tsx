@@ -16,7 +16,7 @@ export const ProfessionalCertification: React.FC = () => {
         </h2>
       </div>
 
-      <div className="container mx-auto px-6 max-w-6xl space-y-20">
+      <div className="container-progressive space-y-20 px-0">
         {/* CEH Master Focus */}
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
@@ -76,7 +76,7 @@ export const ProfessionalCertification: React.FC = () => {
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-8">
             <motion.a
               key="ibr-achiever"
               href="https://drive.google.com/drive/folders/1cRa45evMgzgvIcLzlyLbZTBtUBBI2B0K"

@@ -6,7 +6,7 @@ export const TacticalProjects: React.FC = () => {
     return (
         <div id="tactical-projects" className="py-20 space-y-16">
             {/* Top Cards: Response & Confidentiality */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 container mx-auto px-6">
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-8 container-progressive px-0">
                 <motion.div
                     whileHover={{ y: -5 }}
                     className="glass-card p-12 border-white/5 bg-white/[0.01] hover:bg-white/[0.03] transition-all group"
@@ -63,7 +63,7 @@ export const TacticalProjects: React.FC = () => {
             </div>
 
             {/* Available for Work Banner */}
-            <div className="container mx-auto px-6">
+            <div className="container-progressive px-0">
                 <motion.div
                     initial={{ opacity: 0, scale: 0.98 }}
                     whileInView={{ opacity: 1, scale: 1 }}

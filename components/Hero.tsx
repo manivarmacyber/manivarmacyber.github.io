@@ -18,12 +18,12 @@ export const Hero: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative min-h-[70vh] flex flex-col items-center justify-center pt-48 pb-0 overflow-hidden">
+    <div className="relative min-h-[85vh] flex flex-col items-center justify-center pt-20 pb-16 lg:pt-32 lg:pb-0 overflow-hidden">
       {/* Grid Pattern Background */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
         style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
-      <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10 w-full">
+      <div className="container-progressive grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10 w-full text-center lg:text-left">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -32,27 +32,27 @@ export const Hero: React.FC = () => {
         >
           <div className="space-y-6">
             <div className="relative inline-block w-full">
-              <h1 className="font-orbitron font-black tracking-tight leading-none uppercase text-[clamp(1.8rem,6vw,3.8rem)] whitespace-nowrap">
+              <h1 className="font-orbitron font-[800] tracking-[0.5px] leading-[1.1] uppercase text-[clamp(1.6rem,5vw,4.2rem)] whitespace-nowrap">
                 <span className="text-white">G. MANIKANTA </span>
-                <span className="text-accent-cyan">VARMA</span>
+                <span className="text-accent-cyan text-glow-cyan">VARMA</span>
               </h1>
-              <div className="absolute -bottom-6 left-0 w-full h-[2px] bg-accent-cyan shadow-[0_0_12px_rgba(0,219,233,0.3)]" />
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 w-3/4 lg:w-full h-[2px] bg-accent-cyan shadow-[0_0_12px_rgba(0,219,233,0.3)]" />
             </div>
 
-            <div className="flex flex-wrap gap-4 pt-10">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-3 pt-10">
               {['CEH MASTER V12', 'NCIIPC CONTRIBUTOR', 'IBR ACHIEVER'].map((tag) => (
-                <span key={tag} className="px-6 py-1.5 border border-accent-cyan/40 rounded-full bg-accent-cyan/5 text-[9px] font-mono font-bold text-accent-cyan tracking-[0.2em] uppercase transition-all hover:border-accent-cyan/70 italic">
+                <span key={tag} className="px-4 py-1.5 border border-accent-cyan/30 rounded-full bg-accent-cyan/5 text-[8px] md:text-[9px] font-mono font-bold text-accent-cyan tracking-[0.2em] uppercase transition-all hover:border-accent-cyan/70 italic">
                   {tag}
                 </span>
               ))}
             </div>
           </div>
 
-          <p className="text-white/60 text-lg leading-relaxed max-w-xl font-medium">
+          <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-xl font-medium mx-auto lg:mx-0">
             Elite Cyber Security Professional specializing in <span className="text-white">offensive operations, vulnerability research, and critical infrastructure defense.</span>
           </p>
 
-          <div className="flex flex-wrap gap-4 pt-6">
+          <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-6">
             <motion.a
               whileHover={{ scale: 1.02, boxShadow: '0 0 25px rgba(0,219,233,0.3)' }}
               whileTap={{ scale: 0.98 }}
@@ -94,11 +94,11 @@ export const Hero: React.FC = () => {
           className="relative flex justify-center lg:justify-end"
         >
           <div className="relative group p-1.5 bg-accent-cyan/5 border border-accent-cyan/10 rounded-2xl shadow-[0_0_30px_rgba(0,219,233,0.05)]">
-            <div className="relative w-72 h-72 md:w-[400px] md:h-[400px] rounded-2xl overflow-hidden bg-black/40 border border-white/5">
+            <div className="relative w-[clamp(140px,22vw,300px)] h-[clamp(140px,22vw,300px)] rounded-2xl overflow-hidden bg-black/40 border border-white/5">
               <img
                 src="/profile.jpg"
                 alt="Lead Operative"
-                className="w-full h-full object-cover center-aligned"
+                className="w-full h-full object-cover center-aligned transition-all duration-700"
               />
             </div>
           </div>

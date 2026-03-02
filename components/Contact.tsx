@@ -55,7 +55,7 @@ export const Contact: React.FC = () => {
         }}
       />
 
-      <div className="container mx-auto px-6 max-w-7xl relative z-10">
+      <div className="container-progressive relative z-10 px-0">
 
         {/* Section label */}
         <div className="flex items-center gap-4 mb-10">
@@ -158,7 +158,8 @@ export const Contact: React.FC = () => {
               <button
                 onClick={handleSubmit}
                 disabled={status === 'submitting'}
-                className="w-full py-4 bg-white/[0.03] border border-white/10 rounded-2xl relative overflow-hidden group/btn hover:border-accent-cyan/30 hover:bg-accent-cyan/5 transition-all active:scale-[0.99] flex items-center justify-center gap-3 shadow-xl disabled:opacity-50"
+                className={`w-full py-4 bg-white/[0.03] border rounded-2xl relative overflow-hidden group/btn transition-all active:scale-[0.99] flex items-center justify-center gap-3 shadow-xl ${!verified ? 'border-accent-violet/30 cursor-not-allowed opacity-80' : 'border-white/10 hover:border-accent-cyan/30 hover:bg-accent-cyan/5'
+                  }`}
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.04] to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 skew-x-[-20deg]" />
                 {status === 'submitting' ? (
@@ -168,8 +169,10 @@ export const Contact: React.FC = () => {
                   </>
                 ) : (
                   <>
-                    <Send size={16} className="text-white/30 group-hover/btn:text-accent-cyan group-hover/btn:translate-x-1 transition-all" />
-                    <span className="text-sm font-orbitron font-black text-white uppercase tracking-widest opacity-50 group-hover/btn:opacity-100 transition-opacity">AUTHORIZE LINK</span>
+                    <Send size={16} className={`transition-all ${!verified ? 'text-accent-violet/50' : 'text-white/30 group-hover/btn:text-accent-cyan group-hover/btn:translate-x-1'}`} />
+                    <span className={`text-sm font-orbitron font-black text-white uppercase tracking-widest transition-opacity ${!verified ? 'opacity-30' : 'opacity-50 group-hover/btn:opacity-100'}`}>
+                      {verified ? 'AUTHORIZE LINK' : 'VERIFY IDENTITY'}
+                    </span>
                   </>
                 )}
               </button>

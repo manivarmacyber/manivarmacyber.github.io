@@ -24,10 +24,20 @@ import { EducationSection } from './components/EducationSection';
 import { TacticalProjects } from './components/TacticalProjects';
 
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (!hash) {
+      window.scrollTo(0, 0);
+    } else {
+      setTimeout(() => {
+        const id = hash.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [pathname, hash]);
   return null;
 };
 
@@ -44,13 +54,13 @@ const PageTracker = () => {
 };
 
 const HomePage = () => (
-  <div className="space-y-32 pb-32">
+  <div className="pb-32">
     {/* 1. Hero Section */}
     <section id="home">
       <Hero />
     </section>
 
-    <div className="container mx-auto px-10 space-y-32">
+    <div className="container-progressive space-y-0">
       {/* 2. Self Driven */}
       <section id="mission">
         <ProfessionalMission />
@@ -155,7 +165,7 @@ const AppContent = () => {
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/about" element={<About />} />
         <Route path="/privacy" element={<Privacy />} />
-        <Route path="/contact" element={<div className="container mx-auto px-6 py-32"><Contact /></div>} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </Layout>
   );

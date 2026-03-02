@@ -48,7 +48,7 @@ export const OperationalAchievements: React.FC = () => {
 
     return (
         <div id="achievements" className="py-20">
-            <div className="container mx-auto px-6 max-w-6xl">
+            <div className="container-progressive">
                 <div className="flex items-center gap-6 mb-16 group">
                     <div className="p-4 bg-accent-cyan/10 border border-accent-cyan/20 rounded-2xl text-accent-cyan group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,230,255,0.1)]">
                         <Trophy size={32} />

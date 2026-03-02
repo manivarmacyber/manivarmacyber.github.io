@@ -18,7 +18,7 @@ export const Skills: React.FC = () => {
   const softSkills = ["LOGICAL THINKING", "PROBLEM SOLVING", "COMMUNICATION"];
 
   return (
-    <div id="skills" className="py-20 space-y-24 container mx-auto px-6">
+    <div id="skills" className="py-20 space-y-24 container-progressive px-0">
       {/* Main Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
         <div className="space-y-4">
@@ -33,7 +33,7 @@ export const Skills: React.FC = () => {
       </div>
 
       {/* Top Split: Offensive vs Defensive */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-16">
         {/* Offensive Column */}
         <div className="space-y-10">
           <div className="flex items-center gap-6 relative">
@@ -82,7 +82,7 @@ export const Skills: React.FC = () => {
       </div>
 
       {/* Bottom Split: Platforms vs Soft Skills */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-16">
         <div className="glass-card p-12 border-white/5 bg-accent-cyan/[0.01] hover:bg-accent-cyan/[0.03] transition-all group">
           <div className="flex items-center gap-6 mb-12">
             <div className="p-4 bg-accent-cyan/10 border border-accent-cyan/20 rounded-2xl text-accent-cyan group-hover:scale-110 transition-transform">

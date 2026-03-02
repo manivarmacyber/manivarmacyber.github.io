@@ -53,8 +53,10 @@ export const BlogPost: React.FC = () => {
     if (post) {
       const storedLikes = localStorage.getItem(`blog-likes-${post.id}`);
       const userLiked = localStorage.getItem(`blog-liked-${post.id}`);
+      const userSubscribed = localStorage.getItem(`blog-subscribed`);
       if (storedLikes) setLikes(parseInt(storedLikes));
       if (userLiked) setIsLiked(true);
+      if (userSubscribed) setSubscribed(true);
     }
   }, [post]);
 
@@ -67,16 +69,19 @@ export const BlogPost: React.FC = () => {
     localStorage.setItem(`blog-liked-${post.id}`, 'true');
   };
 
-  const handleSubscribe = async () => {
-    if (!("Notification" in window)) {
-      alert("This browser does not support push notifications.");
-      return;
-    }
-
-    const permission = await Notification.requestPermission();
-    if (permission === "granted") {
-      setSubscribed(true);
-    }
+  const handleSubscribe = () => {
+    setSubscribed(true);
+    localStorage.setItem(`blog-subscribed`, 'true');
+    // Subtle alert for feedback
+    const toast = document.createElement('div');
+    toast.className = 'fixed bottom-24 left-1/2 -translate-x-1/2 px-8 py-4 bg-accent-cyan text-black font-orbitron font-bold text-xs uppercase tracking-[0.4em] rounded-2xl shadow-[0_0_30px_rgba(0,219,233,0.4)] z-[100] animate-bounce';
+    toast.innerText = 'RESEARCH ALERTS ENABLED';
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.5s ease-out';
+      setTimeout(() => document.body.removeChild(toast), 500);
+    }, 3000);
   };
 
   if (!post) return <Navigate to="/blog" />;
@@ -100,7 +105,7 @@ export const BlogPost: React.FC = () => {
                       props.children?.toString().includes('HOW TO FIX') ? <CheckCircle2 size={24} className="text-accent-cyan" /> :
                         <Zap size={24} />}
         </div>
-        <h2 {...props} className="text-2xl md:text-3xl font-orbitron font-[800] uppercase tracking-tighter leading-none italic text-white flex flex-wrap gap-2">
+        <h2 {...props} className="text-2xl md:text-3xl font-orbitron font-[800] tracking-[0.3px] leading-none text-white flex flex-wrap gap-2">
           {props.children}
         </h2>
       </div>
@@ -111,7 +116,7 @@ export const BlogPost: React.FC = () => {
     p: ({ children, ...props }: any) => {
       const isFirstParagraph = children?.[0]?.props?.node?.position?.start?.line === 2 || children?.toString().startsWith('Access control');
       return (
-        <p className={`text-white/70 leading-[1.75] mb-8 text-base font-medium ${isFirstParagraph ? 'blog-drop-cap' : ''}`}>
+        <p className={`text-[rgba(230,250,255,0.85)] leading-[1.8] mb-[1.2rem] text-lg font-medium ${isFirstParagraph ? 'blog-drop-cap' : ''}`}>
           {children}
         </p>
       );
@@ -140,8 +145,8 @@ export const BlogPost: React.FC = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="pt-24 pb-20 px-6 overflow-hidden">
-        <div className="max-w-4xl mx-auto">
+      <div className="pt-24 pb-20 px-6 overflow-hidden relative z-10">
+        <div className="max-w-[900px] mx-auto">
           <Link to="/blog" className="inline-flex items-center gap-2 text-white/40 hover:text-accent-cyan transition-colors mb-16 font-orbitron font-bold text-xs tracking-[0.4em] uppercase">
             <ArrowLeft size={16} /> BACK TO BLOG REPOSITORY
           </Link>
@@ -356,8 +361,8 @@ export const BlogPost: React.FC = () => {
 
                     <div className="flex justify-center pt-8">
                       <Link
-                        to="/contact"
-                        className="px-12 py-5 border border-accent-cyan/30 text-white font-orbitron font-bold text-xs uppercase tracking-[0.4em] hover:bg-accent-cyan hover:shadow-[0_0_30px_rgba(0,219,233,0.3)] transition-all rounded-2xl"
+                        to="/#contact"
+                        className="px-12 py-5 border border-accent-cyan/30 text-white font-orbitron font-bold text-xs uppercase tracking-[0.4em] hover:bg-accent-cyan hover:shadow-[0_0_30px_rgba(0,219,233,0.3)] transition-all rounded-2xl relative z-20"
                       >
                         CONTACT ME
                       </Link>

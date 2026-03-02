@@ -64,7 +64,7 @@ export const Navigation: React.FC<NavigationProps> = ({ activeSection }) => {
       {isActive && (
         <motion.div
           layoutId="nav-indicator"
-          className="absolute -bottom-2 w-6 h-[2px] bg-accent-cyan rounded-full shadow-[0_0_10px_rgba(0,219,233,0.6)]"
+          className="absolute -bottom-2 w-1.5 h-1.5 bg-accent-cyan rounded-full shadow-[0_0_12px_rgba(11,218,255,0.8)]"
           initial={false}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         />

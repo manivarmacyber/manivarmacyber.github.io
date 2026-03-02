@@ -1,165 +1,155 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sparkles, X, MapPin } from 'lucide-react';
-import { getCurrentFestival, getRegionData } from '../utils/festivalUtils';
-import { Festival } from '../data/festivals';
+import { Sparkles, ShieldCheck, Moon, Sun, Snowflake, Zap } from 'lucide-react';
+import { fetchLocationData, getCurrentFestival, Festival, LocationData } from '../utils/festivalUtils';
 
 export const FestivalEngine: React.FC = () => {
     const [festival, setFestival] = useState<Festival | null>(null);
-    const [showIcon, setShowIcon] = useState(false);
-    const [isEnhanced, setIsEnhanced] = useState(false);
-    const [showStateSelector, setShowStateSelector] = useState(false);
-    const [particles, setParticles] = useState<{ id: number; x: number; y: number; delay: number }[]>([]);
-
-    const { country, state } = getRegionData();
+    const [location, setLocation] = useState<LocationData | null>(null);
+    const [isActive, setIsActive] = useState(true);
+    const [showStatus, setShowStatus] = useState(false);
 
     useEffect(() => {
-        // 3s Delay appearance
-        const timer = setTimeout(() => {
-            const current = getCurrentFestival();
-            if (current) {
-                setFestival(current);
-                setShowIcon(true);
-                // Auto-run subtle effect for 12s
-                triggerSubtleEffect();
-            }
-        }, 3000);
+        const initEngine = async () => {
+            const loc = await fetchLocationData();
+            setLocation(loc);
+            const fest = getCurrentFestival(loc);
+            setFestival(fest);
+        };
 
+        // Load after main content
+        const timer = setTimeout(initEngine, 2000);
         return () => clearTimeout(timer);
     }, []);
 
-    const triggerSubtleEffect = () => {
-        const count = window.innerWidth < 768 ? 4 : 8;
-        const newParticles = Array.from({ length: count }).map((_, i) => ({
-            id: Math.random(),
-            x: Math.random() * 100,
-            y: Math.random() * 100,
-            delay: Math.random() * 5
-        }));
-        setParticles(newParticles);
-
-        setTimeout(() => {
-            setParticles([]);
-        }, 12000);
+    const toggleMode = () => {
+        setIsActive(!isActive);
+        setShowStatus(true);
+        setTimeout(() => setShowStatus(false), 3000);
     };
 
-    const handleEnhancedMode = () => {
-        setIsEnhanced(true);
-        triggerSubtleEffect();
-        setTimeout(() => {
-            setIsEnhanced(false);
-        }, 15000);
+    const renderIcon = () => {
+        if (!festival) return null;
+        switch (festival.effect) {
+            case 'snow-drift': return <Snowflake size={14} />;
+            case 'moon-pulse': return <Moon size={14} />;
+            case 'golden-dust': return <Sparkles size={14} />;
+            case 'shield-glow': return <ShieldCheck size={14} />;
+            case 'tricolor-glow': return <Sun size={14} />;
+            default: return <Zap size={14} />;
+        }
     };
 
-    const selectState = (stateCode: string) => {
-        localStorage.setItem('user_region_state', stateCode);
-        setShowStateSelector(false);
-        // Refresh festival after state change
-        const current = getCurrentFestival();
-        setFestival(current);
-        if (current) triggerSubtleEffect();
-    };
-
-    if (!festival) return null;
+    if (!festival || !isActive) {
+        if (!festival) return null;
+        // Show only toggle if festival exists but inactive
+        return (
+            <div className="fixed bottom-6 right-6 z-[100]">
+                <button
+                    onClick={toggleMode}
+                    className="w-8 h-8 rounded-full border border-white/5 bg-black/20 backdrop-blur-md flex items-center justify-center text-white/10 hover:text-white/40 transition-all"
+                >
+                    <Sparkles size={12} />
+                </button>
+            </div>
+        );
+    }
 
     return (
         <>
-            {/* Visual Effects Layer */}
-            <div className="fixed inset-0 pointer-events-none z-[60] overflow-hidden">
+            {/* AMBIENT EFFECTS LAYER */}
+            <div className="fixed inset-0 pointer-events-none z-[5] overflow-hidden opacity-[0.05]">
+                {/* Background Particle Shift */}
                 <AnimatePresence>
-                    {particles.map((p) => (
-                        <motion.div
-                            key={p.id}
-                            initial={{ opacity: 0, y: festival.effect === 'snow-drift' ? -20 : 20 }}
-                            animate={{
-                                opacity: [0, 0.15, 0],
-                                y: festival.effect === 'snow-drift' ? '120vh' : '-20vh',
-                                x: `${p.x + (Math.random() * 10 - 5)}vw`
-                            }}
-                            transition={{
-                                duration: festival.effect === 'snow-drift' ? 10 : 12,
-                                delay: p.delay,
-                                ease: "linear"
-                            }}
-                            className={`absolute w-1 h-1 rounded-full blur-[1px] ${festival.effect === 'snow-drift' ? 'bg-white' :
-                                    festival.effect === 'tricolor-glow' ? 'bg-accent-cyan shadow-[0_0_10px_rgba(34,197,94,0.5)]' :
-                                        'bg-amber-400'
-                                }`}
-                            style={{ left: `${p.x}vw`, top: festival.effect === 'snow-drift' ? '-5vh' : '105vh' }}
-                        />
-                    ))}
+                    {(festival.effect === 'snow-drift' || festival.effect === 'golden-dust') && (
+                        <div className="absolute inset-0">
+                            {[...Array(15)].map((_, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ y: -20, x: Math.random() * 100 + 'vw', opacity: 0 }}
+                                    animate={{
+                                        y: '110vh',
+                                        opacity: [0, 1, 0],
+                                        rotate: 360
+                                    }}
+                                    transition={{
+                                        duration: 10 + Math.random() * 10,
+                                        repeat: Infinity,
+                                        delay: Math.random() * 10,
+                                        ease: "linear"
+                                    }}
+                                    className={`absolute w-1 h-1 rounded-full ${festival.effect === 'snow-drift' ? 'bg-white' : 'bg-amber-400'}`}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </AnimatePresence>
 
-                {/* Subtle Ambient Glow for Independence Day */}
-                {festival.effect === 'tricolor-glow' && particles.length > 0 && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: [0, 0.1, 0] }}
-                        transition={{ duration: 8 }}
-                        className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 via-white to-green-500"
-                    />
-                )}
+                {/* Ambient Shimmer / Glow Border */}
+                <motion.div
+                    animate={{ opacity: [0.1, 0.3, 0.1] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className={`absolute inset-0 pointer-events-none border-[1px] ${festival.effect === 'tricolor-glow' ? 'border-orange-500/20 shadow-[inset_0_0_50px_rgba(34,197,94,0.1)]' :
+                            festival.effect === 'golden-dust' ? 'border-amber-500/10 shadow-[inset_0_0_50px_rgba(245,158,11,0.05)]' :
+                                festival.effect === 'moon-pulse' ? 'border-blue-500/10 shadow-[inset_0_0_50px_rgba(59,130,246,0.1)]' :
+                                    'border-accent-cyan/5'
+                        }`}
+                />
             </div>
 
-            {/* Hidden Icon Control */}
-            <AnimatePresence>
-                {showIcon && (
-                    <div className="fixed bottom-8 right-8 z-[70]">
+            {/* HIDDEN FOOTER CONTROL */}
+            <div className="fixed bottom-6 right-6 z-[100] flex items-center gap-3">
+                <AnimatePresence>
+                    {showStatus && (
                         <motion.div
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 0.5 }}
-                            whileHover={{ opacity: 1, scale: 1.1 }}
-                            className="relative"
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: 20 }}
+                            className="bg-black/90 border border-white/10 px-3 py-1.5 rounded-full backdrop-blur-xl shadow-2xl"
                         >
-                            <button
-                                onClick={() => country === 'INDIA' && !state ? setShowStateSelector(true) : handleEnhancedMode()}
-                                className="w-10 h-10 rounded-full border border-accent-cyan/30 flex items-center justify-center bg-black/40 backdrop-blur-md text-accent-cyan shadow-[0_0_15px_rgba(0,219,233,0.2)] group"
-                            >
-                                <Sparkles size={16} className="group-hover:rotate-12 transition-transform" />
-
-                                {/* Tooltip */}
-                                <div className="absolute bottom-full right-0 mb-4 px-4 py-2 bg-black/80 border border-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-                                    <span className="font-orbitron text-[10px] font-bold text-white uppercase tracking-widest leading-none">
-                                        {festival.message}
-                                    </span>
-                                </div>
-                            </button>
-
-                            {/* State Selector for India (Minimalist) */}
-                            <AnimatePresence>
-                                {showStateSelector && (
-                                    <motion.div
-                                        initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                                        exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                                        className="absolute bottom-full right-0 mb-16 w-48 bg-black/90 border border-white/10 rounded-2xl p-4 backdrop-blur-xl shadow-2xl"
-                                    >
-                                        <div className="flex items-center justify-between mb-4">
-                                            <span className="text-[9px] font-mono text-white/40 uppercase tracking-widest font-black flex items-center gap-2">
-                                                <MapPin size={10} /> Select Region
-                                            </span>
-                                            <button onClick={() => setShowStateSelector(false)} className="text-white/20 hover:text-white">
-                                                <X size={12} />
-                                            </button>
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-2">
-                                            {['TN', 'KL', 'KA', 'AP', 'TS', 'WB', 'MH', 'PB', 'GJ'].map((s) => (
-                                                <button
-                                                    key={s}
-                                                    onClick={() => selectState(s)}
-                                                    className="px-2 py-1.5 rounded-lg bg-white/5 border border-white/5 text-[10px] text-white/60 hover:bg-accent-cyan/10 hover:border-accent-cyan/30 transition-all font-orbitron font-bold"
-                                                >
-                                                    {s}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
+                            <span className="font-orbitron text-[9px] font-black tracking-widest text-white/60 uppercase">
+                                Festival Mode: {isActive ? 'Active' : 'Offline'}
+                            </span>
                         </motion.div>
-                    </div>
-                )}
-            </AnimatePresence>
+                    )}
+                </AnimatePresence>
+
+                <motion.div
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 0.4 }}
+                    whileHover={{ opacity: 1, scale: 1.1 }}
+                    className="relative group"
+                >
+                    <button
+                        onClick={toggleMode}
+                        className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all bg-black/40 backdrop-blur-md shadow-2xl ${festival.effect === 'tricolor-glow' ? 'border-orange-500/30 text-orange-400' :
+                                festival.effect === 'golden-dust' ? 'border-amber-500/30 text-amber-400' :
+                                    festival.effect === 'moon-pulse' ? 'border-blue-400/30 text-blue-400' :
+                                        'border-accent-cyan/30 text-accent-cyan'
+                            }`}
+                    >
+                        {renderIcon()}
+
+                        {/* Hidden Tooltip */}
+                        <div className="absolute bottom-full right-0 mb-4 px-4 py-2 bg-black/90 border border-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-all pointer-events-none transform translate-y-2 group-hover:translate-y-0">
+                            <div className="flex flex-col items-end">
+                                <span className="font-mono text-[8px] text-white/30 uppercase tracking-tighter mb-1">
+                                    {location?.country} {location?.state ? `// ${location.state}` : ''}
+                                </span>
+                                <span className="font-orbitron text-[10px] font-black text-white uppercase tracking-widest whitespace-nowrap">
+                                    {festival.message}
+                                    - [CLICK TO TOGGLE]</span>
+                            </div>
+                        </div>
+                    </button>
+
+                    {/* Subtle Pulse */}
+                    <div className={`absolute inset-0 rounded-full animate-ping opacity-20 ${festival.effect === 'tricolor-glow' ? 'bg-orange-500' :
+                            festival.effect === 'golden-dust' ? 'bg-amber-500' :
+                                'bg-accent-cyan'
+                        }`} style={{ animationDuration: '3s' }} />
+                </motion.div>
+            </div>
         </>
     );
 };

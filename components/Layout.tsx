@@ -42,7 +42,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeSection = 'home'
       </main>
 
       <footer className="relative z-10 py-20 border-t border-white/5 bg-black/20 backdrop-blur-3xl">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="container-progressive grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <Shield className="text-accent-cyan shadow-[0_0_15px_#00E6FF]" size={24} />
@@ -86,7 +86,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeSection = 'home'
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="container-progressive mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-[10px] font-mono text-white/20 uppercase tracking-[0.3em]">
             &copy; 2025 // SECURED OPERATIVE ARCHITECTURE // ALL DATA VERIFIED
           </p>

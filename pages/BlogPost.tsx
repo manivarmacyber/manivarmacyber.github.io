@@ -10,6 +10,9 @@ import {
   Zap, AlertTriangle, Search, CheckCircle2, Info,
   TrendingDown, FileText, Database, ShieldAlert, Cpu
 } from 'lucide-react';
+import { db, app } from '../src/firebase';
+import { getMessaging, getToken } from 'firebase/messaging';
+import { doc, setDoc, getDoc, onSnapshot, updateDoc, increment, serverTimestamp } from 'firebase/firestore';
 
 const AdBlock: React.FC = () => {
   React.useEffect(() => {
@@ -35,7 +38,11 @@ export const BlogPost: React.FC = () => {
   const post = blogPosts.find(p => p.slug === slug);
   const [likes, setLikes] = React.useState<number>(0);
   const [isLiked, setIsLiked] = React.useState<boolean>(false);
+  const [isLikeLoading, setIsLikeLoading] = React.useState<boolean>(false);
+  const [isShareLoading, setIsShareLoading] = React.useState<boolean>(false);
   const [subscribed, setSubscribed] = React.useState<boolean>(false);
+  const [shares, setShares] = React.useState<{ total: number; whatsapp: number; linkedin: number; twitter: number }>({ total: 0, whatsapp: 0, linkedin: 0, twitter: 0 });
+  const messaging = getMessaging(app);
 
   React.useEffect(() => {
     const existingScript = document.getElementById('adsense-script');
@@ -54,28 +61,136 @@ export const BlogPost: React.FC = () => {
       const storedLikes = localStorage.getItem(`blog-likes-${post.id}`);
       const userLiked = localStorage.getItem(`blog-liked-${post.id}`);
       const userSubscribed = localStorage.getItem(`blog-subscribed`);
+
       if (storedLikes) setLikes(parseInt(storedLikes));
       if (userLiked) setIsLiked(true);
-      if (userSubscribed) setSubscribed(true);
+      if (userSubscribed === 'true') setSubscribed(true);
+
+      // Check if user has already liked via the new slug-based key
+      const alreadyLiked = localStorage.getItem(`liked_${post.slug}`);
+      if (alreadyLiked) {
+        setIsLiked(true);
+      }
+
+      // 1. Initial Data Fetch (Likes & Shares)
+      const likesDocRef = doc(db, 'blogLikes', post.slug);
+      const sharesDocRef = doc(db, 'blogShares', post.slug);
+
+      const fetchBlogData = async () => {
+        try {
+          // Fetch Likes
+          const likesSnap = await getDoc(likesDocRef);
+          if (likesSnap.exists()) {
+            setLikes(likesSnap.data().likes || 0);
+          } else {
+            setDoc(likesDocRef, { likes: 0 }, { merge: true });
+          }
+
+          // Fetch Shares
+          const sharesSnap = await getDoc(sharesDocRef);
+          if (sharesSnap.exists()) {
+            setShares(sharesSnap.data() as any);
+          } else {
+            setDoc(sharesDocRef, { total: 0, whatsapp: 0, linkedin: 0, twitter: 0 }, { merge: true });
+          }
+        } catch (error) {
+          console.warn('Failed to fetch initial blog data:', error);
+        }
+      };
+
+      fetchBlogData();
+
+      // checkSubscription(); // Removed for privacy and cost optimization
+
+      return () => {
+        // No listeners to unsubscribe from for optimized performance
+      };
     }
   }, [post]);
 
-  const handleLike = () => {
-    if (!post || isLiked) return;
-    const newLikes = likes + 1;
-    setLikes(newLikes);
-    setIsLiked(true);
-    localStorage.setItem(`blog-likes-${post.id}`, newLikes.toString());
-    localStorage.setItem(`blog-liked-${post.id}`, 'true');
+  const handleLike = async () => {
+    if (!post || isLiked || isLikeLoading) return;
+
+    // Check localStorage again right before action
+    if (localStorage.getItem(`liked_${post.slug}`)) {
+      setIsLiked(true);
+      return;
+    }
+
+    setIsLikeLoading(true);
+
+    // Visual tactile feedback immediately
+    setLikes(prev => prev + 1);
+
+    try {
+      const likesDocRef = doc(db, 'blogLikes', post.slug);
+      await updateDoc(likesDocRef, {
+        likes: increment(1)
+      });
+
+      setIsLiked(true);
+      localStorage.setItem(`liked_${post.slug}`, 'true');
+    } catch (error) {
+      console.error('Error updating likes:', error);
+      // Revert if failed
+      setLikes(prev => prev - 1);
+    } finally {
+      // 5 second cooldown to prevent rapid clicking even if like fails
+      setTimeout(() => {
+        setIsLikeLoading(false);
+      }, 5000);
+    }
   };
 
-  const handleSubscribe = () => {
-    if ((window as any).requestPermission) {
-      (window as any).requestPermission();
+  const handleShare = async (platform: 'whatsapp' | 'linkedin' | 'twitter') => {
+    if (!post || isShareLoading) return;
+
+    setIsShareLoading(true);
+
+    try {
+      const sharesDocRef = doc(db, 'blogShares', post.slug);
+      await updateDoc(sharesDocRef, {
+        [platform]: increment(1),
+        total: increment(1)
+      });
+    } catch (error) {
+      console.error(`Error updating ${platform} shares:`, error);
+    } finally {
+      // 3 second cooldown for shares
+      setTimeout(() => {
+        setIsShareLoading(false);
+      }, 3000);
     }
-    setSubscribed(true);
-    localStorage.setItem(`blog-subscribed`, 'true');
-    // Subtle alert for feedback
+  };
+
+  const handleSubscribe = async () => {
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        const token = await getToken(messaging, {
+          vapidKey: 'BFCsPxD2__lGdwnA5cozBc9CGhUQhdCxnoq6TsepwT3-xqvo3mR6zQyZDfVs3E8xLdaHSnIg73F1gLSH0mt29eY'
+        });
+
+        if (token) {
+          // Store token in Firestore with deduplication using token as Doc ID
+          await setDoc(doc(db, 'subscribers', token), {
+            token: token,
+            createdAt: serverTimestamp()
+          });
+
+          console.log('Subscriber token stored in Firestore:', token);
+          alert("Subscribed successfully 🔔");
+          setSubscribed(true);
+          localStorage.setItem(`blog-subscribed`, 'true');
+        }
+      } else {
+        console.warn('Notification permission denied');
+      }
+    } catch (error) {
+      console.error('Error during FCM subscription:', error);
+    }
+
+    // Toast notification remains for immediate tactile feedback
     const toast = document.createElement('div');
     toast.className = 'fixed bottom-24 left-1/2 -translate-x-1/2 px-8 py-4 bg-accent-cyan text-black font-orbitron font-bold text-xs uppercase tracking-[0.4em] rounded-2xl shadow-[0_0_30px_rgba(0,219,233,0.4)] z-[100] animate-bounce';
     toast.innerText = 'RESEARCH ALERTS ENABLED';
@@ -181,10 +296,12 @@ export const BlogPost: React.FC = () => {
             <div className="flex items-center gap-6 mb-16">
               <button
                 onClick={handleLike}
-                disabled={isLiked}
+                disabled={isLiked || isLikeLoading}
                 className={`flex items-center gap-3 px-6 py-3 rounded-2xl border transition-all ${isLiked
-                  ? 'bg-accent-cyan/20 border-accent-cyan text-accent-cyan'
-                  : 'bg-white/5 border-white/10 text-white/40 hover:border-accent-cyan/50 hover:text-accent-cyan'
+                  ? 'bg-accent-cyan/20 border-accent-cyan text-accent-cyan cursor-default'
+                  : isLikeLoading
+                    ? 'bg-white/5 border-white/20 text-white/20 cursor-wait animate-pulse'
+                    : 'bg-white/5 border-white/10 text-white/40 hover:border-accent-cyan/50 hover:text-accent-cyan'
                   }`}
               >
                 <motion.div
@@ -192,16 +309,19 @@ export const BlogPost: React.FC = () => {
                 >
                   <TrendingDown size={20} className={isLiked ? 'fill-accent-cyan' : ''} />
                 </motion.div>
-                <span className="font-mono text-xs font-black tracking-widest">{likes} LIKES</span>
+                <span className="font-mono text-xs font-black tracking-widest">
+                  {isLiked ? 'LIKED ✓' : isLikeLoading ? 'COOLDOWN...' : `${likes} LIKES`}
+                </span>
               </button>
 
               <div className="h-4 w-px bg-white/10" />
 
-              <div className="flex gap-4">
+              <div className="flex items-center gap-4">
                 <a
                   href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => handleShare('linkedin')}
                   className="p-3 bg-white/5 border border-white/10 rounded-2xl text-white/40 hover:text-accent-cyan hover:border-accent-cyan/50 hover:shadow-[0_0_15px_rgba(0,219,233,0.15)] transition-all"
                 >
                   <Linkedin size={18} />
@@ -210,10 +330,15 @@ export const BlogPost: React.FC = () => {
                   href={`https://wa.me/?text=${encodeURIComponent(shareTitle + ' ' + shareUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => handleShare('whatsapp')}
                   className="p-3 bg-white/5 border border-white/10 rounded-2xl text-white/40 hover:text-accent-cyan hover:border-accent-cyan/50 hover:shadow-[0_0_15px_rgba(0,219,233,0.15)] transition-all"
                 >
                   <MessageCircle size={18} />
                 </a>
+                <div className="flex flex-col items-start justify-center ml-2">
+                  <span className="text-[10px] font-mono font-black text-accent-cyan tracking-widest leading-none">{shares.total}</span>
+                  <span className="text-[8px] font-mono font-bold text-white/20 uppercase tracking-[0.2em]">SHARES</span>
+                </div>
               </div>
             </div>
 
@@ -266,7 +391,7 @@ export const BlogPost: React.FC = () => {
                         {subscribed ? (
                           <>
                             <CheckCircle2 size={14} />
-                            <span>ACTIVE</span>
+                            <span>Subscribed ✅</span>
                           </>
                         ) : (
                           <>
@@ -297,10 +422,14 @@ export const BlogPost: React.FC = () => {
                         </a>
                       </div>
                     </div>
-                    <div className="flex gap-6">
+                    <div className="flex gap-6 items-center">
+                      <div className="flex flex-col items-end mr-4">
+                        <span className="text-xl font-orbitron font-black text-accent-cyan leading-none">{shares.total}</span>
+                        <span className="text-[8px] font-mono font-bold text-white/20 uppercase tracking-[0.3em]">TOTAL SHARES</span>
+                      </div>
                       {[
-                        { icon: Linkedin, url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}` },
-                        { icon: MessageCircle, url: `https://wa.me/?text=${encodeURIComponent(shareTitle + ' ' + shareUrl)}` },
+                        { icon: Linkedin, platform: 'linkedin' as const, url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}` },
+                        { icon: MessageCircle, platform: 'whatsapp' as const, url: `https://wa.me/?text=${encodeURIComponent(shareTitle + ' ' + shareUrl)}` },
                         {
                           icon: FileText,
                           url: '#',
@@ -314,9 +443,12 @@ export const BlogPost: React.FC = () => {
                         <a
                           key={i}
                           href={item.url}
-                          onClick={item.onClick}
-                          target={item.onClick ? undefined : "_blank"}
-                          rel={item.onClick ? undefined : "noopener noreferrer"}
+                          onClick={(e) => {
+                            if (item.onClick) item.onClick(e);
+                            if (item.platform) handleShare(item.platform);
+                          }}
+                          target={item.url === '#' ? undefined : "_blank"}
+                          rel={item.url === '#' ? undefined : "noopener noreferrer"}
                           className="w-16 h-16 rounded-2xl glass-card border-white/10 flex items-center justify-center text-white/40 hover:text-accent-cyan hover:border-accent-cyan/50 transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(0,230,255,0.2)]"
                         >
                           <item.icon size={24} />

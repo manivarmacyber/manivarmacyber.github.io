@@ -124,14 +124,24 @@ export const BlogPost: React.FC = () => {
 
     try {
       const likesDocRef = doc(db, 'blogLikes', post.slug);
-      await updateDoc(likesDocRef, {
-        likes: increment(1)
-      });
+      const docSnap = await getDoc(likesDocRef);
+
+      if (docSnap.exists()) {
+        // Increment existing document
+        await updateDoc(likesDocRef, {
+          likes: increment(1)
+        });
+      } else {
+        // Initialize new document (compatible with 'allow create: if likes == 1' rule)
+        await setDoc(likesDocRef, {
+          likes: 1
+        });
+      }
 
       setIsLiked(true);
       localStorage.setItem(`liked_${post.slug}`, 'true');
     } catch (error) {
-      console.error('Error updating likes:', error);
+      console.error('CRITICAL: Failed to synchronize blog like with Firestore:', error);
       // Revert if failed
       setLikes(prev => prev - 1);
     } finally {
@@ -149,12 +159,25 @@ export const BlogPost: React.FC = () => {
 
     try {
       const sharesDocRef = doc(db, 'blogShares', post.slug);
-      await updateDoc(sharesDocRef, {
-        [platform]: increment(1),
-        total: increment(1)
-      });
+      const docSnap = await getDoc(sharesDocRef);
+
+      if (docSnap.exists()) {
+        // Increment existing document
+        await updateDoc(sharesDocRef, {
+          [platform]: increment(1),
+          total: increment(1)
+        });
+      } else {
+        // Initialize new document
+        await setDoc(sharesDocRef, {
+          whatsapp: platform === 'whatsapp' ? 1 : 0,
+          linkedin: platform === 'linkedin' ? 1 : 0,
+          twitter: platform === 'twitter' ? 1 : 0,
+          total: 1
+        });
+      }
     } catch (error) {
-      console.error(`Error updating ${platform} shares:`, error);
+      console.error(`CRITICAL: Failed to synchronize ${platform} share with Firestore:`, error);
     } finally {
       // 3 second cooldown for shares
       setTimeout(() => {

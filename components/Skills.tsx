@@ -26,7 +26,7 @@ export const Skills: React.FC = () => {
             <div className="w-8 h-[1px] bg-accent-cyan" />
             <span className="text-[10px] font-mono tracking-[0.3em] uppercase">SYSTEM_CAPABILITIES</span>
           </div>
-          <h2 className="text-5xl md:text-6xl font-orbitron font-black tracking-tight text-white uppercase italic">
+          <h2 className="text-5xl md:text-6xl font-orbitron font-black tracking-tight text-text-primary uppercase italic">
             SKILLS
           </h2>
         </div>
@@ -37,12 +37,12 @@ export const Skills: React.FC = () => {
         {/* Offensive Column */}
         <div className="space-y-10">
           <div className="flex items-center gap-6 relative">
-            <div className="absolute left-0 w-1 h-12 bg-accent-cyan shadow-[0_0_10px_rgba(0,230,255,0.6)]" />
+            <div className="absolute left-0 w-[3px] h-10 bg-accent-cyan opacity-80" />
             <div className="ml-6 p-3 bg-accent-cyan/10 border border-accent-cyan/20 rounded-2xl text-accent-cyan">
               <Target size={28} />
             </div>
             <div>
-              <h3 className="text-2xl font-orbitron font-black text-white tracking-widest uppercase">OFFENSIVE SECURITY</h3>
+              <h3 className="text-2xl font-orbitron font-black text-text-primary tracking-widest uppercase">OFFENSIVE SECURITY</h3>
               <p className="text-[10px] font-mono text-accent-cyan tracking-[0.4em] uppercase font-bold">Infiltration & Research</p>
             </div>
           </div>
@@ -60,12 +60,12 @@ export const Skills: React.FC = () => {
         {/* Defensive Column */}
         <div className="space-y-10">
           <div className="flex items-center gap-6 relative">
-            <div className="absolute left-0 w-1 h-12 bg-accent-cyan shadow-[0_0_10px_rgba(0,230,255,0.6)]" />
+            <div className="absolute left-0 w-[3px] h-10 bg-accent-cyan opacity-80" />
             <div className="ml-6 p-3 bg-accent-cyan/10 border border-accent-cyan/20 rounded-xl text-accent-cyan">
               <Shield size={28} />
             </div>
             <div>
-              <h3 className="text-2xl font-orbitron font-black text-white tracking-widest uppercase">DEFENSIVE SECURITY</h3>
+              <h3 className="text-2xl font-orbitron font-black text-text-primary tracking-widest uppercase">DEFENSIVE SECURITY</h3>
               <p className="text-[10px] font-mono text-accent-cyan tracking-[0.4em] uppercase font-bold">Mitigation & Strategy</p>
             </div>
           </div>
@@ -83,12 +83,12 @@ export const Skills: React.FC = () => {
 
       {/* Bottom Split: Platforms vs Soft Skills */}
       <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-16">
-        <div className="glass-card p-12 border-white/5 bg-accent-cyan/[0.01] hover:bg-accent-cyan/[0.03] transition-all group">
+        <div className="glass-card p-8 border-border bg-card-bg transition-all group">
           <div className="flex items-center gap-6 mb-12">
             <div className="p-4 bg-accent-cyan/10 border border-accent-cyan/20 rounded-2xl text-accent-cyan group-hover:scale-110 transition-transform">
               <Cpu size={24} />
             </div>
-            <h3 className="text-xl font-orbitron font-black text-white uppercase tracking-tight italic">TECHNICAL PLATFORMS</h3>
+            <h3 className="text-xl font-orbitron font-black text-text-primary uppercase tracking-tight italic">TECHNICAL PLATFORMS</h3>
           </div>
           <div className="flex flex-wrap gap-4">
             {platforms.map((p, i) => (
@@ -99,12 +99,12 @@ export const Skills: React.FC = () => {
           </div>
         </div>
 
-        <div className="glass-card p-12 border-white/5 bg-accent-cyan/[0.01] hover:bg-accent-cyan/[0.03] transition-all group">
+        <div className="glass-card p-8 border-border bg-card-bg transition-all group">
           <div className="flex items-center gap-6 mb-12">
             <div className="p-4 bg-accent-cyan/10 border border-accent-cyan/20 rounded-2xl text-accent-cyan group-hover:scale-110 transition-transform">
               <Brain size={24} />
             </div>
-            <h3 className="text-xl font-orbitron font-black text-white uppercase tracking-tight italic">PROFESSIONAL SOFT SKILLS</h3>
+            <h3 className="text-xl font-orbitron font-black text-text-primary uppercase tracking-tight italic">PROFESSIONAL SOFT SKILLS</h3>
           </div>
           <div className="flex flex-wrap gap-4">
             {softSkills.map((s, i) => (

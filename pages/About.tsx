@@ -12,12 +12,12 @@ export const About: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           className="space-y-12"
         >
-          <h1 className="font-orbitron text-5xl md:text-7xl font-black tracking-tighter italic uppercase text-white">
+          <h1 className="font-orbitron text-5xl md:text-7xl font-black tracking-tighter italic uppercase text-text-primary">
             ABOUT THE <span className="text-accent-cyan text-glow-cyan">OPERATIVE</span>
           </h1>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="space-y-6 text-white/60 text-lg leading-relaxed">
+            <div className="space-y-6 text-text-primary/60 text-lg leading-relaxed">
               <p>
                 G. Manikanta Varma is a self-driven cybersecurity professional with a strong focus on penetration testing and bug hunting. Experienced in identifying and reporting real-time security issues through freelance projects and government programs.
               </p>
@@ -35,7 +35,7 @@ export const About: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-orbitron font-bold">Mission</h4>
-                  <p className="text-sm text-white/40">Securing the digital frontier through proactive defense.</p>
+                  <p className="text-sm text-text-primary/40">Securing the digital frontier through proactive defense.</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -43,8 +43,8 @@ export const About: React.FC = () => {
                   <Target size={24} />
                 </div>
                 <div>
-                  <h4 className="font-orbitron font-bold text-white">Vision</h4>
-                  <p className="text-sm text-white/40">Setting the standard for elite penetration testing.</p>
+                  <h4 className="font-orbitron font-bold text-text-primary">Vision</h4>
+                  <p className="text-sm text-text-primary/40">Setting the standard for elite penetration testing.</p>
                 </div>
               </div>
             </div>

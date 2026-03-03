@@ -8,7 +8,7 @@ export const CredentialsDatabase: React.FC = () => {
             <div className="container mx-auto px-6 max-w-2xl">
                 <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="glass-card p-10 border-white/5 flex items-center gap-8 group bg-white/[0.01] hover:bg-white/[0.03] transition-all cursor-pointer relative overflow-hidden"
+                    className="glass-card p-8 border-border flex items-center gap-8 group bg-card-bg transition-all cursor-pointer relative overflow-hidden"
                 >
                     {/* Subtle Scanline Effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.02] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
@@ -18,14 +18,14 @@ export const CredentialsDatabase: React.FC = () => {
                     </div>
 
                     <div className="space-y-2">
-                        <span className="block text-[9px] font-mono text-white/20 uppercase tracking-[0.4em] font-black">CREDENTIALS_DATABASE</span>
-                        <h3 className="text-lg md:text-xl font-orbitron font-black text-white uppercase tracking-widest group-hover:text-accent-violet transition-colors">
+                        <span className="block text-[9px] font-mono text-text-secondary font-black uppercase tracking-[0.4em]">CREDENTIALS_DATABASE</span>
+                        <h3 className="text-lg md:text-xl font-orbitron font-black text-text-primary uppercase tracking-widest group-hover:text-accent-violet transition-colors">
                             ACCESS SKILL CERTIFICATIONS ARCHIVE
                         </h3>
                     </div>
 
-                    <div className="ml-auto opacity-20 group-hover:opacity-100 transition-opacity">
-                        <ExternalLink size={20} className="text-white" />
+                    <div className="ml-auto opacity-40 group-hover:opacity-100 transition-opacity">
+                        <ExternalLink size={20} className="text-text-primary" />
                     </div>
                 </motion.div>
             </div>

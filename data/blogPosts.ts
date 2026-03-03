@@ -10,26 +10,32 @@ export const blogPosts: BlogPost[] = [
     author: 'Mani Varma',
     tags: ['OWASP TOP 10', 'PENETRATION TESTING', 'ARCHITECTURAL RISK', 'AD-READY'],
     readingTime: '20 MIN READ',
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop',
+    image: '/bac-main-cover-v2.jpg',
     content: `
 Broken Access Control (BAC) is a critical security vulnerability where an application fails to properly restrict users from accessing unauthorized data or functionality. It enables privilege escalation, data exposure, and account compromise, making it OWASP Top 10 A01 and one of the most exploited web vulnerabilities globally.
 
-## EXECUTIVE SUMMARY
-
-### Why BAC is OWASP A01
 Broken Access Control has ascended to the #1 position in the most recent OWASP Top 10 due to several converging factors. Primary among these is the shift towards microservices and API-first architectures, where the "Trust Boundary" is often misplaced or entirely missing. Unlike injection attacks that rely on specific characters, BAC is a logical failure, making it difficult for traditional automated scanners and WAFs to detect without deep context of the business logic.
 
-## WHAT IS BROKEN ACCESS CONTROL (BAC)?
+This comprehensive research explores the mechanics of BAC vulnerabilities, their impact on enterprise systems, and the latest scoring standards using CVSS v4.0.
+
+MARKER_BAC_FLOW
+
+## WHAT IS BROKEN ACCESS CONTROL?
 
 Broken Access Control (BAC) is a policy-level failure where an application allows users to access resources or perform actions outside of their intended permissions. It occurs when:
 - Users can access other users' accounts (Horizontal Escalation).
-- Users can access administrative functions (Vertical Escalation).
-- The application trusts client-supplied data to determine access rights.
-- Metadata (like IDOR) or environment variables are manipulated to bypass security checks.
+- Regular users can access administrative functions (Vertical Escalation).
+- Attackers can access files or data by manipulating URLs or parameters (IDOR).
+
+MARKER_CONCEPTUAL_BAC
+
+## TYPES OF BROKEN ACCESS CONTROL
+
+Broken Access Control isn't a single flaw but a family of vulnerabilities. Below is an infographic mapping the most common types encountered in the field.
+
+MARKER_BAC_INFOGRAPHIC
 
 It is fundamentally a failure of the **Authorization** mechanism, distinct from Authentication (which only verifies identity).
-
-## WHY BAC IS CRITICAL?
 
 Broken Access Control is categorized as a high-impact vulnerability because it strikes at the heart of data confidentiality and system integrity.
 
@@ -44,9 +50,6 @@ Broken Access Control is categorized as a high-impact vulnerability because it s
 ## TYPES OF VULNERABILITIES UNDER BAC
 
 Broken Access Control manifests in various forms across modern architectures. Below are the primary types encountered in professional security research:
-
-![Types of Broken Access Control including IDOR, Horizontal and Vertical Privilege Escalation, API Authorization Failures](/bac-types.png)
-*Common attack patterns under OWASP A01.*
 
 ### 1. Insecure Direct Object Reference (IDOR)
 Accessing or modifying objects (users, files, records) by manipulating unique identifiers in request parameters.
@@ -90,6 +93,8 @@ The application's API endpoint responsible for retrieving account details (\`/ap
 - **Mass Data Extraction Potential**: Automated scraping of the entire user database.
 
 <!-- AD_PLACEHOLDER_2 -->
+
+MARKER_CVSS_EVOLUTION
 
 ## CVSS 3.1 BREAKDOWN
 

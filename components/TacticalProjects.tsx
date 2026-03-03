@@ -9,15 +9,15 @@ export const TacticalProjects: React.FC = () => {
             <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-8 container-progressive px-0">
                 <motion.div
                     whileHover={{ y: -5 }}
-                    className="glass-card p-12 border-white/5 bg-white/[0.01] hover:bg-white/[0.03] transition-all group"
+                    className="glass-card p-8 border-border bg-card-bg transition-all group"
                 >
                     <div className="flex items-center gap-8 mb-10">
                         <div className="p-5 bg-accent-cyan/10 border border-accent-cyan/20 rounded-2xl text-accent-cyan group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(0,219,233,0.15)]">
                             <Clock size={32} />
                         </div>
                         <div>
-                            <h3 className="text-xl font-orbitron font-black text-white uppercase tracking-tight italic">QUICK RESPONSE TIME</h3>
-                            <p className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] font-black italic">Professional Communication Guaranteed</p>
+                            <h3 className="text-xl font-orbitron font-black text-text-primary uppercase tracking-tight italic">QUICK RESPONSE TIME</h3>
+                            <p className="text-[10px] font-mono text-text-secondary uppercase tracking-[0.2em] font-black italic">Professional Communication Guaranteed</p>
                         </div>
                     </div>
                     <ul className="space-y-4 ml-2">
@@ -26,7 +26,7 @@ export const TacticalProjects: React.FC = () => {
                             "Within 24 hours on weekends",
                             "Emergency consultations available"
                         ].map((item, i) => (
-                            <li key={i} className="flex items-center gap-4 text-white/60 text-sm font-medium">
+                            <li key={i} className="flex items-center gap-4 text-text-secondary text-sm font-medium">
                                 <CheckCircle2 size={16} className="text-accent-cyan" />
                                 <span>{item}</span>
                             </li>
@@ -36,15 +36,15 @@ export const TacticalProjects: React.FC = () => {
 
                 <motion.div
                     whileHover={{ y: -5 }}
-                    className="glass-card p-12 border-white/5 bg-white/[0.01] hover:bg-white/[0.03] transition-all group"
+                    className="glass-card p-8 border-border bg-card-bg transition-all group"
                 >
                     <div className="flex items-center gap-8 mb-10">
                         <div className="p-5 bg-accent-cyan/10 border border-accent-cyan/20 rounded-2xl text-accent-cyan group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(0,230,255,0.1)]">
                             <ShieldCheck size={32} />
                         </div>
                         <div>
-                            <h3 className="text-xl font-orbitron font-black text-white uppercase tracking-tight italic">SECURITY & CONFIDENTIALITY</h3>
-                            <p className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] font-black italic">Your Data and Communications are Secure</p>
+                            <h3 className="text-xl font-orbitron font-black text-text-primary uppercase tracking-tight italic">SECURITY & CONFIDENTIALITY</h3>
+                            <p className="text-[10px] font-mono text-text-secondary uppercase tracking-[0.2em] font-black italic">Your Data and Communications are Secure</p>
                         </div>
                     </div>
                     <ul className="space-y-4 ml-2">
@@ -53,7 +53,7 @@ export const TacticalProjects: React.FC = () => {
                             "Secure communication channels",
                             "Professional data handling"
                         ].map((item, i) => (
-                            <li key={i} className="flex items-center gap-4 text-white/60 text-sm font-medium">
+                            <li key={i} className="flex items-center gap-4 text-text-primary/60 text-sm font-medium">
                                 <CheckCircle2 size={16} className="text-accent-cyan" />
                                 <span>{item}</span>
                             </li>
@@ -67,7 +67,7 @@ export const TacticalProjects: React.FC = () => {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.98 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    className="glass-card p-12 md:p-16 border-accent-cyan/10 relative overflow-hidden group bg-accent-cyan/[0.01] hover:bg-accent-cyan/[0.02]"
+                    className="glass-card p-8 md:p-12 border-border relative overflow-hidden group bg-card-bg"
                 >
                     {/* Decorative cyan dot indicator */}
                     <div className="absolute top-12 left-12 flex items-center gap-4">
@@ -77,7 +77,7 @@ export const TacticalProjects: React.FC = () => {
 
                     <div className="flex flex-col lg:flex-row justify-between items-center gap-12 pt-12">
                         <div className="max-w-2xl space-y-6">
-                            <p className="text-lg text-white/60 leading-relaxed font-medium">
+                            <p className="text-lg text-text-secondary leading-relaxed font-medium">
                                 I'm currently available for cybersecurity projects including penetration testing, vulnerability assessments, and security consulting opportunities.
                             </p>
                         </div>
@@ -87,7 +87,7 @@ export const TacticalProjects: React.FC = () => {
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                                className="px-10 py-5 border border-white/10 text-white font-orbitron font-bold text-xs uppercase tracking-[0.3em] rounded-2xl hover:bg-white/5 hover:border-accent-cyan/50 hover:shadow-[0_0_25px_rgba(0,219,233,0.1)] transition-all flex items-center justify-center gap-3 active:scale-[0.98] w-full sm:w-auto"
+                                className="px-10 py-5 border border-border text-text-primary font-orbitron font-bold text-xs uppercase tracking-[0.3em] rounded-2xl hover:bg-accent-cyan/10 hover:border-accent-cyan/50 transition-all flex items-center justify-center gap-3 active:scale-[0.98] w-full sm:w-auto"
                             >
                                 <span>ENGAGE NOW</span>
                             </motion.button>
@@ -95,15 +95,15 @@ export const TacticalProjects: React.FC = () => {
                     </div>
 
                     {/* Tactical Bottom Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-16 mt-16 border-t border-white/5">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-16 mt-16 border-t border-border">
                         {[
                             "FREELANCE, FULL-TIME & CONTRACT BASE",
                             "CAN TRAVEL ANYWHERE IN INDIA",
                             "AVAILABLE FOR REMOTE AND ON-SITE"
                         ].map((tag, i) => (
                             <div key={i} className="flex items-center gap-4 group/tag">
-                                <CheckCircle2 size={14} className="text-accent-cyan opacity-40 group-hover/tag:opacity-100 transition-opacity" />
-                                <span className="text-[9px] font-mono text-white/40 group-hover/tag:text-white/80 transition-colors uppercase tracking-[0.2em] font-black">
+                                <CheckCircle2 size={14} className="text-accent-cyan" />
+                                <span className="text-[9px] font-mono text-text-secondary group-hover/tag:text-text-primary transition-colors uppercase tracking-[0.2em] font-black">
                                     {tag}
                                 </span>
                             </div>

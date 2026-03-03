@@ -25,7 +25,7 @@ export const OperationalOutputs: React.FC = () => {
                     <Shield size={12} className="animate-pulse" />
                     <span>Real-Time Deliverables</span>
                 </div>
-                <h2 className="text-3xl md:text-5xl font-orbitron font-[800] text-white uppercase tracking-tighter">
+                <h2 className="text-3xl md:text-5xl font-orbitron font-[800] text-text-primary uppercase tracking-tighter">
                     MISSION <span className="text-accent-cyan text-glow-cyan">OPERATIONAL</span> OUTPUTS
                 </h2>
                 <div className="w-12 h-[1px] bg-accent-cyan/30" />
@@ -37,11 +37,11 @@ export const OperationalOutputs: React.FC = () => {
                         key={i}
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        className="p-1 border border-white/5 rounded-2xl bg-white/[0.01] hover:border-accent-cyan/20 transition-all group"
+                        className="p-1 border border-border rounded-2xl bg-card-bg hover:border-accent-cyan/20 transition-all group"
                     >
-                        <div className="bg-[#0B101B] rounded-2xl p-12 space-y-8 relative overflow-hidden h-full flex flex-col justify-between border border-white/5">
+                        <div className="bg-card-bg rounded-2xl p-8 md:p-12 space-y-8 relative overflow-hidden h-full flex flex-col justify-between border border-border">
                             {/* link icon top-right */}
-                            <a href={item.link} className="absolute top-8 right-8 text-white/10 group-hover:text-accent-cyan transition-colors">
+                            <a href={item.link} className="absolute top-8 right-8 text-text-secondary/20 group-hover:text-accent-cyan transition-colors">
                                 <ExternalLink size={20} />
                             </a>
 
@@ -50,19 +50,19 @@ export const OperationalOutputs: React.FC = () => {
                                     <div className="w-4 h-[1px] bg-accent-violet/40" />
                                     <span>OPERATIONAL_POC</span>
                                 </div>
-                                <h3 className="text-2xl font-orbitron font-black text-white uppercase tracking-tight leading-tight">
+                                <h3 className="text-2xl font-orbitron font-black text-text-primary uppercase tracking-tight leading-tight">
                                     {item.title}
                                 </h3>
-                                <p className="text-white/40 text-sm leading-relaxed">
+                                <p className="text-text-secondary text-sm leading-relaxed">
                                     {item.desc}
                                 </p>
                             </div>
 
-                            <div className="mt-12 flex items-center justify-between pt-8 border-t border-white/5">
-                                <div className="text-white/10 font-mono text-[9px] uppercase tracking-widest group-hover:text-accent-cyan/40 transition-colors">
+                            <div className="mt-12 flex items-center justify-between pt-8 border-t border-border">
+                                <div className="text-text-secondary/40 font-mono text-[9px] uppercase tracking-widest group-hover:text-accent-cyan/60 transition-colors">
                                     {item.footer}
                                 </div>
-                                <ChevronRight size={14} className="text-white/10 group-hover:text-accent-cyan transition-transform group-hover:translate-x-2" />
+                                <ChevronRight size={14} className="text-text-secondary/40 group-hover:text-accent-cyan transition-transform group-hover:translate-x-2" />
                             </div>
                         </div>
                     </motion.div>

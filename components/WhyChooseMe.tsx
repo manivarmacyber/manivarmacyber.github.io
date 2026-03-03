@@ -18,7 +18,7 @@ export const WhyChooseMe: React.FC = () => {
                 <div className="px-6 py-2 bg-accent-cyan/5 border border-accent-cyan/20 rounded-full font-mono text-[9px] text-accent-cyan tracking-[0.4em] font-black italic">
                     // WHY CHOOSE ME
                 </div>
-                <h2 className="text-3xl md:text-5xl font-orbitron font-[800] text-white uppercase tracking-tighter italic">
+                <h2 className="text-3xl md:text-5xl font-orbitron font-[800] text-text-primary uppercase tracking-tighter italic">
                     WHY CHOOSE ME FOR YOUR <span className="text-accent-cyan text-glow-cyan">CYBERSECURITY PROJECTS?</span>
                 </h2>
             </div>
@@ -30,13 +30,13 @@ export const WhyChooseMe: React.FC = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
-                        className="glass-card p-10 border-white/5 hover:border-accent-cyan/20 transition-all group text-center"
+                        className="glass-card p-8 border-border hover:border-accent-cyan/20 transition-all group text-center bg-card-bg"
                     >
-                        <div className="mx-auto w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-white/20 group-hover:text-accent-cyan transition-colors mb-6">
+                        <div className="mx-auto w-12 h-12 bg-accent-cyan/10 rounded-2xl flex items-center justify-center text-text-secondary group-hover:text-accent-cyan transition-colors mb-6">
                             <card.icon size={24} />
                         </div>
-                        <h3 className="text-lg font-orbitron font-bold text-white mb-4 uppercase tracking-tighter">{card.title}</h3>
-                        <p className="text-white/40 text-xs leading-relaxed">{card.desc}</p>
+                        <h3 className="text-lg font-orbitron font-bold text-text-primary mb-4 uppercase tracking-tighter">{card.title}</h3>
+                        <p className="text-text-secondary text-xs leading-relaxed">{card.desc}</p>
                     </motion.div>
                 ))}
             </div>

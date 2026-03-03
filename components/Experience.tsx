@@ -48,10 +48,10 @@ export const Experience: React.FC = () => {
   return (
     <div id="journey" className="py-20">
       <div className="flex flex-col items-center gap-6 mb-20 text-center">
-        <h2 className="text-3xl md:text-5xl font-orbitron font-[800] text-white uppercase tracking-tighter leading-none italic">
+        <h2 className="text-3xl md:text-5xl font-orbitron font-[800] text-text-primary uppercase tracking-tighter leading-none italic">
           PROFESSIONAL <span className="text-accent-cyan text-glow-cyan">JOURNEY</span>
         </h2>
-        <div className="w-1/4 h-px bg-white/10" />
+        <div className="w-1/4 h-px bg-border" />
       </div>
 
       <div className="container-progressive relative px-0">
@@ -63,22 +63,22 @@ export const Experience: React.FC = () => {
           {experiences.map((exp, i) => (
             <div key={exp.id} className={`relative flex flex-col ${exp.side === 'left' ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center justify-center gap-12 group`}>
               {/* Timeline Dot */}
-              <div className="absolute left-6 lg:left-1/2 top-0 lg:top-1/2 w-4 h-4 bg-accent-cyan rounded-full -translate-x-1/2 lg:-translate-y-1/2 shadow-[0_0_12px_rgba(0,219,233,0.5)] z-20 group-hover:scale-125 transition-transform" />
+              <div className="absolute left-6 lg:left-1/2 top-0 lg:top-1/2 w-4 h-4 bg-accent-cyan rounded-full -translate-x-1/2 lg:-translate-y-1/2 shadow-[0_0_8px_var(--color-accent-cyan)] z-20 group-hover:scale-125 transition-transform opacity-80" />
 
               {/* Content Card */}
               <motion.div
                 initial={{ opacity: 0, x: exp.side === 'left' ? -30 : 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className={`w-full lg:w-[45%] glass-card p-10 border-white/5 relative overflow-hidden bg-white/[0.01] hover:bg-white/[0.03] transition-all border-accent-cyan/0 hover:border-accent-cyan/10 group/card`}
+                className={`w-full lg:w-[45%] glass-card p-8 border-border relative overflow-hidden bg-card-bg transition-all hover:border-accent-cyan/20 group/card`}
               >
                 <div className="space-y-6">
                   <span className="block text-[10px] font-mono text-accent-cyan uppercase tracking-[0.4em] font-black">{exp.title}</span>
                   <ul className="space-y-4">
                     {exp.details.map((detail, idx) => (
-                      <li key={idx} className="flex gap-4 text-white/60 text-sm leading-relaxed font-medium">
+                      <li key={idx} className="flex gap-4 text-text-secondary text-sm leading-relaxed font-medium">
                         <span className="text-accent-cyan">▹</span>
-                        <span className="group-hover/card:text-white/80 transition-colors">{detail}</span>
+                        <span className="group-hover/card:text-text-primary transition-colors">{detail}</span>
                       </li>
                     ))}
                   </ul>
@@ -88,7 +88,7 @@ export const Experience: React.FC = () => {
               {/* Info Block (Date & Org) */}
               <div className={`w-full lg:w-[45%] flex flex-col ${exp.side === 'left' ? 'lg:items-start pl-16 lg:pl-0' : 'lg:items-end pr-0 lg:pr-0 pl-16 lg:pl-0'} space-y-4`}>
                 <span className="text-base font-mono text-accent-violet uppercase tracking-[0.4em] font-black italic">{exp.period}</span>
-                <h3 className="text-2xl md:text-3xl font-orbitron font-bold text-white uppercase tracking-tighter leading-none italic max-w-sm">
+                <h3 className="text-2xl md:text-3xl font-orbitron font-bold text-text-primary uppercase tracking-tighter leading-none italic max-w-sm">
                   {exp.organization}
                 </h3>
               </div>

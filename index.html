@@ -13,6 +13,22 @@
     });
   </script>
 
+  <script id="adsense-script" async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7367345153052165"
+    crossorigin="anonymous"></script>
+
+  <script>
+    (function () {
+      try {
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        console.error('Theme initialization failed', e);
+      }
+    })();
+  </script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google-site-verification" content="to1aKJeBXge_9EB5pSn3_BgRn5vp-H3RXWhtHhwk3ds" />

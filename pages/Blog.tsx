@@ -32,15 +32,15 @@ export const Blog: React.FC = () => {
             <div className="inline-block px-4 py-1.5 mb-6 bg-accent-cyan/10 border border-accent-cyan/20 rounded-full font-mono text-[10px] text-accent-cyan tracking-[0.4em] font-black uppercase italic">
               Knowledge Repository
             </div>
-            <h1 className="font-orbitron text-3xl md:text-5xl font-black tracking-tighter mb-8 leading-none italic text-white flex flex-col items-center">
+            <h1 className="font-orbitron text-3xl md:text-5xl font-black tracking-tighter mb-8 leading-none italic text-text-primary flex flex-col items-center">
               SECURITY <span className="text-accent-cyan text-glow-cyan">INSIGHTS</span>
             </h1>
-            <p className="text-white/40 max-w-2xl mx-auto text-lg font-medium">
+            <p className="text-text-secondary max-w-2xl mx-auto text-lg font-medium">
               Technical intelligence and vulnerability research from the front lines of enterprise security.
             </p>
           </motion.div>
 
-          <div className="w-full h-32 glass-card border-white/5 bg-white/[0.01] mb-20 flex items-center justify-center text-white/10 font-mono text-[10px] tracking-[0.6em] font-black italic rounded-2xl">
+          <div className="w-full h-32 glass-card border-border bg-accent-cyan/5 mb-20 flex items-center justify-center text-text-secondary/20 font-mono text-[10px] tracking-[0.6em] font-black italic rounded-2xl">
             [ SYSTEM_AD_UPLINK_READY ]
           </div>
 
@@ -72,7 +72,7 @@ export const Blog: React.FC = () => {
                     </div>
 
                     <div className="p-8 flex-grow flex flex-col">
-                      <div className="flex items-center gap-6 text-[9px] font-mono text-white/30 mb-6 uppercase tracking-[0.3em] font-black italic">
+                      <div className="flex items-center gap-6 text-[9px] font-mono text-text-secondary mb-6 uppercase tracking-[0.3em] font-black italic">
                         <div className="flex items-center gap-2">
                           <Calendar size={14} className="text-accent-cyan" />
                           {post.publishDate}
@@ -83,11 +83,11 @@ export const Blog: React.FC = () => {
                         </div>
                       </div>
 
-                      <h3 className="font-orbitron font-black text-2xl mb-4 group-hover:text-accent-cyan transition-colors line-clamp-2 uppercase italic leading-tight text-white">
+                      <h3 className="font-orbitron font-black text-2xl mb-4 group-hover:text-accent-cyan transition-colors line-clamp-2 uppercase italic leading-tight text-text-primary">
                         {post.title}
                       </h3>
 
-                      <p className="text-white/40 text-sm mb-8 line-clamp-3 leading-relaxed font-medium">
+                      <p className="text-text-secondary text-sm mb-8 line-clamp-3 leading-relaxed font-medium">
                         {post.excerpt}
                       </p>
 
@@ -101,7 +101,7 @@ export const Blog: React.FC = () => {
             ))}
           </div>
 
-          <div className="w-full h-32 glass-card border-white/5 bg-white/[0.01] mt-20 flex items-center justify-center text-white/10 font-mono text-[10px] tracking-[0.6em] font-black italic rounded-2xl">
+          <div className="w-full h-32 glass-card border-border bg-accent-cyan/5 mt-20 flex items-center justify-center text-text-secondary/20 font-mono text-[10px] tracking-[0.6em] font-black italic rounded-2xl">
             [ SYSTEM_AD_UPLINK_READY ]
           </div>
         </div>

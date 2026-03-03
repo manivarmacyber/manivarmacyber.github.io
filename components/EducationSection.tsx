@@ -30,7 +30,7 @@ export const EducationSection: React.FC = () => {
                 <div className="p-3 bg-accent-cyan/10 rounded-xl border border-accent-cyan/20 text-accent-cyan">
                     <GraduationCap size={24} />
                 </div>
-                <h2 className="text-3xl md:text-5xl font-orbitron font-black text-white uppercase tracking-tighter">
+                <h2 className="text-3xl md:text-5xl font-orbitron font-black text-text-primary uppercase tracking-tighter">
                     ACADEMIC <span className="text-accent-cyan">HISTORY</span>
                 </h2>
                 <div className="w-12 h-[1px] bg-accent-cyan/30" />
@@ -43,7 +43,7 @@ export const EducationSection: React.FC = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
-                        className="glass-card p-10 border-white/5 space-y-6 relative overflow-hidden group"
+                        className="glass-card p-8 border-border space-y-6 relative overflow-hidden group bg-card-bg"
                     >
                         {/* Cyan accent line top */}
                         <div className="absolute top-0 left-0 w-full h-[2px] bg-accent-cyan/20 group-hover:bg-accent-cyan transition-all" />
@@ -54,7 +54,7 @@ export const EducationSection: React.FC = () => {
                         </div>
 
                         <div className="space-y-2">
-                            <h3 className="text-lg font-orbitron font-black text-white uppercase tracking-tight leading-tight group-hover:text-accent-cyan transition-colors">
+                            <h3 className="text-lg font-orbitron font-black text-text-primary uppercase tracking-tight leading-tight group-hover:text-accent-cyan transition-colors">
                                 {item.college}
                             </h3>
                             <p className="text-[10px] font-mono text-accent-violet font-black uppercase tracking-[0.2em]">
@@ -62,7 +62,7 @@ export const EducationSection: React.FC = () => {
                             </p>
                         </div>
 
-                        <div className="flex items-center gap-2 text-white/20 font-mono text-[9px] tracking-widest pt-4 border-t border-white/5">
+                        <div className="flex items-center gap-2 text-text-secondary font-mono text-[9px] tracking-widest pt-4 border-t border-border">
                             <MapPin size={10} />
                             <span>{item.location}</span>
                         </div>

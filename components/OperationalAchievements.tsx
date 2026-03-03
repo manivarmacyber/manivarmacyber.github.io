@@ -53,7 +53,7 @@ export const OperationalAchievements: React.FC = () => {
                     <div className="p-4 bg-accent-cyan/10 border border-accent-cyan/20 rounded-2xl text-accent-cyan group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,230,255,0.1)]">
                         <Trophy size={32} />
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-orbitron font-black text-white uppercase tracking-tighter leading-none italic">
+                    <h2 className="text-3xl md:text-5xl font-orbitron font-black text-text-primary uppercase tracking-tighter leading-none italic">
                         OPERATIONAL <span className="text-accent-cyan text-glow-cyan">ACHIEVEMENTS</span>
                     </h2>
                 </div>
@@ -69,18 +69,18 @@ export const OperationalAchievements: React.FC = () => {
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
-                                className={`glass-card p-10 border-white/5 flex flex-col md:flex-row items-start md:items-center gap-10 group bg-white/[0.01] hover:bg-white/[0.03] transition-all block cursor-pointer hover:border-accent-cyan/20`}
+                                className={`glass-card p-8 border-border flex flex-col md:flex-row items-start md:items-center gap-10 group bg-card-bg transition-all block cursor-pointer hover:border-accent-cyan/20`}
                             >
                                 <div className={`p-5 ${item.bg} rounded-2xl border ${item.border} ${item.color} group-hover:scale-110 transition-transform`}>
                                     <item.icon size={32} />
                                 </div>
                                 <div className="space-y-3 flex-1">
-                                    <h3 className="text-lg md:text-xl font-orbitron font-black text-white uppercase tracking-tight leading-tight">
+                                    <h3 className="text-lg md:text-xl font-orbitron font-black text-text-primary uppercase tracking-tight leading-tight">
                                         {item.title}
                                     </h3>
-                                    <p className="text-sm text-white/40 font-medium">{item.description}</p>
+                                    <p className="text-sm text-text-secondary font-medium">{item.description}</p>
                                 </div>
-                                <div className="text-white/10 group-hover:text-accent-cyan transition-colors">
+                                <div className="text-text-secondary/40 group-hover:text-accent-cyan transition-colors">
                                     <ExternalLink size={20} />
                                 </div>
                             </motion.a>
@@ -90,16 +90,16 @@ export const OperationalAchievements: React.FC = () => {
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
-                                className={`glass-card p-10 border-white/5 flex flex-col md:flex-row items-start md:items-center gap-10 group bg-white/[0.01] transition-all`}
+                                className={`glass-card p-8 border-border flex flex-col md:flex-row items-start md:items-center gap-10 group bg-card-bg transition-all`}
                             >
                                 <div className={`p-5 ${item.bg} rounded-2xl border ${item.border} ${item.color}`}>
                                     <item.icon size={32} />
                                 </div>
                                 <div className="space-y-3 flex-1">
-                                    <h3 className="text-lg md:text-xl font-orbitron font-black text-white uppercase tracking-tight leading-tight">
+                                    <h3 className="text-lg md:text-xl font-orbitron font-black text-text-primary uppercase tracking-tight leading-tight">
                                         {item.title}
                                     </h3>
-                                    <p className="text-sm text-white/40 font-medium">{item.description}</p>
+                                    <p className="text-sm text-text-secondary font-medium">{item.description}</p>
                                 </div>
                             </motion.div>
                         )

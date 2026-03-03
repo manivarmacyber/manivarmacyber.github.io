@@ -26,10 +26,10 @@ export const LiveProjects: React.FC = () => {
                 <div className="p-3 bg-accent-cyan/10 rounded-xl border border-accent-cyan/20 text-accent-cyan">
                     <Activity size={24} />
                 </div>
-                <h2 className="text-3xl md:text-5xl font-orbitron font-black text-white uppercase tracking-tighter italic">
+                <h2 className="text-3xl md:text-5xl font-orbitron font-black text-text-primary uppercase tracking-tighter italic">
                     PROJECTS
                 </h2>
-                <div className="flex items-center gap-2 text-white/20 font-mono text-[9px] tracking-[0.4em] uppercase font-black">
+                <div className="flex items-center gap-2 text-text-secondary font-mono text-[9px] tracking-[0.4em] uppercase font-black">
                     <Globe size={10} className="text-accent-cyan" />
                     <span>Live Intelligence & Security Operations</span>
                 </div>
@@ -44,21 +44,21 @@ export const LiveProjects: React.FC = () => {
                         rel="noopener noreferrer"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        className="glass-card p-12 border-white/5 space-y-8 group bg-white/[0.01] hover:bg-white/[0.02] transition-all hover:border-accent-cyan/20 block cursor-pointer"
+                        className="glass-card p-8 border-border space-y-8 group bg-card-bg transition-all hover:border-accent-cyan/20 block cursor-pointer"
                     >
                         <div className="flex items-center justify-between">
                             <div className="p-5 bg-accent-cyan/10 rounded-2xl border border-accent-cyan/20 text-accent-cyan group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(0,230,255,0.08)]">
                                 <item.icon size={28} />
                             </div>
-                            <div className="px-4 py-1.5 bg-black/40 border border-white/10 rounded-full font-mono text-[8px] text-white/40 tracking-[0.2em]">
+                            <div className="px-4 py-1.5 bg-accent-cyan/10 border border-border rounded-full font-mono text-[8px] text-text-secondary tracking-[0.2em]">
                                 STATUS: OPERATIONAL
                             </div>
                         </div>
                         <div className="space-y-4">
-                            <h3 className="text-2xl font-orbitron font-black text-white uppercase tracking-tight italic group-hover:text-accent-cyan transition-colors">{item.title}</h3>
-                            <p className="text-white/40 text-sm leading-relaxed font-medium">{item.desc}</p>
+                            <h3 className="text-2xl font-orbitron font-black text-text-primary uppercase tracking-tight italic group-hover:text-accent-cyan transition-colors">{item.title}</h3>
+                            <p className="text-text-secondary text-sm leading-relaxed font-medium">{item.desc}</p>
                         </div>
-                        <div className="pt-8 flex items-center justify-between border-t border-white/5">
+                        <div className="pt-8 flex items-center justify-between border-t border-border">
                             <span className="text-[10px] font-mono text-accent-cyan font-black tracking-widest uppercase">{item.tech}</span>
                             <ChevronRight size={14} className="text-accent-cyan group-hover:translate-x-1 transition-transform" />
                         </div>

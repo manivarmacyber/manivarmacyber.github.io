@@ -19,12 +19,12 @@ export const Projects: React.FC = () => {
   ];
 
   return (
-    <div id="academic" className="space-y-16 py-20 opacity-80">
+    <div id="academic" className="space-y-16 py-20">
       <div className="flex flex-col items-center text-center space-y-4">
-        <h2 className="text-2xl md:text-3xl font-orbitron font-black text-white/40 uppercase tracking-tighter">
-          ACADEMIC <span className="text-white/20">FOUNDATION</span>
+        <h2 className="text-2xl md:text-3xl font-orbitron font-black text-text-primary uppercase tracking-tighter">
+          ACADEMIC <span className="text-accent-cyan opacity-60">FOUNDATION</span>
         </h2>
-        <div className="flex items-center gap-2 text-white/10 font-mono text-[8px] tracking-[0.4em] uppercase font-black">
+        <div className="flex items-center gap-2 text-text-secondary font-mono text-[8px] tracking-[0.4em] uppercase font-black">
           <BookOpen size={10} />
           <span>Theoretical Security Frameworks</span>
         </div>
@@ -34,32 +34,32 @@ export const Projects: React.FC = () => {
         {researchCards.map((card, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0.4, scale: 0.95 }}
-            whileHover={{ opacity: 1, scale: 1, borderColor: 'rgba(0, 242, 255, 0.2)' }}
+            initial={{ opacity: 1, scale: 0.98 }}
+            whileHover={{ scale: 1, borderColor: 'var(--color-accent-cyan)' }}
             transition={{ duration: 0.4 }}
-            className="glass-card p-10 border-white/5 flex flex-col justify-between group grayscale hover:grayscale-0 transition-all min-h-[320px]"
+            className="glass-card p-8 border-border flex flex-col justify-between group transition-all min-h-[320px]"
           >
             <div className="space-y-6">
-              <div className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-white/20 group-hover:text-accent-cyan transition-colors">
+              <div className="w-12 h-12 bg-accent-cyan/10 rounded-xl flex items-center justify-center text-accent-cyan transition-colors">
                 <card.icon size={24} />
               </div>
 
               <div className="space-y-3">
-                <h3 className="text-xl font-orbitron font-black text-white/60 uppercase tracking-tight leading-tight group-hover:text-white transition-colors">
+                <h3 className="text-xl font-orbitron font-black text-text-primary uppercase tracking-tight leading-tight transition-colors">
                   {card.title}
                 </h3>
-                <p className="text-white/30 text-xs leading-relaxed group-hover:text-white/50 transition-colors">
+                <p className="text-text-secondary text-xs leading-relaxed transition-colors">
                   {card.desc}
                 </p>
               </div>
             </div>
 
-            <div className="mt-8 flex items-center justify-between pt-6 border-t border-white/5">
-              <div className="flex items-center gap-2 text-white/10 font-mono text-[8px] uppercase font-black tracking-widest group-hover:text-accent-cyan transition-colors">
+            <div className="mt-8 flex items-center justify-between pt-6 border-t border-border">
+              <div className="flex items-center gap-2 text-text-secondary font-mono text-[8px] uppercase font-black tracking-widest group-hover:text-accent-cyan transition-colors">
                 <FileText size={10} />
                 <span>ACADEMIC_ARCHIVE</span>
               </div>
-              <div className="px-2 py-0.5 bg-white/5 rounded text-[8px] font-mono text-white/10 uppercase tracking-[0.1em]">
+              <div className="px-2 py-0.5 bg-accent-cyan/10 rounded text-[8px] font-mono text-accent-cyan uppercase tracking-[0.1em]">
                 {card.tag}
               </div>
             </div>

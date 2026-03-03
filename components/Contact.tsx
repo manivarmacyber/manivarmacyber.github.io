@@ -59,9 +59,9 @@ export const Contact: React.FC = () => {
 
         {/* Section label */}
         <div className="flex items-center gap-4 mb-10">
-          <div className="h-px flex-1 bg-white/5" />
+          <div className="h-px flex-1 bg-border" />
           <span className="text-[10px] font-mono text-accent-cyan uppercase tracking-[0.4em] font-black">DIRECT COMMS INTERFACE</span>
-          <div className="h-px flex-1 bg-white/5" />
+          <div className="h-px flex-1 bg-border" />
         </div>
 
         {/* 2-column layout */}
@@ -71,10 +71,10 @@ export const Contact: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
-            whileHover={{ y: -6, boxShadow: '0 0 40px rgba(0, 230, 255, 0.1)' }}
+            whileHover={{ y: -6 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:w-[40%] w-full glass-card p-8 border border-white/5 hover:border-accent-cyan/20 rounded-[20px] space-y-6 relative overflow-hidden bg-white/[0.01] transition-colors duration-300"
+            className="lg:w-[40%] w-full glass-card p-8 border border-border hover:border-accent-cyan/20 rounded-[20px] space-y-6 relative overflow-hidden bg-card-bg transition-colors duration-300 shadow-sm"
           >
             {/* Cyan edge glow */}
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent-cyan/30 to-transparent" />
@@ -82,12 +82,12 @@ export const Contact: React.FC = () => {
             {/* Card header */}
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <Terminal size={22} className="text-white/50" />
-                <h2 className="text-xl md:text-2xl font-orbitron font-black text-white uppercase tracking-tighter leading-none">
+                <Terminal size={22} className="text-text-primary/50" />
+                <h2 className="text-xl md:text-2xl font-orbitron font-black text-text-primary uppercase tracking-tighter leading-none">
                   DIRECT <span className="text-accent-cyan">UPLINK</span>
                 </h2>
               </div>
-              <div className="flex items-center gap-2 px-4 py-1.5 bg-accent-cyan/5 border border-white/10 rounded-full font-mono text-[8px] text-white/40 tracking-widest uppercase">
+              <div className="flex items-center gap-2 px-4 py-1.5 bg-accent-cyan/10 border border-border rounded-full font-mono text-[8px] text-text-secondary tracking-widest uppercase">
                 <Shield size={12} className={`text-accent-cyan ${verified ? '' : 'animate-pulse'}`} />
                 <span>{verified ? 'VERIFIED' : 'COMMS_ON'}</span>
               </div>
@@ -98,7 +98,7 @@ export const Contact: React.FC = () => {
               {/* Name + Email row */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-white/20 font-mono text-[9px] uppercase tracking-[0.4em] font-black">
+                  <div className="flex items-center gap-2 text-text-secondary font-mono text-[9px] uppercase tracking-[0.4em] font-black">
                     <User size={12} />
                     <span>IDENTITY</span>
                   </div>
@@ -106,12 +106,12 @@ export const Contact: React.FC = () => {
                     type="text"
                     value={formData.full_name}
                     onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                    className="w-full bg-black/40 border border-white/5 px-4 py-3 rounded-xl text-xs font-mono text-white focus:border-accent-cyan/30 outline-none transition-all placeholder:text-white/10 shadow-inner"
+                    className="w-full bg-card-bg border border-border px-4 py-3 rounded-xl text-xs font-mono text-text-primary focus:border-accent-cyan/50 outline-none transition-all placeholder:text-text-secondary shadow-inner"
                     placeholder="Full Name"
                   />
                 </div>
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-white/20 font-mono text-[9px] uppercase tracking-[0.4em] font-black">
+                  <div className="flex items-center gap-2 text-text-secondary font-mono text-[9px] uppercase tracking-[0.4em] font-black">
                     <AtSign size={12} />
                     <span>RETURN PATH</span>
                   </div>
@@ -119,7 +119,7 @@ export const Contact: React.FC = () => {
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-black/40 border border-white/5 px-4 py-3 rounded-xl text-xs font-mono text-white focus:border-accent-cyan/30 outline-none transition-all placeholder:text-white/10 shadow-inner"
+                    className="w-full bg-card-bg border border-border px-4 py-3 rounded-xl text-xs font-mono text-text-primary focus:border-accent-cyan/50 outline-none transition-all placeholder:text-text-secondary shadow-inner"
                     placeholder="identity@domain.com"
                   />
                 </div>
@@ -127,7 +127,7 @@ export const Contact: React.FC = () => {
 
               {/* Message */}
               <div className="space-y-2">
-                <div className="flex items-center gap-2 text-white/20 font-mono text-[9px] uppercase tracking-[0.4em] font-black">
+                <div className="flex items-center gap-2 text-text-secondary font-mono text-[9px] uppercase tracking-[0.4em] font-black">
                   <FileCode size={12} />
                   <span>MESSAGE PAYLOAD</span>
                 </div>
@@ -135,7 +135,7 @@ export const Contact: React.FC = () => {
                   rows={4}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full bg-black/40 border border-white/5 px-4 py-3 rounded-xl text-xs font-mono text-white focus:border-accent-cyan/30 outline-none transition-all placeholder:text-white/10 resize-y shadow-inner"
+                  className="w-full bg-card-bg border border-border px-4 py-3 rounded-xl text-xs font-mono text-text-primary focus:border-accent-cyan/50 outline-none transition-all placeholder:text-text-secondary resize-y shadow-inner"
                   style={{ minHeight: '110px', maxHeight: '180px' }}
                   placeholder="Describe your project, inquiry, or security requirements..."
                 />
@@ -144,12 +144,12 @@ export const Contact: React.FC = () => {
               {/* Verify */}
               <div
                 onClick={() => setVerified(!verified)}
-                className="flex items-center gap-3 px-4 py-3 bg-white/5 border border-white/5 rounded-xl cursor-pointer hover:bg-white/[0.08] transition-all"
+                className="flex items-center gap-3 px-4 py-3 bg-accent-cyan/5 border border-border rounded-xl cursor-pointer hover:bg-accent-cyan/10 transition-all"
               >
-                <div className={`w-4 h-4 border ${verified ? 'border-accent-cyan bg-accent-cyan/20' : 'border-white/20'} rounded flex items-center justify-center transition-colors flex-shrink-0`}>
+                <div className={`w-4 h-4 border ${verified ? 'border-accent-cyan bg-accent-cyan/20' : 'border-border'} rounded flex items-center justify-center transition-colors flex-shrink-0`}>
                   <CheckCircle2 size={11} className={`text-accent-cyan transition-opacity ${verified ? 'opacity-100' : 'opacity-0'}`} />
                 </div>
-                <span className={`text-[9px] font-mono uppercase tracking-[0.4em] font-black ${verified ? 'text-accent-cyan' : 'text-white/40'}`}>
+                <span className={`text-[9px] font-mono uppercase tracking-[0.4em] font-black ${verified ? 'text-accent-cyan' : 'text-text-secondary'}`}>
                   OPERATIVE IDENTITY VERIFIED
                 </span>
               </div>
@@ -158,19 +158,19 @@ export const Contact: React.FC = () => {
               <button
                 onClick={handleSubmit}
                 disabled={status === 'submitting'}
-                className={`w-full py-4 bg-white/[0.03] border rounded-2xl relative overflow-hidden group/btn transition-all active:scale-[0.99] flex items-center justify-center gap-3 shadow-xl ${!verified ? 'border-accent-violet/30 cursor-not-allowed opacity-80' : 'border-white/10 hover:border-accent-cyan/30 hover:bg-accent-cyan/5'
+                className={`w-full py-4 bg-accent-cyan/5 border rounded-2xl relative overflow-hidden group/btn transition-all active:scale-[0.99] flex items-center justify-center gap-3 shadow-sm ${!verified ? 'border-border cursor-not-allowed opacity-80' : 'border-border hover:border-accent-cyan/30 hover:bg-accent-cyan/10'
                   }`}
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.04] to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 skew-x-[-20deg]" />
                 {status === 'submitting' ? (
                   <>
                     <Loader2 size={18} className="text-accent-cyan animate-spin" />
-                    <span className="text-sm font-orbitron font-black text-white uppercase tracking-widest">TRANSMITTING...</span>
+                    <span className="text-sm font-orbitron font-black text-text-primary uppercase tracking-widest">TRANSMITTING...</span>
                   </>
                 ) : (
                   <>
-                    <Send size={16} className={`transition-all ${!verified ? 'text-accent-violet/50' : 'text-white/30 group-hover/btn:text-accent-cyan group-hover/btn:translate-x-1'}`} />
-                    <span className={`text-sm font-orbitron font-black text-white uppercase tracking-widest transition-opacity ${!verified ? 'opacity-30' : 'opacity-50 group-hover/btn:opacity-100'}`}>
+                    <Send size={16} className={`transition-all ${!verified ? 'text-accent-violet/50' : 'text-text-primary/30 group-hover/btn:text-accent-cyan group-hover/btn:translate-x-1'}`} />
+                    <span className={`text-sm font-orbitron font-black text-text-primary uppercase tracking-widest transition-opacity ${!verified ? 'opacity-30' : 'opacity-50 group-hover/btn:opacity-100'}`}>
                       {verified ? 'AUTHORIZE LINK' : 'VERIFY IDENTITY'}
                     </span>
                   </>
@@ -205,14 +205,14 @@ export const Contact: React.FC = () => {
 
             {/* Right header */}
             <div className="flex items-center gap-4">
-              <div className="p-2.5 bg-white/5 border border-white/10 rounded-xl text-white/40">
+              <div className="p-2.5 bg-accent-cyan/10 border border-border rounded-xl text-text-secondary">
                 <Send size={18} className="rotate-[-15deg]" />
               </div>
               <div>
-                <h2 className="text-xl md:text-2xl font-orbitron font-black text-white uppercase tracking-tighter leading-none">
-                  COMMUNICATION <span className="text-white">CHANNELS</span>
+                <h2 className="text-xl md:text-2xl font-orbitron font-black text-text-primary uppercase tracking-tighter leading-none">
+                  COMMUNICATION <span className="text-text-primary">CHANNELS</span>
                 </h2>
-                <p className="text-[9px] font-mono text-white/30 uppercase tracking-[0.3em] mt-1">SECURE UPLINK PROTOCOLS</p>
+                <p className="text-[9px] font-mono text-text-secondary uppercase tracking-[0.3em] mt-1">SECURE UPLINK PROTOCOLS</p>
               </div>
             </div>
 
@@ -229,22 +229,21 @@ export const Contact: React.FC = () => {
                   whileHover={{ y: -5, boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.35, delay: i * 0.07 }}
-                  className={`glass-card p-6 border ${item.border} ${item.hoverBorder} bg-white/[0.01] hover:bg-white/[0.03] flex items-center gap-5 group transition-all duration-300 rounded-2xl block cursor-pointer`}
+                  className={`glass-card p-6 border ${item.border} ${item.hoverBorder} bg-card-bg group transition-all duration-300 rounded-2xl block cursor-pointer`}
                 >
                   <div className={`p-3 ${item.bg} rounded-xl border ${item.border} ${item.iconColor} group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
                     <item.icon size={20} />
                   </div>
                   <div className="min-w-0">
-                    <span className="block text-[9px] font-mono text-white/40 uppercase tracking-[0.35em] font-black mb-1.5">{item.label}</span>
-                    <span className={`block text-sm font-orbitron font-black text-white uppercase tracking-tight group-hover:${item.iconColor} transition-colors duration-300 truncate`}>{item.value}</span>
+                    <span className="block text-[9px] font-mono text-text-secondary uppercase tracking-[0.35em] font-black mb-1.5">{item.label}</span>
+                    <span className={`block text-sm font-orbitron font-black text-text-primary uppercase tracking-tight group-hover:${item.iconColor} transition-colors duration-300 truncate`}>{item.value}</span>
                   </div>
                 </motion.a>
               ))}
             </div>
 
-            {/* Bottom footer tag */}
-            <div className="text-center">
-              <p className="text-[9px] font-mono text-white/10 uppercase tracking-[0.8em] font-bold">SECURE_HANDSHAKE_V4.2_ENCRYPTED</p>
+            <div className="text-center pt-8">
+              <p className="text-[9px] font-mono text-text-secondary uppercase tracking-[0.8em] font-bold">SECURE_HANDSHAKE_V4.2_ENCRYPTED</p>
             </div>
           </div>
 

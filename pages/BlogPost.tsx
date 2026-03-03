@@ -23,7 +23,7 @@ const AdBlock: React.FC = () => {
 
   return (
     <div className="my-16 py-8 bg-white/[0.01] border border-white/5 rounded-2xl flex flex-col items-center justify-center min-h-[100px] overflow-hidden">
-      <span className="text-[10px] font-mono text-white/10 uppercase tracking-[0.4em] mb-4">ADVERTISEMENT</span>
+      <span className="text-[10px] font-mono text-text-primary/10 uppercase tracking-[0.4em] mb-4">ADVERTISEMENT</span>
       <ins className="adsbygoogle"
         style={{ display: 'block' }}
         data-ad-client="ca-pub-7367345153052165"
@@ -41,6 +41,8 @@ export const BlogPost: React.FC = () => {
   const [isLikeLoading, setIsLikeLoading] = React.useState<boolean>(false);
   const [isShareLoading, setIsShareLoading] = React.useState<boolean>(false);
   const [subscribed, setSubscribed] = React.useState<boolean>(false);
+  const [isSubscribing, setIsSubscribing] = React.useState<boolean>(false);
+  const [subscriptionError, setSubscriptionError] = React.useState<string | null>(null);
   const [shares, setShares] = React.useState<{ total: number; whatsapp: number; linkedin: number; twitter: number }>({ total: 0, whatsapp: 0, linkedin: 0, twitter: 0 });
   const messaging = getMessaging(app);
 
@@ -187,43 +189,88 @@ export const BlogPost: React.FC = () => {
   };
 
   const handleSubscribe = async () => {
-    try {
-      const permission = await Notification.requestPermission();
-      if (permission === 'granted') {
-        const token = await getToken(messaging, {
-          vapidKey: 'BFCsPxD2__lGdwnA5cozBc9CGhUQhdCxnoq6TsepwT3-xqvo3mR6zQyZDfVs3E8xLdaHSnIg73F1gLSH0mt29eY'
-        });
+    if (subscribed || isSubscribing) return;
 
-        if (token) {
-          // Store token in Firestore with deduplication using token as Doc ID
-          await setDoc(doc(db, 'subscribers', token), {
-            token: token,
-            createdAt: serverTimestamp()
-          });
-
-          console.log('Subscriber token stored in Firestore:', token);
-          alert("Subscribed successfully 🔔");
-          setSubscribed(true);
-          localStorage.setItem(`blog-subscribed`, 'true');
-        }
-      } else {
-        console.warn('Notification permission denied');
-      }
-    } catch (error) {
-      console.error('Error during FCM subscription:', error);
+    // Check if permission is already denied
+    if (Notification.permission === 'denied') {
+      setSubscriptionError("Notification permission denied. Please reset permissions in your browser.");
+      return;
     }
 
-    // Toast notification remains for immediate tactile feedback
-    const toast = document.createElement('div');
-    toast.className = 'fixed bottom-24 left-1/2 -translate-x-1/2 px-8 py-4 bg-accent-cyan text-black font-orbitron font-bold text-xs uppercase tracking-[0.4em] rounded-2xl shadow-[0_0_30px_rgba(0,219,233,0.4)] z-[100] animate-bounce';
-    toast.innerText = 'RESEARCH ALERTS ENABLED';
-    document.body.appendChild(toast);
-    setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.transition = 'opacity 0.5s ease-out';
-      setTimeout(() => document.body.removeChild(toast), 500);
-    }, 3000);
+    setIsSubscribing(true);
+    setSubscriptionError(null);
+
+    // Faster timeout for connection - increased slightly to 12s
+    const timeoutId = setTimeout(() => {
+      setIsSubscribing(false);
+      setSubscriptionError("Connection timed out. Please check your internet or retry.");
+    }, 12000);
+
+    try {
+      // 1. Request Permission (Fast path if already granted)
+      const permission = await Notification.requestPermission();
+
+      if (permission !== 'granted') {
+        throw new Error("PERMISSION_DENIED");
+      }
+
+      // 2. Register Service Worker explicitly to ensure getToken works reliably
+      let registration;
+      if ('serviceWorker' in navigator) {
+        registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+      }
+
+      // 3. Get Token (FCM)
+      const token = await getToken(messaging, {
+        vapidKey: 'BFCsPxD2__lGdwnA5cozBc9CGhUQhdCxnoq6TsepwT3-xqvo3mR6zQyZDfVs3E8xLdaHSnIg73F1gLSH0mt29eY',
+        serviceWorkerRegistration: registration
+      });
+
+      if (!token) {
+        throw new Error("TOKEN_GENERATION_FAILED");
+      }
+
+      // 4. OPTIMISTIC UI: Assume success once token is acquired
+      setSubscribed(true);
+      localStorage.setItem(`blog-subscribed`, 'true');
+      setIsSubscribing(false);
+      clearTimeout(timeoutId);
+
+      // 5. BACKGROUND SYNC: Update FireStore without blocking the UI
+      setDoc(doc(db, 'subscribers', token), {
+        token: token,
+        subscribed: true,
+        createdAt: serverTimestamp()
+      }).catch(err => {
+        console.error('Firestore sync failed in background:', err);
+      });
+
+      // 6. Tactical feedback
+      const toast = document.createElement('div');
+      toast.className = 'fixed bottom-24 left-1/2 -translate-x-1/2 px-8 py-4 bg-accent-cyan text-black font-orbitron font-bold text-xs uppercase tracking-[0.4em] rounded-2xl shadow-[0_0_30px_rgba(0,219,233,0.4)] z-[100] animate-bounce';
+      toast.innerText = 'RESEARCH ALERTS ENABLED';
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.5s ease-out';
+        setTimeout(() => document.body.removeChild(toast), 500);
+      }, 3000);
+
+    } catch (error: any) {
+      console.error('Error during FCM subscription:', error);
+      setIsSubscribing(false);
+      clearTimeout(timeoutId);
+
+      if (error.message === "PERMISSION_DENIED") {
+        setSubscriptionError("Notification permission denied.");
+      } else if (error.message === "TOKEN_GENERATION_FAILED") {
+        setSubscriptionError("Failed to generate secure token.");
+      } else {
+        setSubscriptionError("System error. Ensure you are on HTTPS or localhost.");
+      }
+    }
   };
+
 
   if (!post) return <Navigate to="/blog" />;
 
@@ -233,7 +280,148 @@ export const BlogPost: React.FC = () => {
   // Split content by ad placeholders
   const contentParts = post.content.split(/<!-- AD_PLACEHOLDER_\d+ -->/);
 
+  // BAC Infographic Component
+  const BACInfographic: React.FC = () => {
+    return (
+      <div className="my-12 flex flex-col items-center gap-3">
+        <motion.img
+          src="/bac-types.png"
+          alt="Types of Broken Access Control"
+          loading="lazy"
+          className="max-w-3xl w-full rounded-2xl border border-border shadow-lg"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+        />
+        <p className="font-mono text-[10px] text-text-secondary opacity-40 uppercase tracking-[0.4em] font-black italic text-center">
+          VULNERABILITY TAXONOMY: KEY CATEGORIES IN BAC
+        </p>
+      </div>
+    );
+  };
+
+  // CVSS Evolution Component
+  const CVSSComparison: React.FC = () => {
+    return (
+      <div className="my-20 space-y-12">
+        <h3 className="text-3xl md:text-4xl font-orbitron font-black text-text-primary uppercase tracking-tighter italic border-l-8 border-accent-cyan pl-6 mb-12">
+          CVSS Score Evolution – v2 vs v3.1 vs v4.0
+        </h3>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {[
+            {
+              version: 'CVSS v2.0',
+              year: '2007',
+              focus: 'The Foundation',
+              explanation: 'The first major standard. Focused on basic base metrics but often lacked precision in diverse environmental contexts.',
+              improvement: 'Introduced the core logic of Attack Vector and Complexity.',
+              status: 'Legacy / Informational'
+            },
+            {
+              version: 'CVSS v3.1',
+              year: '2019',
+              focus: 'The Refinement',
+              explanation: 'Added the "Scope" (S) metric to account for vulnerabilities that affect systems beyond the initial vulnerable component.',
+              improvement: 'Improved precision in scoring and User Interaction requirements.',
+              status: 'Standard Production'
+            },
+            {
+              version: 'CVSS v4.0',
+              year: '2023',
+              focus: 'Latest FIRST Standard',
+              explanation: 'A significant leap. Focuses on real-world impact with supplemental metrics and refined severity levels.',
+              improvement: 'Enhanced assessment of logical failures like Authorization (BAC).',
+              status: 'LATEST STANDARD'
+            }
+          ].map((v, i) => (
+            <div key={i} className="p-8 border border-border bg-card-bg rounded-[2rem] relative overflow-hidden group hover:border-accent-cyan/40 transition-all shadow-sm">
+              <div className="absolute top-0 right-0 p-4 font-mono text-5xl font-black text-text-primary/5 group-hover:text-accent-cyan/10 transition-colors uppercase leading-none select-none">
+                {v.version.split(' ')[1]}
+              </div>
+              <div className="relative z-10">
+                <span className="text-[10px] font-mono text-accent-cyan font-black tracking-[0.3em] uppercase">{v.year} // {v.status}</span>
+                <h4 className="text-2xl font-orbitron font-black text-text-primary mt-2 mb-6">{v.version}</h4>
+
+                <div className="space-y-6">
+                  <div>
+                    <span className="text-[10px] font-bold text-accent-cyan font-black uppercase tracking-widest block mb-2 font-mono opacity-90 dark:opacity-60">Core Focus</span>
+                    <p className="text-lg text-text-primary font-bold leading-tight">{v.focus}</p>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-accent-cyan font-black uppercase tracking-widest block mb-1 font-mono opacity-90 dark:opacity-60">Architectural Shift</span>
+                    <p className="text-sm text-text-secondary leading-relaxed">{v.explanation}</p>
+                  </div>
+                  <div className="pt-4 border-t border-border">
+                    <span className="text-[10px] font-bold text-accent-cyan font-black uppercase tracking-widest block mb-1 font-mono opacity-90 dark:opacity-60">Security Impact</span>
+                    <p className="text-sm text-text-primary italic font-medium">"{v.improvement}"</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* BAC Comparison Scenario */}
+        <div className="mt-16 bg-card-bg p-10 md:p-14 border border-border rounded-[2.5rem] relative overflow-hidden shadow-lg">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-accent-cyan/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
+
+          <h4 className="font-orbitron font-black text-2xl md:text-3xl text-text-primary mb-8 flex items-center gap-4 italic relative z-10">
+            <ShieldAlert size={32} className="text-accent-cyan" />
+            VULNERABILITY COMPARISON: BROKEN ACCESS CONTROL
+          </h4>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+            {[
+              { label: 'CVSS v2', score: '7.5', severity: 'HIGH', badgeColor: 'bg-orange-500/10 text-orange-600 dark:text-[#f97316] border-orange-500/30' },
+              { label: 'CVSS v3.1', score: '8.8', severity: 'HIGH', badgeColor: 'bg-orange-500/10 text-orange-600 dark:text-[#f97316] border-orange-500/30' },
+              { label: 'CVSS v4.0', score: '9.3', severity: 'CRITICAL', badgeColor: 'bg-red-500/10 text-red-600 dark:text-[#ef4444] border-red-500/30' }
+            ].map((item, idx) => (
+              <div key={idx} className="p-8 rounded-3xl bg-bg border border-border text-center group hover:bg-card-bg transition-all hover:scale-105 shadow-sm">
+                <span className="text-[12px] font-mono font-black text-text-secondary uppercase tracking-[0.3em]">{item.label}</span>
+                <div className={`text-6xl font-orbitron font-black my-4 tabular-nums ${item.severity === 'CRITICAL' ? 'text-red-600 dark:text-[#ef4444]' : 'text-orange-600 dark:text-[#f97316]'}`}>{item.score}</div>
+                <div className={`inline-block px-4 py-1.5 rounded-full text-[12px] font-black uppercase tracking-widest border ${item.badgeColor}`}>
+                  {item.severity}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 p-6 bg-accent-cyan/5 rounded-2xl border border-border relative z-10">
+            <p className="text-lg text-text-secondary font-medium leading-relaxed">
+              <span className="text-text-primary font-bold">Analysis:</span> The evolution to <span className="text-accent-cyan font-bold">CVSS v4.0</span> reflects a fundamental shift in how we score logical vulnerabilities. By introducing mandatory scope assessment and supplemental metrics for authorization bypasses, BAC is now correctly classified as <span className="text-red-600 dark:text-[#ef4444] font-black underline decoration-2 underline-offset-4">CRITICAL</span>. This ensures that security teams prioritize authorization logic just as highly as traditional memory corruption bugs.
+            </p>
+          </div>
+        </div>
+
+        {/* Severity Scale Legend */}
+        <div className="flex flex-wrap justify-center gap-6 mt-12 bg-black/10 p-6 rounded-2xl border border-white/5">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-[#ef4444] shadow-[0_0_10px_#ef4444]" />
+            <span className="text-[10px] font-mono font-black text-text-primary uppercase tracking-widest">Critical</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-[#f97316] shadow-[0_0_10px_#f97316]" />
+            <span className="text-[10px] font-mono font-black text-text-primary uppercase tracking-widest">High</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-[#eab308] shadow-[0_0_10px_#eab308]" />
+            <span className="text-[10px] font-mono font-black text-text-primary uppercase tracking-widest">Medium</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-[#22c55e] shadow-[0_0_10px_#22c55e]" />
+            <span className="text-[10px] font-mono font-black text-text-primary uppercase tracking-widest">Low</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const components = {
+    // Override default rendering for specific placeholders
+    h1: ({ ...props }) => (
+      <h1 {...props} className="font-orbitron text-4xl md:text-5xl font-[800] tracking-tighter mb-8 leading-[1.1] text-text-primary uppercase italic" />
+    ),
     h2: ({ ...props }) => (
       <div className="flex items-center gap-6 mt-16 mb-8 group/h2">
         <div className="p-3 bg-accent-cyan/10 border border-accent-cyan/20 rounded-2xl text-accent-cyan group-hover/h2:scale-110 transition-transform">
@@ -246,26 +434,63 @@ export const BlogPost: React.FC = () => {
                       props.children?.toString().includes('HOW TO FIX') ? <CheckCircle2 size={24} className="text-accent-cyan" /> :
                         <Zap size={24} />}
         </div>
-        <h2 {...props} className="text-2xl md:text-3xl font-orbitron font-[800] tracking-[0.3px] leading-none text-white flex flex-wrap gap-2">
+        <h2 {...props} className="text-2xl md:text-3xl font-orbitron font-[800] tracking-[0.3px] leading-none text-text-primary flex flex-wrap gap-2">
           {props.children}
         </h2>
       </div>
     ),
     h3: ({ ...props }) => (
-      <h3 {...props} className="text-lg font-orbitron font-bold text-white uppercase tracking-wider mt-10 mb-4" />
+      <h3 {...props} className="text-lg font-orbitron font-bold text-text-primary uppercase tracking-wider mt-10 mb-4" />
     ),
-    p: ({ children, ...props }: any) => {
+    p: ({ children, node, ...props }: any) => {
+      // Logic for plain-text markers (HTML comments are stripped by ReactMarkdown)
+      const content = children?.toString()?.trim();
+      if (content === 'MARKER_BAC_INFOGRAPHIC') return <BACInfographic />;
+      if (content === 'MARKER_CVSS_EVOLUTION') return <CVSSComparison />;
+      if (content === 'MARKER_BAC_FLOW') return (
+        <div className="my-10 flex flex-col items-center gap-3">
+          <motion.img
+            src="/bac-vulnerability-flow.jpg"
+            alt="Broken Access Control Vulnerability Flow"
+            loading="lazy"
+            className="max-w-2xl w-full rounded-2xl border border-border shadow-lg"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          />
+          <p className="font-mono text-[10px] text-text-secondary opacity-40 uppercase tracking-[0.4em] font-black italic">
+            SYSTEM ARCHITECTURE: ATTACKER TO RESOURCE FLOW
+          </p>
+        </div>
+      );
+      if (content === 'MARKER_CONCEPTUAL_BAC') return (
+        <div className="my-10 flex flex-col items-center gap-3">
+          <motion.img
+            src="/bac-tactical-mapping.png"
+            alt="Broken Access Control Conceptual Model"
+            loading="lazy"
+            className="max-w-2xl w-full rounded-2xl border border-border shadow-lg"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          />
+          <p className="font-mono text-[10px] text-text-secondary opacity-40 uppercase tracking-[0.4em] font-black italic text-center">
+            LOGICAL BOUNDARY ANALYSIS: EFFECTIVE VS BROKEN CONTROL
+          </p>
+        </div>
+      );
+
       const isFirstParagraph = children?.[0]?.props?.node?.position?.start?.line === 2 || children?.toString().startsWith('Access control');
       return (
-        <p className={`text-[rgba(230,250,255,0.85)] leading-[1.8] mb-[1.2rem] text-lg font-medium ${isFirstParagraph ? 'blog-drop-cap' : ''}`}>
+        <p className={`text-text-secondary leading-[1.8] mb-[1.2rem] text-lg font-medium ${isFirstParagraph ? 'blog-drop-cap' : ''}`}>
           {children}
         </p>
       );
     },
     ul: ({ ...props }) => <ul {...props} className="tactical-list space-y-4 mb-10" />,
-    li: ({ ...props }) => <li {...props} className="text-white/60 font-medium text-sm" />,
+    li: ({ ...props }) => <li {...props} className="text-text-secondary font-medium text-sm" />,
     blockquote: ({ ...props }) => (
-      <div className="my-12 p-8 bg-accent-cyan/[0.02] border-l-4 border-accent-cyan rounded-r-2xl italic text-xl text-white/80 font-medium leading-relaxed">
+      <div className="my-12 p-8 bg-accent-cyan/[0.02] border-l-4 border-accent-cyan rounded-r-2xl italic text-xl text-text-primary/80 font-medium leading-relaxed">
         {props.children}
       </div>
     ),
@@ -277,7 +502,7 @@ export const BlogPost: React.FC = () => {
         >
           <img {...props} className="w-full h-auto block" />
         </motion.div>
-        <p className="mt-6 font-mono text-[10px] text-white/40 uppercase tracking-[0.4em] font-black italic">
+        <p className="mt-6 font-mono text-[10px] text-text-secondary opacity-40 uppercase tracking-[0.4em] font-black italic">
           {props.alt || "Tactical security visualization"}
         </p>
       </div>
@@ -285,10 +510,10 @@ export const BlogPost: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-bg">
       <div className="pt-24 pb-20 px-6 overflow-hidden relative z-10">
-        <div className="max-w-[900px] mx-auto">
-          <Link to="/blog" className="inline-flex items-center gap-2 text-white/40 hover:text-accent-cyan transition-colors mb-16 font-orbitron font-bold text-xs tracking-[0.4em] uppercase">
+        <div className="max-w-[1000px] mx-auto">
+          <Link to="/blog" className="inline-flex items-center gap-2 text-text-secondary hover:text-accent-cyan transition-colors mb-16 font-orbitron font-bold text-xs tracking-[0.4em] uppercase">
             <ArrowLeft size={16} /> BACK TO BLOG REPOSITORY
           </Link>
 
@@ -297,7 +522,7 @@ export const BlogPost: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             {/* Meta Header */}
-            <div className="flex flex-wrap items-center gap-8 text-[10px] font-mono text-white/40 mb-10 uppercase tracking-[0.4em] font-black">
+            <div className="flex flex-wrap items-center gap-8 text-[10px] font-mono text-text-secondary mb-10 uppercase tracking-[0.4em] font-black">
               <div className="px-4 py-2 bg-accent-cyan/10 border border-accent-cyan/20 rounded-full text-accent-cyan">
                 {post.tags[0]}
               </div>
@@ -311,7 +536,7 @@ export const BlogPost: React.FC = () => {
               </div>
             </div>
 
-            <h1 className="font-orbitron text-4xl md:text-5xl font-[800] tracking-tighter mb-8 leading-[1.1] text-white uppercase italic">
+            <h1 className="font-orbitron text-4xl md:text-6xl font-[800] tracking-tighter mb-8 leading-[1.1] text-text-primary uppercase italic">
               {post.title}
             </h1>
 
@@ -323,8 +548,8 @@ export const BlogPost: React.FC = () => {
                 className={`flex items-center gap-3 px-6 py-3 rounded-2xl border transition-all ${isLiked
                   ? 'bg-accent-cyan/20 border-accent-cyan text-accent-cyan cursor-default'
                   : isLikeLoading
-                    ? 'bg-white/5 border-white/20 text-white/20 cursor-wait animate-pulse'
-                    : 'bg-white/5 border-white/10 text-white/40 hover:border-accent-cyan/50 hover:text-accent-cyan'
+                    ? 'bg-white/5 border-border text-text-secondary cursor-wait animate-pulse'
+                    : 'bg-white/5 border-border text-text-secondary hover:border-accent-cyan/50 hover:text-accent-cyan'
                   }`}
               >
                 <motion.div
@@ -337,7 +562,7 @@ export const BlogPost: React.FC = () => {
                 </span>
               </button>
 
-              <div className="h-4 w-px bg-white/10" />
+              <div className="h-4 w-px bg-border" />
 
               <div className="flex items-center gap-4">
                 <a
@@ -345,7 +570,7 @@ export const BlogPost: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => handleShare('linkedin')}
-                  className="p-3 bg-white/5 border border-white/10 rounded-2xl text-white/40 hover:text-accent-cyan hover:border-accent-cyan/50 hover:shadow-[0_0_15px_rgba(0,219,233,0.15)] transition-all"
+                  className="p-3 bg-white/5 border border-border rounded-2xl text-text-secondary hover:text-accent-cyan hover:border-accent-cyan/50 hover:shadow-[0_0_15px_rgba(0,219,233,0.15)] transition-all"
                 >
                   <Linkedin size={18} />
                 </a>
@@ -354,20 +579,20 @@ export const BlogPost: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => handleShare('whatsapp')}
-                  className="p-3 bg-white/5 border border-white/10 rounded-2xl text-white/40 hover:text-accent-cyan hover:border-accent-cyan/50 hover:shadow-[0_0_15px_rgba(0,219,233,0.15)] transition-all"
+                  className="p-3 bg-white/5 border border-border rounded-2xl text-text-secondary hover:text-accent-cyan hover:border-accent-cyan/50 hover:shadow-[0_0_15px_rgba(0,219,233,0.15)] transition-all"
                 >
                   <MessageCircle size={18} />
                 </a>
                 <div className="flex flex-col items-start justify-center ml-2">
                   <span className="text-[10px] font-mono font-black text-accent-cyan tracking-widest leading-none">{shares.total}</span>
-                  <span className="text-[8px] font-mono font-bold text-white/20 uppercase tracking-[0.2em]">SHARES</span>
+                  <span className="text-[8px] font-mono font-bold text-text-secondary uppercase tracking-[0.2em]">SHARES</span>
                 </div>
               </div>
             </div>
 
-            <div className="relative h-[400px] md:h-[600px] rounded-2xl overflow-hidden mb-24 grayscale-[50%] hover:grayscale-0 transition-all duration-1000 border border-white/5 shadow-2xl">
+            <div className="relative h-[400px] md:h-[600px] rounded-2xl overflow-hidden mb-24 transition-all duration-1000 border border-border shadow-2xl">
               <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent" />
             </div>
 
             <div className="flex flex-col lg:flex-row gap-20">
@@ -396,33 +621,42 @@ export const BlogPost: React.FC = () => {
                         <Search size={32} />
                       </div>
                       <div className="flex-grow text-center md:text-left space-y-2">
-                        <h3 className="text-xl md:text-2xl font-orbitron font-black text-white uppercase tracking-tighter leading-none italic">
+                        <h3 className="text-xl md:text-2xl font-orbitron font-black text-text-primary uppercase tracking-tighter leading-none italic">
                           SUBSCRIBE TO <span className="text-accent-cyan">RESEARCH ALERTS</span>
                         </h3>
-                        <p className="text-white/40 text-sm font-medium">
+                        <p className="text-text-secondary text-sm font-medium">
                           encrypted push notifications for zero-day research.
                         </p>
                       </div>
-                      <button
-                        onClick={handleSubscribe}
-                        disabled={subscribed}
-                        className={`px-8 py-4 rounded-2xl font-orbitron font-bold text-[10px] uppercase tracking-[0.3em] transition-all flex items-center gap-3 shrink-0 ${subscribed
-                          ? 'bg-accent-cyan/20 border border-accent-cyan text-accent-cyan cursor-default'
-                          : 'bg-white/5 border border-white/10 text-white hover:bg-accent-cyan hover:border-accent-cyan hover:text-black hover:shadow-[0_0_20px_rgba(0,219,233,0.3)] active:scale-95'
-                          }`}
-                      >
-                        {subscribed ? (
-                          <>
-                            <CheckCircle2 size={14} />
-                            <span>Subscribed ✅</span>
-                          </>
-                        ) : (
-                          <>
-                            <Zap size={14} />
-                            <span>SUBSCRIBE</span>
-                          </>
+                      <div className="flex flex-col items-center md:items-end gap-2">
+                        <button
+                          onClick={handleSubscribe}
+                          disabled={subscribed || isSubscribing}
+                          className={`px-8 py-4 rounded-2xl font-orbitron font-bold text-[10px] uppercase tracking-[0.3em] transition-all flex items-center gap-3 shrink-0 ${subscribed
+                            ? 'bg-accent-cyan/20 border border-accent-cyan text-accent-cyan cursor-default'
+                            : isSubscribing
+                              ? 'bg-accent-cyan/10 border border-accent-cyan/30 text-text-secondary cursor-wait animate-pulse'
+                              : 'bg-card-bg border border-border text-text-primary hover:bg-accent-cyan hover:border-accent-cyan hover:text-black hover:shadow-[0_0_20px_rgba(0,219,233,0.3)] active:scale-95'
+                            }`}
+                        >
+                          {subscribed ? (
+                            <>
+                              <CheckCircle2 size={14} />
+                              <span>Subscribed</span>
+                            </>
+                          ) : (
+                            <>
+                              <Zap size={14} />
+                              <span>{isSubscribing ? 'CONNECTING...' : 'SUBSCRIBE'}</span>
+                            </>
+                          )}
+                        </button>
+                        {subscriptionError && (
+                          <span className="text-[10px] font-mono text-red-500 uppercase tracking-widest animate-pulse">
+                            {subscriptionError}
+                          </span>
                         )}
-                      </button>
+                      </div>
                     </div>
                   </motion.div>
                 </div>
@@ -431,15 +665,15 @@ export const BlogPost: React.FC = () => {
                 <div className="mt-16 p-12 glass-card border-white/5 bg-white/[0.01]">
                   <div className="flex flex-col md:flex-row items-center justify-between gap-12">
                     <div className="text-center md:text-left">
-                      <h4 className="font-orbitron font-black text-xl mb-3 text-white">REINFORCE SECURITY</h4>
-                      <p className="text-white/40 text-sm font-medium tracking-wide">Distribute this technical intelligence to your operations center.</p>
+                      <h4 className="font-orbitron font-black text-xl mb-3 text-text-primary uppercase italic">REINFORCE SECURITY</h4>
+                      <p className="text-text-secondary text-sm font-medium tracking-wide">Distribute this technical intelligence to your operations center.</p>
 
                       <div className="flex gap-4 mt-6">
                         <a
                           href="https://www.linkedin.com/in/manikantavarmag"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[10px] font-mono text-accent-cyan hover:text-white transition-colors tracking-widest uppercase font-black"
+                          className="text-[10px] font-mono text-accent-cyan hover:text-text-primary transition-colors tracking-widest uppercase font-black"
                         >
                           View Operative Profile
                         </a>
@@ -448,7 +682,7 @@ export const BlogPost: React.FC = () => {
                     <div className="flex gap-6 items-center">
                       <div className="flex flex-col items-end mr-4">
                         <span className="text-xl font-orbitron font-black text-accent-cyan leading-none">{shares.total}</span>
-                        <span className="text-[8px] font-mono font-bold text-white/20 uppercase tracking-[0.3em]">TOTAL SHARES</span>
+                        <span className="text-[8px] font-mono font-bold text-text-secondary uppercase tracking-[0.3em]">TOTAL SHARES</span>
                       </div>
                       {[
                         { icon: Linkedin, platform: 'linkedin' as const, url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}` },
@@ -472,7 +706,7 @@ export const BlogPost: React.FC = () => {
                           }}
                           target={item.url === '#' ? undefined : "_blank"}
                           rel={item.url === '#' ? undefined : "noopener noreferrer"}
-                          className="w-16 h-16 rounded-2xl glass-card border-white/10 flex items-center justify-center text-white/40 hover:text-accent-cyan hover:border-accent-cyan/50 transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(0,230,255,0.2)]"
+                          className="w-16 h-16 rounded-2xl glass-card border-border flex items-center justify-center text-text-secondary hover:text-accent-cyan hover:border-accent-cyan/50 transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(0,230,255,0.2)]"
                         >
                           <item.icon size={24} />
                         </a>
@@ -486,14 +720,14 @@ export const BlogPost: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-16">
                     {[
                       { label: '9.8', sub: 'TYPICAL HIGH CVSS', color: 'text-accent-cyan', icon: TrendingDown },
-                      { label: 'CVE', sub: 'DOCUMENTATION BASIS', color: 'text-white', icon: FileText },
+                      { label: 'CVE', sub: 'DOCUMENTATION BASIS', color: 'text-text-primary', icon: FileText },
                       { label: 'Impact', sub: 'DATA INTEGRITY LOSS', color: 'text-accent-cyan', icon: ShieldAlert }
                     ].map((item, i) => (
-                      <div key={i} className="glass-card p-10 border-white/5 bg-white/[0.01] text-center space-y-4 group hover:bg-white/[0.03] transition-all">
+                      <div key={i} className="glass-card p-10 border-border bg-card-bg text-center space-y-4 group hover:bg-white/[0.03] transition-all">
                         <div className={`text-4xl md:text-5xl font-orbitron font-black ${item.color} group-hover:scale-110 transition-transform`}>
                           {item.label}
                         </div>
-                        <div className="text-[9px] font-mono text-white/20 uppercase tracking-[0.4em] font-black">
+                        <div className="text-[9px] font-mono text-text-secondary opacity-40 uppercase tracking-[0.4em] font-black">
                           {item.sub}
                         </div>
                       </div>
@@ -509,18 +743,18 @@ export const BlogPost: React.FC = () => {
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/[0.05] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                    <h3 className="text-4xl md:text-6xl font-orbitron font-black text-white uppercase tracking-tighter italic">
-                      NEED A SECURITY <span className="text-white">ASSESSMENT?</span>
+                    <h3 className="text-4xl md:text-6xl font-orbitron font-black text-text-primary uppercase tracking-tighter italic">
+                      NEED A SECURITY <span className="text-accent-cyan">ASSESSMENT?</span>
                     </h3>
 
-                    <p className="text-white/40 text-lg max-w-2xl mx-auto font-medium">
+                    <p className="text-text-secondary text-lg max-w-2xl mx-auto font-medium">
                       I specialize in hardening infrastructure and identifying complex vulnerabilities before they can be exploited.
                     </p>
 
                     <div className="flex justify-center pt-8">
                       <Link
                         to="/#contact"
-                        className="px-12 py-5 border border-accent-cyan/30 text-white font-orbitron font-bold text-xs uppercase tracking-[0.4em] hover:bg-accent-cyan hover:shadow-[0_0_30px_rgba(0,219,233,0.3)] transition-all rounded-2xl relative z-20"
+                        className="px-12 py-5 border border-accent-cyan/30 text-text-primary hover:text-black font-orbitron font-bold text-xs uppercase tracking-[0.4em] hover:bg-accent-cyan hover:shadow-[0_0_30px_rgba(0,219,233,0.3)] transition-all rounded-2xl relative z-20"
                       >
                         CONTACT ME
                       </Link>

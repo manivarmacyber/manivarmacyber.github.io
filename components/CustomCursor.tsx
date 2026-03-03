@@ -73,7 +73,7 @@ export const CustomCursor: React.FC = () => {
                         initial={{ opacity: 0.5, scale: 0 }}
                         animate={{ opacity: 0, scale: 3.5 }}
                         exit={{ opacity: 0 }}
-                        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9997] border border-accent-cyan/40"
+                        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9997] border border-accent-cyan/30"
                         style={{
                             width: 18,
                             height: 18,
@@ -112,10 +112,10 @@ export const CustomCursor: React.FC = () => {
                     width: 18,
                     height: 18,
                     borderRadius: '50%',
-                    border: '2px solid #00E6FF',
+                    border: '2px solid var(--color-accent-cyan)',
                     borderRightColor: 'transparent',
                     opacity: 0.8,
-                    boxShadow: '0 0 10px rgba(0, 230, 255, 0.3)',
+                    boxShadow: '0 0 10px var(--color-accent-cyan)',
                 }}
                 animate={{
                     scale: isHovering ? 1.2 : 1,

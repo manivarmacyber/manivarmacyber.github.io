@@ -26,15 +26,15 @@ export const CookieNotice: React.FC = () => {
           exit={{ y: 100, opacity: 0 }}
           className="fixed bottom-8 left-8 right-8 md:left-auto md:right-8 md:w-96 z-[100]"
         >
-          <div className="glass-card p-6 border-accent-cyan/20 shadow-2xl">
+          <div className="glass-card p-6 border-border shadow-2xl bg-card-bg">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-full bg-accent-cyan/10 flex items-center justify-center text-accent-cyan shrink-0">
                 <Cookie size={20} />
               </div>
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-orbitron font-bold text-sm mb-1 uppercase tracking-widest">Cookie Protocol</h4>
-                  <p className="text-white/40 text-xs leading-relaxed">
+                  <h4 className="font-orbitron font-bold text-sm mb-1 uppercase tracking-widest text-text-primary">Cookie Protocol</h4>
+                  <p className="text-text-secondary text-xs leading-relaxed">
                     We use cookies to optimize system performance and analyze traffic patterns. By continuing, you authorize these protocols.
                   </p>
                 </div>
@@ -47,7 +47,7 @@ export const CookieNotice: React.FC = () => {
                   </button>
                   <button
                     onClick={() => setIsVisible(false)}
-                    className="px-4 border border-white/10 text-white/40 hover:text-white transition-colors rounded"
+                    className="px-4 border border-border text-text-secondary hover:text-text-primary transition-colors rounded"
                   >
                     <X size={14} />
                   </button>

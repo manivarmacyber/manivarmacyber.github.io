@@ -88,7 +88,7 @@ export const BlogPost: React.FC = () => {
         canonicalLink.setAttribute('rel', 'canonical');
         document.head.appendChild(canonicalLink);
       }
-      canonicalLink.setAttribute('href', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
+      canonicalLink.setAttribute('href', window.location.href);
 
       // SEO Logic: Update Open Graph & Article Metadata Robustly
       const setOrCreateMeta = (attrName: 'property' | 'name', attrValue: string, content: string) => {

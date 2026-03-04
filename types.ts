@@ -51,6 +51,7 @@ export interface BlogPost {
   tags: string[];
   readingTime: string;
   image: string;
+  coverImage?: string;
 }
 
 export type CulturalTheme = 'neutral' | 'warm-light' | 'spring-growth' | 'national-india' | 'solstice-cool';

@@ -109,12 +109,18 @@ export const BlogPost: React.FC = () => {
       if (ogDesc) ogDesc.setAttribute('content', post.excerpt);
       if (ogUrl) ogUrl.setAttribute('content', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
       if (ogType) ogType.setAttribute('content', 'article');
-      if (ogImg) ogImg.setAttribute('content', `https://manivarmacyber.pages.dev${post.image}`);
+      const coverImg = post.coverImage || '/images/blog-default-cover.jpg';
+      if (ogImg) ogImg.setAttribute('content', `https://manivarmacyber.pages.dev${coverImg}`);
 
       // Article specific metadata
       if (artTime) {
-        const isoDate = new Date(post.publishDate).toISOString().split('T')[0];
-        artTime.setAttribute('content', isoDate);
+        // Convert MARCH 03, 2026 to 2026-03-03
+        try {
+          const isoDate = new Date(post.publishDate).toISOString().split('T')[0];
+          artTime.setAttribute('content', isoDate);
+        } catch (e) {
+          artTime.setAttribute('content', post.publishDate);
+        }
       }
       if (artAuthor) artAuthor.setAttribute('content', `G Manikanta Varma`);
       if (standardAuthor) standardAuthor.setAttribute('content', `G Manikanta Varma`);
@@ -135,7 +141,7 @@ export const BlogPost: React.FC = () => {
       if (twTitle) twTitle.setAttribute('content', `${post.title} | Mani Varma`);
       if (twDesc) twDesc.setAttribute('content', post.excerpt);
       if (twUrl) twUrl.setAttribute('content', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
-      if (twImg) twImg.setAttribute('content', `https://manivarmacyber.pages.dev${post.image}`);
+      if (twImg) twImg.setAttribute('content', `https://manivarmacyber.pages.dev${coverImg}`);
 
       // SEO Logic: Update Structured Data (JSON-LD)
       const schemaScript = document.createElement('script');

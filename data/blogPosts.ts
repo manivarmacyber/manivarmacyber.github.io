@@ -11,6 +11,7 @@ export const blogPosts: BlogPost[] = [
     tags: ['OWASP TOP 10', 'PENETRATION TESTING', 'ARCHITECTURAL RISK', 'AD-READY'],
     readingTime: '20 MIN READ',
     image: '/bac-main-cover-v2.jpg',
+    coverImage: '/bac-main-cover-v2.jpg',
     content: `
 Broken Access Control (BAC) is a critical security vulnerability where an application fails to properly restrict users from accessing unauthorized data or functionality. It enables privilege escalation, data exposure, and account compromise, making it OWASP Top 10 A01 and one of the most exploited web vulnerabilities globally.
 
@@ -145,6 +146,7 @@ Fixing BAC requires a defense-in-depth approach centered on server-side validati
     tags: ['OWASP TOP 10', 'PENETRATION TESTING', 'AUTHORIZATION', 'AD-READY'],
     readingTime: '25 MIN READ',
     image: '/idor-cover.jpg',
+    coverImage: '/images/idor-cover.png',
     content: `
 Access control is the cornerstone of any secure application, yet it remains one of the most fragile layers in modern software architecture. Among the myriad of ways access control can fail, Insecure Direct Object Reference (IDOR) stands out as the most deceptive, often hiding behind a simple integer or UUID in a URL.
 

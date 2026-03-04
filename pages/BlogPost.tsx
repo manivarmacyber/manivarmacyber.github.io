@@ -93,6 +93,7 @@ export const BlogPost: React.FC = () => {
       const ogType = document.querySelector('meta[property="og:type"]');
       const ogImg = document.querySelector('meta[property="og:image"]');
       const artTime = document.querySelector('meta[property="article:published_time"]');
+      const artModTime = document.querySelector('meta[property="article:modified_time"]');
       const artAuthor = document.querySelector('meta[property="article:author"]');
       const standardAuthor = document.querySelector('meta[name="author"]');
 
@@ -102,6 +103,7 @@ export const BlogPost: React.FC = () => {
       const originalOgType = ogType?.getAttribute('content');
       const originalOgImg = ogImg?.getAttribute('content');
       const originalArtTime = artTime?.getAttribute('content');
+      const originalArtModTime = artModTime?.getAttribute('content');
       const originalArtAuthor = artAuthor?.getAttribute('content');
       const originalStandardAuthor = standardAuthor?.getAttribute('content');
 
@@ -120,6 +122,15 @@ export const BlogPost: React.FC = () => {
           artTime.setAttribute('content', isoDate);
         } catch (e) {
           artTime.setAttribute('content', post.publishDate);
+        }
+      }
+      if (artModTime) {
+        try {
+          const modDate = post.updatedDate || post.publishDate || new Date().toISOString();
+          const isoModDate = new Date(modDate).toISOString().split('T')[0];
+          artModTime.setAttribute('content', isoModDate);
+        } catch (e) {
+          artModTime.setAttribute('content', post.updatedDate || post.publishDate || '');
         }
       }
       if (artAuthor) artAuthor.setAttribute('content', `G Manikanta Varma`);
@@ -239,6 +250,7 @@ export const BlogPost: React.FC = () => {
         if (ogType && originalOgType) ogType.setAttribute('content', originalOgType);
         if (ogImg && originalOgImg) ogImg.setAttribute('content', originalOgImg);
         if (artTime) artTime.setAttribute('content', originalArtTime || '');
+        if (artModTime) artModTime.setAttribute('content', originalArtModTime || '');
         if (artAuthor) artAuthor.setAttribute('content', originalArtAuthor || '');
         if (standardAuthor) standardAuthor.setAttribute('content', originalStandardAuthor || '');
 

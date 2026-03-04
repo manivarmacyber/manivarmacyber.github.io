@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { Navigation } from './Navigation';
 import { Shield, Lock, Cpu, Globe } from 'lucide-react';
 import { FestivalEngine } from './FestivalEngine';
@@ -60,19 +61,19 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeSection = 'home'
           <div>
             <h4 className="font-orbitron font-bold text-xs tracking-widest text-text-secondary/80 mb-6 uppercase">Quick Links</h4>
             <ul className="space-y-4 text-sm text-text-secondary/80">
-              <li><a href="/#home" className="hover:text-accent-cyan transition-colors">Home</a></li>
-              <li><a href="/#skills" className="hover:text-accent-cyan transition-colors">Skills</a></li>
-              <li><a href="/#operational-outputs" className="hover:text-accent-cyan transition-colors">Projects</a></li>
-              <li><a href="/blog" className="hover:text-accent-cyan transition-colors">Blog</a></li>
+              <li><Link to="/#home" className="hover:text-accent-cyan transition-colors">Home</Link></li>
+              <li><Link to="/#skills" className="hover:text-accent-cyan transition-colors">Skills</Link></li>
+              <li><Link to="/#operational-outputs" className="hover:text-accent-cyan transition-colors">Projects</Link></li>
+              <li><Link to="/blog" className="hover:text-accent-cyan transition-colors">Blog</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-orbitron font-bold text-xs tracking-widest text-text-secondary/80 mb-6 uppercase">Legal</h4>
             <ul className="space-y-4 text-sm text-text-secondary/80">
-              <li><a href="/privacy" className="hover:text-accent-cyan transition-colors">Privacy Policy</a></li>
-              <li><a href="/about" className="hover:text-accent-cyan transition-colors">About</a></li>
-              <li><a href="/contact" className="hover:text-accent-cyan transition-colors">Contact</a></li>
+              <li><Link to="/privacy" className="hover:text-accent-cyan transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/about" className="hover:text-accent-cyan transition-colors">About</Link></li>
+              <li><Link to="/contact" className="hover:text-accent-cyan transition-colors">Contact</Link></li>
             </ul>
           </div>
 

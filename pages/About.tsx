@@ -24,9 +24,13 @@ export const About: React.FC = () => {
               <p>
                 He is skilled in VAPT, Web application security, and using tools like Burp-Suite, Nmap, Nessus, and Metasploit. He holds a CEH Master v12 certification and is currently upgrading his skills while freelancing to help secure government assets.
               </p>
-              <p>
-                He has basic knowledge of SOC concepts and tools like SIEM, EDR, XDR, SOAR, and Wazuh, gained through his internship program.
-              </p>
+
+              <div className="pt-8 border-t border-border mt-8">
+                <h3 className="font-orbitron font-black text-xl text-accent-cyan mb-4 uppercase italic tracking-tighter">The Research Platform</h3>
+                <p className="text-sm font-medium leading-relaxed">
+                  This website serves as a dedicated knowledge repository for advanced cybersecurity research. My mission is to publish in-depth vulnerability analysis, architectural risk models (like BAC and IDOR), and educational security learning content to help the global developer community build more resilient software ecosystems.
+                </p>
+              </div>
             </div>
             <div className="glass-card p-8 space-y-8 border-accent-cyan/20">
               <div className="flex items-center gap-4">

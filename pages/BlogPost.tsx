@@ -93,7 +93,8 @@ export const BlogPost: React.FC = () => {
       const ogType = document.querySelector('meta[property="og:type"]');
       const ogImg = document.querySelector('meta[property="og:image"]');
       const artTime = document.querySelector('meta[property="article:published_time"]');
-      const artAuthor = document.querySelector('meta[name="author"]');
+      const artAuthor = document.querySelector('meta[property="article:author"]');
+      const standardAuthor = document.querySelector('meta[name="author"]');
 
       const originalOgTitle = ogTitle?.getAttribute('content');
       const originalOgDesc = ogDesc?.getAttribute('content');
@@ -102,12 +103,13 @@ export const BlogPost: React.FC = () => {
       const originalOgImg = ogImg?.getAttribute('content');
       const originalArtTime = artTime?.getAttribute('content');
       const originalArtAuthor = artAuthor?.getAttribute('content');
+      const originalStandardAuthor = standardAuthor?.getAttribute('content');
 
       if (ogTitle) ogTitle.setAttribute('content', `${post.title} | Mani Varma`);
       if (ogDesc) ogDesc.setAttribute('content', post.excerpt);
       if (ogUrl) ogUrl.setAttribute('content', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
       if (ogType) ogType.setAttribute('content', 'article');
-      if (ogImg) ogImg.setAttribute('content', `https://manivarmacyber.pages.dev${post.image === '/idor-cover.jpg' ? '/images/idor-cover.png' : post.image}`);
+      if (ogImg) ogImg.setAttribute('content', `https://manivarmacyber.pages.dev${post.image}`);
 
       // Article specific metadata
       if (artTime) {
@@ -115,6 +117,7 @@ export const BlogPost: React.FC = () => {
         artTime.setAttribute('content', isoDate);
       }
       if (artAuthor) artAuthor.setAttribute('content', `G Manikanta Varma`);
+      if (standardAuthor) standardAuthor.setAttribute('content', `G Manikanta Varma`);
 
       // SEO Logic: Update Twitter Metadata
       const twCard = document.querySelector('meta[name="twitter:card"]');
@@ -132,7 +135,7 @@ export const BlogPost: React.FC = () => {
       if (twTitle) twTitle.setAttribute('content', `${post.title} | Mani Varma`);
       if (twDesc) twDesc.setAttribute('content', post.excerpt);
       if (twUrl) twUrl.setAttribute('content', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
-      if (twImg) twImg.setAttribute('content', `https://manivarmacyber.pages.dev${post.image === '/idor-cover.jpg' ? '/images/idor-cover.png' : post.image}`);
+      if (twImg) twImg.setAttribute('content', `https://manivarmacyber.pages.dev${post.image}`);
 
       // SEO Logic: Update Structured Data (JSON-LD)
       const schemaScript = document.createElement('script');
@@ -231,6 +234,7 @@ export const BlogPost: React.FC = () => {
         if (ogImg && originalOgImg) ogImg.setAttribute('content', originalOgImg);
         if (artTime) artTime.setAttribute('content', originalArtTime || '');
         if (artAuthor) artAuthor.setAttribute('content', originalArtAuthor || '');
+        if (standardAuthor) standardAuthor.setAttribute('content', originalStandardAuthor || '');
 
         // Restore Twitter metadata
         if (twCard && originalTwCard) twCard.setAttribute('content', originalTwCard);

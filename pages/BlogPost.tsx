@@ -6,7 +6,7 @@ import { blogPosts } from '../data/blogPosts';
 import ReactMarkdown from 'react-markdown';
 import {
   Calendar, Clock, User, Share2, Linkedin, Twitter,
-  MessageCircle, ArrowLeft, Tag, Shield, Target,
+  MessageCircle, ArrowLeft, ArrowRight, Tag, Shield, Target,
   Zap, AlertTriangle, Search, CheckCircle2, Info,
   TrendingDown, FileText, Database, ShieldAlert, Cpu
 } from 'lucide-react';
@@ -71,6 +71,77 @@ export const BlogPost: React.FC = () => {
         metaDescription.setAttribute('content', post.excerpt);
       }
 
+      // SEO Logic: Update Meta Keywords
+      const metaKeywords = document.querySelector('meta[name="keywords"]');
+      const originalKeywords = metaKeywords?.getAttribute('content');
+      if (metaKeywords) {
+        const postKeywords = [...post.tags, "Cybersecurity Research", "Vulnerability Analysis"].join(', ');
+        metaKeywords.setAttribute('content', postKeywords);
+      }
+
+      // SEO Logic: Update Canonical Link
+      const canonicalLink = document.querySelector('link[rel="canonical"]');
+      const originalCanonical = canonicalLink?.getAttribute('href');
+      if (canonicalLink) {
+        canonicalLink.setAttribute('href', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
+      }
+
+      // SEO Logic: Update Open Graph Metadata
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      const ogUrl = document.querySelector('meta[property="og:url"]');
+      const originalOgTitle = ogTitle?.getAttribute('content');
+      const originalOgDesc = ogDesc?.getAttribute('content');
+      const originalOgUrl = ogUrl?.getAttribute('content');
+
+      if (ogTitle) ogTitle.setAttribute('content', `${post.title} | Mani Varma`);
+      if (ogDesc) ogDesc.setAttribute('content', post.excerpt);
+      if (ogUrl) ogUrl.setAttribute('content', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
+
+      // SEO Logic: Update Twitter Metadata
+      const twTitle = document.querySelector('meta[property="twitter:title"]');
+      const twDesc = document.querySelector('meta[property="twitter:description"]');
+      const twUrl = document.querySelector('meta[property="twitter:url"]');
+      const originalTwTitle = twTitle?.getAttribute('content');
+      const originalTwDesc = twDesc?.getAttribute('content');
+      const originalTwUrl = twUrl?.getAttribute('content');
+
+      if (twTitle) twTitle.setAttribute('content', `${post.title} | Mani Varma`);
+      if (twDesc) twDesc.setAttribute('content', post.excerpt);
+      if (twUrl) twUrl.setAttribute('content', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
+
+      // SEO Logic: Update Structured Data (JSON-LD)
+      const schemaScript = document.createElement('script');
+      schemaScript.type = 'application/ld+json';
+      schemaScript.id = `schema-${post.slug}`;
+      const schemaData = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "description": post.excerpt,
+        "author": {
+          "@type": "Person",
+          "name": "Manikanta Varma",
+          "url": "https://manivarmacyber.pages.dev/"
+        },
+        "datePublished": post.publishDate,
+        "image": `https://manivarmacyber.pages.dev${post.image}`,
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": `https://manivarmacyber.pages.dev/blog/${post.slug}`
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Mani Varma Cybersecurity Research",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://manivarmacyber.pages.dev/logo.png"
+          }
+        }
+      };
+      schemaScript.text = JSON.stringify(schemaData);
+      document.head.appendChild(schemaScript);
+
       const storedLikes = localStorage.getItem(`blog-likes-${post.id}`);
       const userLiked = localStorage.getItem(`blog-liked-${post.id}`);
       const userSubscribed = localStorage.getItem(`blog-subscribed`);
@@ -120,6 +191,28 @@ export const BlogPost: React.FC = () => {
         document.title = originalTitle;
         if (metaDescription && originalDescription) {
           metaDescription.setAttribute('content', originalDescription);
+        }
+        if (metaKeywords && originalKeywords) {
+          metaKeywords.setAttribute('content', originalKeywords);
+        }
+        if (canonicalLink && originalCanonical) {
+          canonicalLink.setAttribute('href', originalCanonical);
+        }
+
+        // Restore OG metadata
+        if (ogTitle && originalOgTitle) ogTitle.setAttribute('content', originalOgTitle);
+        if (ogDesc && originalOgDesc) ogDesc.setAttribute('content', originalOgDesc);
+        if (ogUrl && originalOgUrl) ogUrl.setAttribute('content', originalOgUrl);
+
+        // Restore Twitter metadata
+        if (twTitle && originalTwTitle) twTitle.setAttribute('content', originalTwTitle);
+        if (twDesc && originalTwDesc) twDesc.setAttribute('content', originalTwDesc);
+        if (twUrl && originalTwUrl) twUrl.setAttribute('content', originalTwUrl);
+
+        // Remove dynamic structured data
+        const dynamicSchema = document.getElementById(`schema-${post.slug}`);
+        if (dynamicSchema) {
+          dynamicSchema.remove();
         }
       };
     }
@@ -292,8 +385,26 @@ export const BlogPost: React.FC = () => {
   const shareUrl = window.location.href;
   const shareTitle = post.title;
 
-  // Split content by ad placeholders
-  const contentParts = post.content.split(/<!-- AD_PLACEHOLDER_\d+ -->/);
+  // Keyword Auto-Linking: Automatically link related technical terms only on first occurrence
+  const processedContent = React.useMemo(() => {
+    if (!post) return '';
+    let c = post.content;
+    const AUTO_LINKS = [
+      { phrase: 'Insecure Direct Object Reference', slug: 'idor-vulnerability-guide' },
+      { phrase: 'Broken Access Control', slug: 'broken-access-control-owasp-a01-analysis' }
+    ];
+    AUTO_LINKS.forEach(({ phrase, slug }) => {
+      if (slug === post.slug) return;
+      // Match whole phrase, case-insensitive, skip if it's already inside a link
+      // Use a simple first-occurrence replacement for safety
+      const regex = new RegExp(`(?<!\\[)\\b${phrase}\\b(?!\\]\\()`, 'i');
+      c = c.replace(regex, (match) => `[${match}](/blog/${slug})`);
+    });
+    return c;
+  }, [post]);
+
+  // Split content by ad placeholders using the auto-linked content
+  const contentParts = processedContent.split(/<!-- AD_PLACEHOLDER_\d+ -->/);
 
   // BAC Infographic Component
   const BACInfographic: React.FC = () => {
@@ -644,6 +755,12 @@ export const BlogPost: React.FC = () => {
         </p>
       </div>
     ),
+    a: ({ href, children }: any) => {
+      if (href?.startsWith('/blog/')) {
+        return <Link to={href} className="text-accent-cyan hover:underline decoration-accent-cyan/30 underline-offset-4">{children}</Link>;
+      }
+      return <a href={href} className="text-accent-cyan hover:underline decoration-accent-cyan/30 underline-offset-4" target="_blank" rel="noopener noreferrer">{children}</a>;
+    },
   };
 
   return (
@@ -737,10 +854,45 @@ export const BlogPost: React.FC = () => {
                 <div className="blog-content">
                   {contentParts.map((part, index) => (
                     <React.Fragment key={index}>
-                      <ReactMarkdown components={components as any}>{part}</ReactMarkdown>
+                      <ReactMarkdown
+                        components={components as any}
+                      >
+                        {part}
+                      </ReactMarkdown>
                       {index < contentParts.length - 1 && <AdBlock />}
                     </React.Fragment>
                   ))}
+                </div>
+
+                {/* Related Articles Module - SEO Internal Linking */}
+                <div className="mt-24 pt-24 border-t border-white/5">
+                  <div className="flex items-center gap-3 text-accent-cyan font-mono text-[10px] uppercase tracking-[0.4em] font-black mb-8">
+                    <Shield size={14} />
+                    <span>Technical Intelligence: Related Research</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {blogPosts
+                      .filter(p => p.slug !== post.slug && p.tags.some(tag => post.tags.includes(tag)))
+                      .slice(0, 2)
+                      .map((relatedPost) => (
+                        <Link
+                          key={relatedPost.id}
+                          to={`/blog/${relatedPost.slug}`}
+                          className="group block p-8 rounded-3xl bg-white/[0.01] border border-white/5 hover:border-accent-cyan/20 hover:bg-white/[0.03] transition-all duration-500"
+                        >
+                          <div className="flex flex-col gap-4">
+                            <span className="text-[10px] font-mono text-text-secondary uppercase tracking-widest">{relatedPost.publishDate}</span>
+                            <h4 className="text-xl font-orbitron font-black text-text-primary group-hover:text-accent-cyan transition-colors uppercase italic leading-tight">
+                              {relatedPost.title}
+                            </h4>
+                            <div className="flex items-center gap-2 text-accent-cyan font-mono text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-[-10px] group-hover:translate-x-0">
+                              DECRYPT RESEARCH <ArrowRight size={12} />
+                            </div>
+                          </div>
+                        </Link>
+                      ))}
+                  </div>
                 </div>
 
                 {/* News Subscription - Moved & Resized */}

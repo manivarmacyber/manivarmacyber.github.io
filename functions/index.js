@@ -17,7 +17,7 @@ exports.onNewBlogPost = onDocumentCreated("blogPosts/{blogId}", async (event) =>
     const blogData = snapshot.data();
     const title = blogData.title || "New Security Research Published 🚀";
     const slug = blogData.slug;
-    const blogUrl = `https://mani-varma.netlify.app/blog/${slug}`;
+    const blogUrl = `https://manivarmacyber.pages.dev/blog/${slug}`;
 
     try {
         // 1. Fetch all active subscribers
@@ -47,7 +47,7 @@ exports.onNewBlogPost = onDocumentCreated("blogPosts/{blogId}", async (event) =>
             webpush: {
                 notification: {
                     click_action: blogUrl,
-                    icon: "https://mani-varma.netlify.app/favicon.ico"
+                    icon: "https://manivarmacyber.pages.dev/favicon.ico"
                 }
             },
             tokens: tokens

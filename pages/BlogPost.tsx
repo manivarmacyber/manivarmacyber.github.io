@@ -60,6 +60,17 @@ export const BlogPost: React.FC = () => {
 
   React.useEffect(() => {
     if (post) {
+      // SEO Logic: Update Document Title
+      const originalTitle = document.title;
+      document.title = `${post.title} | Mani Varma`;
+
+      // SEO Logic: Update Meta Description
+      const metaDescription = document.querySelector('meta[name="description"]');
+      const originalDescription = metaDescription?.getAttribute('content');
+      if (metaDescription) {
+        metaDescription.setAttribute('content', post.excerpt);
+      }
+
       const storedLikes = localStorage.getItem(`blog-likes-${post.id}`);
       const userLiked = localStorage.getItem(`blog-liked-${post.id}`);
       const userSubscribed = localStorage.getItem(`blog-subscribed`);
@@ -105,7 +116,11 @@ export const BlogPost: React.FC = () => {
       // checkSubscription(); // Removed for privacy and cost optimization
 
       return () => {
-        // No listeners to unsubscribe from for optimized performance
+        // Restore original SEO on unmount
+        document.title = originalTitle;
+        if (metaDescription && originalDescription) {
+          metaDescription.setAttribute('content', originalDescription);
+        }
       };
     }
   }, [post]);

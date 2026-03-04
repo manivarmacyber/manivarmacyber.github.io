@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://manivarmacyber.netlify.app/</loc>
+    <loc>https://manivarmacyber.pages.dev/</loc>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://manivarmacyber.netlify.app/#projects</loc>
+    <loc>https://manivarmacyber.pages.dev/#projects</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://manivarmacyber.netlify.app/#experience</loc>
+    <loc>https://manivarmacyber.pages.dev/#experience</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://manivarmacyber.netlify.app/#skills</loc>
+    <loc>https://manivarmacyber.pages.dev/#skills</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://manivarmacyber.netlify.app/#contact</loc>
+    <loc>https://manivarmacyber.pages.dev/#contact</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://manivarmacyber.netlify.app/#blog</loc>
+    <loc>https://manivarmacyber.pages.dev/#blog</loc>
     <priority>0.8</priority>
   </url>
 </urlset>

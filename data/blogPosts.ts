@@ -137,9 +137,9 @@ Fixing BAC requires a defense-in-depth approach centered on server-side validati
   },
   {
     id: '2',
-    title: 'Insecure Direct Object Reference (IDOR) – A Deep Technical Analysis of Modern Authorization Failures',
-    slug: 'insecure-direct-object-reference-deep-dive',
-    excerpt: 'An exhaustive analysis of IDOR vulnerabilities, mapping technical roots to enterprise risks, CVSS v4.0 standards, and industry detection frameworks.',
+    title: 'IDOR Vulnerability Explained | Cybersecurity Guide',
+    slug: 'idor-vulnerability-guide',
+    excerpt: 'Learn how Insecure Direct Object Reference (IDOR) vulnerabilities work, how attackers exploit them, and how developers can prevent them.',
     publishDate: 'MARCH 03, 2026',
     author: 'Mani Varma',
     tags: ['OWASP TOP 10', 'PENETRATION TESTING', 'AUTHORIZATION', 'AD-READY'],

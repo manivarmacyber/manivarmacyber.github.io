@@ -417,6 +417,124 @@ export const BlogPost: React.FC = () => {
     );
   };
 
+  // IDOR specific components
+  const IDORFlowDiagram: React.FC = () => (
+    <div className="my-10 flex flex-col items-center gap-3">
+      <motion.img
+        src="/idor-diagram.png"
+        alt="Insecure Direct Object Reference Vulnerability Flow"
+        loading="lazy"
+        className="max-w-2xl w-full rounded-2xl border border-border shadow-lg"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      />
+      <p className="font-mono text-[10px] text-text-secondary opacity-40 uppercase tracking-[0.4em] font-black italic text-center">
+        TECHNICAL ARCHITECTURE: IDOR MANIPULATION & DATA EXPOSURE
+      </p>
+    </div>
+  );
+
+  const IDORCVSSAnalysis: React.FC = () => (
+    <div className="my-20 space-y-12">
+      <h3 className="text-3xl md:text-4xl font-orbitron font-black text-text-primary uppercase tracking-tighter italic border-l-8 border-accent-cyan pl-6 mb-12">
+        IDOR Severity Landscape: CVSS Evolution
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {[
+          { label: 'CVSS v2.0', score: '5.0', severity: 'MEDIUM', focus: 'Partial Confidentiality Impact' },
+          { label: 'CVSS v3.1', score: '7.5', severity: 'HIGH', focus: 'High Impact on Confidentiality' },
+          { label: 'CVSS v4.0', score: '8.7', severity: 'HIGH', focus: 'Logical Authentication Failure' }
+        ].map((item, idx) => (
+          <div key={idx} className="p-8 rounded-3xl bg-card-bg border border-border text-center group hover:border-accent-cyan/40 transition-all shadow-sm">
+            <span className="text-[12px] font-mono font-black text-accent-cyan uppercase tracking-[0.3em]">{item.label}</span>
+            <div className="text-6xl font-orbitron font-black my-4 tabular-nums text-text-primary">{item.score}</div>
+            <div className="text-[10px] font-bold text-text-secondary uppercase tracking-widest block mb-4 font-mono">{item.severity}</div>
+            <p className="text-xs text-text-secondary italic">"{item.focus}"</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  const PTESOSSTMMComparison: React.FC = () => (
+    <div className="my-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="p-10 bg-white/[0.02] border border-white/5 rounded-[2.5rem] relative overflow-hidden group hover:border-accent-cyan/30 transition-all">
+        <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+          <Target size={80} className="text-accent-cyan" />
+        </div>
+        <h4 className="text-2xl font-orbitron font-black text-text-primary mb-6 flex items-center gap-3">
+          <div className="w-2 h-8 bg-accent-cyan" />
+          PTES FRAMEWORK
+        </h4>
+        <ul className="space-y-4 text-sm text-text-secondary font-medium">
+          <li className="flex gap-3"><span className="text-accent-cyan font-bold">•</span> Intelligence gathering for object discovery</li>
+          <li className="flex gap-3"><span className="text-accent-cyan font-bold">•</span> Threat modeling against resource ownership</li>
+          <li className="flex gap-3"><span className="text-accent-cyan font-bold">•</span> Exploitation of numeric/patterned IDs</li>
+          <li className="flex gap-3"><span className="text-accent-cyan font-bold">•</span> Post-exploitation data exfiltration mapping</li>
+        </ul>
+      </div>
+      <div className="p-10 bg-white/[0.02] border border-white/5 rounded-[2.5rem] relative overflow-hidden group hover:border-accent-cyan/30 transition-all">
+        <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+          <Shield size={80} className="text-accent-cyan" />
+        </div>
+        <h4 className="text-2xl font-orbitron font-black text-text-primary mb-6 flex items-center gap-3">
+          <div className="w-2 h-8 bg-accent-cyan" />
+          OSSTMM METHOD
+        </h4>
+        <ul className="space-y-4 text-sm text-text-secondary font-medium">
+          <li className="flex gap-3"><span className="text-accent-cyan font-bold">•</span> Operational security metric validation</li>
+          <li className="flex gap-3"><span className="text-accent-cyan font-bold">•</span> Trust metric concept for user relationships</li>
+          <li className="flex gap-3"><span className="text-accent-cyan font-bold">•</span> Attack surface mapping of direct references</li>
+          <li className="flex gap-3"><span className="text-accent-cyan font-bold">•</span> Quantifiable risk measurement of AuthZ</li>
+        </ul>
+      </div>
+    </div>
+  );
+
+  const IDORvsBACComparison: React.FC = () => (
+    <div className="my-20 p-10 md:p-14 border border-border bg-card-bg rounded-[3rem] shadow-2xl relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-96 h-96 bg-accent-cyan/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
+      <h3 className="text-3xl font-orbitron font-black text-text-primary mb-12 uppercase italic relative z-10 flex items-center gap-4">
+        <AlertTriangle className="text-accent-cyan" />
+        IDOR vs. Broken Access Control
+      </h3>
+      <div className="overflow-x-auto relative z-10">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="border-b border-white/10">
+              <th className="py-6 px-4 font-mono text-[10px] text-accent-cyan uppercase tracking-[0.3em]">Feature</th>
+              <th className="py-6 px-4 font-mono text-[10px] text-accent-cyan uppercase tracking-[0.3em]">IDOR (Specific)</th>
+              <th className="py-6 px-4 font-mono text-[10px] text-accent-cyan uppercase tracking-[0.3em]">BAC (General)</th>
+            </tr>
+          </thead>
+          <tbody className="text-text-secondary text-sm">
+            <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+              <td className="py-6 px-4 font-bold text-text-primary">Classification</td>
+              <td className="py-6 px-4 italic">Subset of Broken Access Control</td>
+              <td className="py-6 px-4 italic">Broad security category</td>
+            </tr>
+            <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+              <td className="py-6 px-4 font-bold text-text-primary">Primary Fail</td>
+              <td className="py-6 px-4">Object-Level Ownership</td>
+              <td className="py-6 px-4">Function or Object Level</td>
+            </tr>
+            <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+              <td className="py-6 px-4 font-bold text-text-primary">Exploit Path</td>
+              <td className="py-6 px-4 opacity-80">Manipulating identifiers (IDs, slugs, keys)</td>
+              <td className="py-6 px-4 opacity-80">Bypassing checks, URL hijacking, Role elevation</td>
+            </tr>
+            <tr className="hover:bg-white/[0.02] transition-colors">
+              <td className="py-6 px-4 font-bold text-text-primary">Best Fix</td>
+              <td className="py-6 px-4 text-accent-cyan font-bold">Ownership-based database filtering</td>
+              <td className="py-6 px-4 text-accent-cyan font-bold">Comprehensive RBAC/ABAC enforcement</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+
   const components = {
     // Override default rendering for specific placeholders
     h1: ({ ...props }) => (
@@ -479,6 +597,10 @@ export const BlogPost: React.FC = () => {
           </p>
         </div>
       );
+      if (content === 'MARKER_IDOR_FLOW') return <IDORFlowDiagram />;
+      if (content === 'MARKER_IDOR_CVSS') return <IDORCVSSAnalysis />;
+      if (content === 'MARKER_PTES_OSSTMM') return <PTESOSSTMMComparison />;
+      if (content === 'MARKER_IDOR_COMPARISON') return <IDORvsBACComparison />;
 
       const isFirstParagraph = children?.[0]?.props?.node?.position?.start?.line === 2 || children?.toString().startsWith('Access control');
       return (

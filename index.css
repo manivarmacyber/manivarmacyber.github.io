@@ -49,15 +49,17 @@ body {
 
 /* ── LIGHT MODE — Enterprise Cyber SaaS ── */
 [data-theme='light'] {
-  --color-bg: #f1f5f9;
-  --color-nav-bg: rgba(255, 255, 255, 0.92);
-  --color-accent-cyan: #0284c7;
-  --color-accent-violet: #7c3aed;
+  --color-bg: #f8fafc;
+  --color-nav-bg: rgba(255, 255, 255, 0.94);
+  --color-accent-cyan: #075985;
+  /* Darker Sky 800 for contrast */
+  --color-accent-violet: #6d28d9;
   --color-text-primary: #0f172a;
-  --color-text-secondary: #475569;
-  --color-border: rgba(15, 23, 42, 0.09);
+  --color-text-secondary: #334155;
+  /* Slate 700 for better AA contrast */
+  --color-border: rgba(15, 23, 42, 0.12);
   --color-card-bg: #ffffff;
-  --color-selection-bg: #0284c7;
+  --color-selection-bg: #0ea5e9;
   --color-selection-text: #ffffff;
 }
 

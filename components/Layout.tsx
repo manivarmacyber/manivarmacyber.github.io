@@ -52,14 +52,14 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeSection = 'home'
               <Shield className="text-accent-cyan shadow-[0_0_15px_#00E6FF]" size={24} />
               <span className="font-orbitron font-black tracking-tighter text-xl text-glow-cyan">MANI VARMA</span>
             </div>
-            <p className="text-text-secondary/60 text-sm leading-relaxed">
+            <p className="text-text-secondary/80 text-sm leading-relaxed">
               Elite Cybersecurity Authority specializing in advanced penetration testing and vulnerability research.
             </p>
           </div>
 
           <div>
             <h4 className="font-orbitron font-bold text-xs tracking-widest text-text-secondary/80 mb-6 uppercase">Quick Links</h4>
-            <ul className="space-y-4 text-sm text-text-secondary/60">
+            <ul className="space-y-4 text-sm text-text-secondary/80">
               <li><a href="/#home" className="hover:text-accent-cyan transition-colors">Home</a></li>
               <li><a href="/#skills" className="hover:text-accent-cyan transition-colors">Skills</a></li>
               <li><a href="/#operational-outputs" className="hover:text-accent-cyan transition-colors">Projects</a></li>
@@ -69,7 +69,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeSection = 'home'
 
           <div>
             <h4 className="font-orbitron font-bold text-xs tracking-widest text-text-secondary/80 mb-6 uppercase">Legal</h4>
-            <ul className="space-y-4 text-sm text-text-secondary/60">
+            <ul className="space-y-4 text-sm text-text-secondary/80">
               <li><a href="/privacy" className="hover:text-accent-cyan transition-colors">Privacy Policy</a></li>
               <li><a href="/about" className="hover:text-accent-cyan transition-colors">About</a></li>
               <li><a href="/contact" className="hover:text-accent-cyan transition-colors">Contact</a></li>
@@ -83,7 +83,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeSection = 'home'
                 <div className="w-2 h-2 bg-accent-cyan rounded-full animate-pulse shadow-[0_0_8px_#00E6FF]" />
                 <span className="font-mono tracking-tighter">NODE_ACTIVE // SECURE_LINK_ESTABLISHED</span>
               </div>
-              <div className="text-[10px] font-mono text-text-secondary/20 uppercase tracking-widest">
+              <div className="text-[10px] font-mono text-text-secondary/50 uppercase tracking-widest">
                 VER: 4.2.0_LUXURY_CORE
               </div>
             </div>

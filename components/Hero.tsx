@@ -95,10 +95,10 @@ export const Hero: React.FC = () => {
               href="https://drive.google.com/file/d/1YaNxcLwMoInBADwMBoBE_dquYQqFRuKQ/view?usp=drivesdk"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-7 py-3.5 border border-accent-cyan/25 bg-transparent text-accent-cyan
+              className="px-7 py-3.5 border border-accent-cyan/30 md:border-accent-cyan/25 bg-transparent text-accent-cyan
                 font-orbitron font-bold text-[0.65rem] uppercase tracking-[0.18em] transition-all
                 rounded-xl flex items-center justify-center gap-2.5
-                hover:bg-accent-cyan/[0.06] hover:border-accent-cyan/50 w-full sm:w-auto"
+                hover:bg-accent-cyan/[0.06] hover:border-accent-cyan/60 w-full sm:w-auto"
               aria-label="View resume in new tab"
             >
               <Terminal size={16} aria-hidden="true" />
@@ -109,10 +109,10 @@ export const Hero: React.FC = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-7 py-3.5 border border-accent-cyan/25 bg-transparent text-accent-cyan
+              className="px-7 py-3.5 border border-accent-cyan/30 md:border-accent-cyan/25 bg-transparent text-accent-cyan
                 font-orbitron font-bold text-[0.65rem] uppercase tracking-[0.18em] transition-all
                 rounded-xl flex items-center justify-center gap-2.5
-                hover:bg-accent-cyan/[0.06] hover:border-accent-cyan/50 w-full sm:w-auto"
+                hover:bg-accent-cyan/[0.06] hover:border-accent-cyan/60 w-full sm:w-auto"
               aria-label="Scroll to contact section"
             >
               <MessageSquare size={16} aria-hidden="true" />

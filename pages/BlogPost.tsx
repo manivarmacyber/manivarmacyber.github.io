@@ -82,6 +82,7 @@ export const BlogPost: React.FC = () => {
       // SEO Logic: Update Canonical Link
       let canonicalLink = document.querySelector('link[rel="canonical"]');
       const originalCanonical = canonicalLink?.getAttribute('href');
+      const canonicalIsNew = !canonicalLink;
       if (!canonicalLink) {
         canonicalLink = document.createElement('link');
         canonicalLink.setAttribute('rel', 'canonical');
@@ -89,71 +90,54 @@ export const BlogPost: React.FC = () => {
       }
       canonicalLink.setAttribute('href', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
 
-      // SEO Logic: Update Open Graph Metadata
-      const ogTitle = document.querySelector('meta[property="og:title"]');
-      const ogDesc = document.querySelector('meta[property="og:description"]');
-      const ogUrl = document.querySelector('meta[property="og:url"]');
-      const ogType = document.querySelector('meta[property="og:type"]');
-      const ogImg = document.querySelector('meta[property="og:image"]');
-      const artTime = document.querySelector('meta[property="article:published_time"]');
-      const artModTime = document.querySelector('meta[property="article:modified_time"]');
-      const artAuthor = document.querySelector('meta[property="article:author"]');
-      const standardAuthor = document.querySelector('meta[name="author"]');
-
-      const originalOgTitle = ogTitle?.getAttribute('content');
-      const originalOgDesc = ogDesc?.getAttribute('content');
-      const originalOgUrl = ogUrl?.getAttribute('content');
-      const originalOgType = ogType?.getAttribute('content');
-      const originalOgImg = ogImg?.getAttribute('content');
-      const originalArtTime = artTime?.getAttribute('content');
-      const originalArtModTime = artModTime?.getAttribute('content');
-      const originalArtAuthor = artAuthor?.getAttribute('content');
-      const originalStandardAuthor = standardAuthor?.getAttribute('content');
-
-      if (ogTitle) ogTitle.setAttribute('content', post.title);
-      if (ogDesc) ogDesc.setAttribute('content', post.excerpt);
-      if (ogUrl) ogUrl.setAttribute('content', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
-      if (ogType) ogType.setAttribute('content', 'article');
-      if (ogImg) ogImg.setAttribute('content', `https://manivarmacyber.pages.dev${post.image}`);
-
-      // Article specific metadata
-      if (artTime) {
-        try {
-          const dateOnly = new Date(post.publishDate).toISOString().split('T')[0];
-          artTime.setAttribute('content', `${dateOnly}T10:00:00+00:00`);
-        } catch (e) {
-          artTime.setAttribute('content', post.publishDate);
+      // SEO Logic: Update Open Graph & Article Metadata Robustly
+      const setOrCreateMeta = (attrName: 'property' | 'name', attrValue: string, content: string) => {
+        let el = document.querySelector(`meta[${attrName}="${attrValue}"]`);
+        const originalContent = el ? el.getAttribute('content') : null;
+        const isNew = !el;
+        if (!el) {
+          el = document.createElement('meta');
+          el.setAttribute(attrName, attrValue);
+          document.head.appendChild(el);
         }
+        el.setAttribute('content', content);
+        return { el, originalContent, isNew };
+      };
+
+      const ogTitle = setOrCreateMeta('property', 'og:title', post.title);
+      const ogDesc = setOrCreateMeta('property', 'og:description', post.excerpt);
+      const ogUrl = setOrCreateMeta('property', 'og:url', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
+      const ogType = setOrCreateMeta('property', 'og:type', 'article');
+      const ogImg = setOrCreateMeta('property', 'og:image', `https://manivarmacyber.pages.dev${post.image}`);
+
+      const artAuthor = setOrCreateMeta('property', 'article:author', 'G Manikanta Varma');
+      const standardAuthor = setOrCreateMeta('name', 'author', 'G Manikanta Varma');
+
+      // Date logic
+      let publishTimeIso = '';
+      try {
+        publishTimeIso = new Date(post.publishDate).toISOString().split('T')[0] + 'T10:00:00+00:00';
+      } catch (e) {
+        publishTimeIso = post.publishDate;
       }
-      if (artModTime) {
-        try {
-          const modDate = post.updatedDate || post.publishDate || new Date().toISOString();
-          const dateOnly = new Date(modDate).toISOString().split('T')[0];
-          artModTime.setAttribute('content', `${dateOnly}T10:00:00+00:00`);
-        } catch (e) {
-          artModTime.setAttribute('content', post.updatedDate || post.publishDate || '');
-        }
+
+      let modifiedTimeIso = '';
+      try {
+        const modDate = post.updatedDate || post.publishDate || new Date().toISOString();
+        modifiedTimeIso = new Date(modDate).toISOString().split('T')[0] + 'T10:00:00+00:00';
+      } catch (e) {
+        modifiedTimeIso = post.updatedDate || post.publishDate || '';
       }
-      if (artAuthor) artAuthor.setAttribute('content', `G Manikanta Varma`);
-      if (standardAuthor) standardAuthor.setAttribute('content', `G Manikanta Varma`);
 
-      // SEO Logic: Update Twitter Metadata
-      const twCard = document.querySelector('meta[name="twitter:card"]');
-      const twTitle = document.querySelector('meta[name="twitter:title"]');
-      const twDesc = document.querySelector('meta[name="twitter:description"]');
-      const twUrl = document.querySelector('meta[name="twitter:url"]');
-      const twImg = document.querySelector('meta[name="twitter:image"]');
+      const artTime = setOrCreateMeta('property', 'article:published_time', publishTimeIso);
+      const artModTime = setOrCreateMeta('property', 'article:modified_time', modifiedTimeIso);
 
-      const originalTwCard = twCard?.getAttribute('content');
-      const originalTwTitle = twTitle?.getAttribute('content');
-      const originalTwDesc = twDesc?.getAttribute('content');
-      const originalTwUrl = twUrl?.getAttribute('content');
-      const originalTwImg = twImg?.getAttribute('content');
-
-      if (twTitle) twTitle.setAttribute('content', post.title);
-      if (twDesc) twDesc.setAttribute('content', post.excerpt);
-      if (twUrl) twUrl.setAttribute('content', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
-      if (twImg) twImg.setAttribute('content', `https://manivarmacyber.pages.dev${post.image}`);
+      // Twitter Metadata
+      const twCard = setOrCreateMeta('name', 'twitter:card', 'summary_large_image');
+      const twTitle = setOrCreateMeta('name', 'twitter:title', post.title);
+      const twDesc = setOrCreateMeta('name', 'twitter:description', post.excerpt);
+      const twUrl = setOrCreateMeta('name', 'twitter:url', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
+      const twImg = setOrCreateMeta('name', 'twitter:image', `https://manivarmacyber.pages.dev${post.image}`);
 
       // SEO Logic: Update Structured Data (JSON-LD)
       const schemaScript = document.createElement('script');
@@ -240,27 +224,31 @@ export const BlogPost: React.FC = () => {
         if (metaKeywords && originalKeywords) {
           metaKeywords.setAttribute('content', originalKeywords);
         }
-        if (canonicalLink && originalCanonical) {
+        if (canonicalIsNew && canonicalLink) {
+          canonicalLink.remove();
+        } else if (canonicalLink && originalCanonical) {
           canonicalLink.setAttribute('href', originalCanonical);
         }
 
         // Restore OG metadata
-        if (ogTitle && originalOgTitle) ogTitle.setAttribute('content', originalOgTitle);
-        if (ogDesc && originalOgDesc) ogDesc.setAttribute('content', originalOgDesc);
-        if (ogUrl && originalOgUrl) ogUrl.setAttribute('content', originalOgUrl);
-        if (ogType && originalOgType) ogType.setAttribute('content', originalOgType);
-        if (ogImg && originalOgImg) ogImg.setAttribute('content', originalOgImg);
-        if (artTime) artTime.setAttribute('content', originalArtTime || '');
-        if (artModTime) artModTime.setAttribute('content', originalArtModTime || '');
-        if (artAuthor) artAuthor.setAttribute('content', originalArtAuthor || '');
-        if (standardAuthor) standardAuthor.setAttribute('content', originalStandardAuthor || '');
+        if (ogTitle.isNew) ogTitle.el.remove(); else if (ogTitle.originalContent) ogTitle.el.setAttribute('content', ogTitle.originalContent);
+        if (ogDesc.isNew) ogDesc.el.remove(); else if (ogDesc.originalContent) ogDesc.el.setAttribute('content', ogDesc.originalContent);
+        if (ogUrl.isNew) ogUrl.el.remove(); else if (ogUrl.originalContent) ogUrl.el.setAttribute('content', ogUrl.originalContent);
+        if (ogType.isNew) ogType.el.remove(); else if (ogType.originalContent) ogType.el.setAttribute('content', ogType.originalContent);
+        if (ogImg.isNew) ogImg.el.remove(); else if (ogImg.originalContent) ogImg.el.setAttribute('content', ogImg.originalContent);
+
+        // Restore Article metadata
+        if (artTime.isNew) artTime.el.remove(); else if (artTime.originalContent) artTime.el.setAttribute('content', artTime.originalContent);
+        if (artModTime.isNew) artModTime.el.remove(); else if (artModTime.originalContent) artModTime.el.setAttribute('content', artModTime.originalContent);
+        if (artAuthor.isNew) artAuthor.el.remove(); else if (artAuthor.originalContent) artAuthor.el.setAttribute('content', artAuthor.originalContent);
+        if (standardAuthor.isNew) standardAuthor.el.remove(); else if (standardAuthor.originalContent) standardAuthor.el.setAttribute('content', standardAuthor.originalContent);
 
         // Restore Twitter metadata
-        if (twCard && originalTwCard) twCard.setAttribute('content', originalTwCard);
-        if (twTitle && originalTwTitle) twTitle.setAttribute('content', originalTwTitle);
-        if (twDesc && originalTwDesc) twDesc.setAttribute('content', originalTwDesc);
-        if (twUrl && originalTwUrl) twUrl.setAttribute('content', originalTwUrl);
-        if (twImg && originalTwImg) twImg.setAttribute('content', originalTwImg);
+        if (twCard.isNew) twCard.el.remove(); else if (twCard.originalContent) twCard.el.setAttribute('content', twCard.originalContent);
+        if (twTitle.isNew) twTitle.el.remove(); else if (twTitle.originalContent) twTitle.el.setAttribute('content', twTitle.originalContent);
+        if (twDesc.isNew) twDesc.el.remove(); else if (twDesc.originalContent) twDesc.el.setAttribute('content', twDesc.originalContent);
+        if (twUrl.isNew) twUrl.el.remove(); else if (twUrl.originalContent) twUrl.el.setAttribute('content', twUrl.originalContent);
+        if (twImg.isNew) twImg.el.remove(); else if (twImg.originalContent) twImg.el.setAttribute('content', twImg.originalContent);
 
         // Remove dynamic structured data
         const dynamicSchema = document.getElementById(`schema-${post.slug}`);

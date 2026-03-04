@@ -2,8 +2,9 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Navigation } from './Navigation';
-import { Shield, Lock, Cpu, Globe } from 'lucide-react';
+import { Shield, Lock, Cpu, Globe, FileText, ArrowRight } from 'lucide-react';
 import { FestivalEngine } from './FestivalEngine';
+import { blogPosts } from '../data/blogPosts';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -11,6 +12,7 @@ interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children, activeSection = 'home' }) => {
+  const latestPost = blogPosts[0];
   const [theme, setTheme] = React.useState<'dark' | 'light'>(() => {
     const rootTheme = document.documentElement.getAttribute('data-theme');
     if (rootTheme === 'dark' || rootTheme === 'light') return rootTheme;
@@ -64,7 +66,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeSection = 'home'
               <li><Link to="/#home" className="hover:text-accent-cyan transition-colors">Home</Link></li>
               <li><Link to="/#skills" className="hover:text-accent-cyan transition-colors">Skills</Link></li>
               <li><Link to="/#operational-outputs" className="hover:text-accent-cyan transition-colors">Projects</Link></li>
-              <li><Link to="/blog" className="hover:text-accent-cyan transition-colors">Blog</Link></li>
+              <li><Link to="/blog" className="hover:text-accent-cyan transition-colors">Blog Repository</Link></li>
             </ul>
           </div>
 
@@ -72,22 +74,30 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeSection = 'home'
             <h4 className="font-orbitron font-bold text-xs tracking-widest text-text-secondary/80 mb-6 uppercase">Legal</h4>
             <ul className="space-y-4 text-sm text-text-secondary/80">
               <li><Link to="/privacy" className="hover:text-accent-cyan transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/about" className="hover:text-accent-cyan transition-colors">About</Link></li>
+              <li><Link to="/about" className="hover:text-accent-cyan transition-colors">About Operative</Link></li>
               <li><Link to="/contact" className="hover:text-accent-cyan transition-colors">Contact</Link></li>
             </ul>
           </div>
 
-          <div>
-            <h4 className="font-orbitron font-bold text-xs tracking-widest text-text-secondary/80 mb-6 uppercase">System Protocol</h4>
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-xs text-accent-cyan">
-                <div className="w-2 h-2 bg-accent-cyan rounded-full animate-pulse shadow-[0_0_8px_#00E6FF]" />
-                <span className="font-mono tracking-tighter">NODE_ACTIVE // SECURE_LINK_ESTABLISHED</span>
+          <div className="space-y-6">
+            <h4 className="font-orbitron font-bold text-xs tracking-widest text-text-secondary/80 mb-6 uppercase">Latest Research</h4>
+            <Link
+              to={`/blog/${latestPost.slug}`}
+              className="group block p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-accent-cyan/20 transition-all"
+            >
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-2 text-[8px] font-mono text-accent-cyan uppercase tracking-widest font-black">
+                  <FileText size={12} />
+                  <span>New Whitepaper</span>
+                </div>
+                <h5 className="text-[11px] font-orbitron font-bold text-text-primary group-hover:text-accent-cyan transition-colors leading-tight uppercase line-clamp-2">
+                  {latestPost.title}
+                </h5>
+                <div className="flex items-center gap-2 text-[8px] font-mono text-text-secondary uppercase tracking-[0.2em] group-hover:text-accent-cyan transition-colors">
+                  READ ARTICLE <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
+                </div>
               </div>
-              <div className="text-[10px] font-mono text-text-secondary/50 uppercase tracking-widest">
-                VER: 4.2.0_LUXURY_CORE
-              </div>
-            </div>
+            </Link>
           </div>
         </div>
 

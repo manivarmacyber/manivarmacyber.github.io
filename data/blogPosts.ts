@@ -138,7 +138,7 @@ Fixing BAC requires a defense-in-depth approach centered on server-side validati
   {
     id: '2',
     title: 'IDOR Vulnerability Explained | Cybersecurity Guide',
-    slug: 'idor-vulnerability-guide',
+    slug: 'idor-security-analysis',
     excerpt: 'Learn how Insecure Direct Object Reference (IDOR) vulnerabilities work, how attackers exploit them, and how developers can prevent them.',
     publishDate: 'MARCH 03, 2026',
     author: 'Mani Varma',

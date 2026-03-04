@@ -1,9 +1,13 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Layout } from '../components/Layout';
-import { Shield, Target, Cpu, Lock } from 'lucide-react';
+import { Shield, Target, Cpu, Lock, ArrowRight, BookOpen } from 'lucide-react';
+import { blogPosts } from '../data/blogPosts';
+import { Link } from 'react-router-dom';
 
 export const About: React.FC = () => {
+  const featuredPosts = blogPosts.slice(0, 2);
+
   return (
     <div className="pt-24 pb-12">
       <div className="container-progressive px-0">
@@ -51,6 +55,47 @@ export const About: React.FC = () => {
                   <p className="text-sm text-text-primary/40">Setting the standard for elite penetration testing.</p>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Research Highlights - SEO Internal Linking */}
+          <div className="mt-20 pt-20 border-t border-border">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+              <div className="space-y-4">
+                <span className="text-accent-cyan font-mono text-[10px] uppercase tracking-[0.4em] font-black italic">Operative Intelligence</span>
+                <h2 className="text-3xl md:text-4xl font-orbitron font-black text-text-primary uppercase italic tracking-tighter">
+                  RESEARCH <span className="text-accent-cyan">HIGHLIGHTS</span>
+                </h2>
+              </div>
+              <Link
+                to="/blog"
+                className="group flex items-center gap-3 text-text-secondary hover:text-accent-cyan transition-colors font-orbitron font-bold text-xs tracking-[0.3em] uppercase"
+              >
+                View Repository <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {featuredPosts.map((post) => (
+                <Link
+                  key={post.id}
+                  to={`/blog/${post.slug}`}
+                  className="group block p-8 rounded-3xl bg-white/[0.01] border border-white/5 hover:border-accent-cyan/20 transition-all duration-500"
+                >
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center gap-4 text-[9px] font-mono text-text-secondary uppercase tracking-widest font-black">
+                      <span className="flex items-center gap-1.5"><BookOpen size={10} className="text-accent-cyan" /> {post.readingTime}</span>
+                      <span>{post.publishDate}</span>
+                    </div>
+                    <h4 className="text-xl font-orbitron font-black text-text-primary group-hover:text-accent-cyan transition-colors uppercase italic leading-tight">
+                      {post.title}
+                    </h4>
+                    <p className="text-sm text-text-secondary line-clamp-2 font-medium">
+                      {post.excerpt}
+                    </p>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         </motion.div>

@@ -90,25 +90,38 @@ export const BlogPost: React.FC = () => {
       const ogTitle = document.querySelector('meta[property="og:title"]');
       const ogDesc = document.querySelector('meta[property="og:description"]');
       const ogUrl = document.querySelector('meta[property="og:url"]');
+      const ogType = document.querySelector('meta[property="og:type"]');
+      const ogImg = document.querySelector('meta[property="og:image"]');
+
       const originalOgTitle = ogTitle?.getAttribute('content');
       const originalOgDesc = ogDesc?.getAttribute('content');
       const originalOgUrl = ogUrl?.getAttribute('content');
+      const originalOgType = ogType?.getAttribute('content');
+      const originalOgImg = ogImg?.getAttribute('content');
 
       if (ogTitle) ogTitle.setAttribute('content', `${post.title} | Mani Varma`);
       if (ogDesc) ogDesc.setAttribute('content', post.excerpt);
       if (ogUrl) ogUrl.setAttribute('content', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
+      if (ogType) ogType.setAttribute('content', 'article');
+      if (ogImg) ogImg.setAttribute('content', `https://manivarmacyber.pages.dev${post.image === '/idor-cover.jpg' ? '/images/idor-cover.png' : post.image}`);
 
       // SEO Logic: Update Twitter Metadata
-      const twTitle = document.querySelector('meta[property="twitter:title"]');
-      const twDesc = document.querySelector('meta[property="twitter:description"]');
-      const twUrl = document.querySelector('meta[property="twitter:url"]');
+      const twCard = document.querySelector('meta[name="twitter:card"]');
+      const twTitle = document.querySelector('meta[name="twitter:title"]');
+      const twDesc = document.querySelector('meta[name="twitter:description"]');
+      const twUrl = document.querySelector('meta[name="twitter:url"]');
+      const twImg = document.querySelector('meta[name="twitter:image"]');
+
+      const originalTwCard = twCard?.getAttribute('content');
       const originalTwTitle = twTitle?.getAttribute('content');
       const originalTwDesc = twDesc?.getAttribute('content');
       const originalTwUrl = twUrl?.getAttribute('content');
+      const originalTwImg = twImg?.getAttribute('content');
 
       if (twTitle) twTitle.setAttribute('content', `${post.title} | Mani Varma`);
       if (twDesc) twDesc.setAttribute('content', post.excerpt);
       if (twUrl) twUrl.setAttribute('content', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
+      if (twImg) twImg.setAttribute('content', `https://manivarmacyber.pages.dev${post.image === '/idor-cover.jpg' ? '/images/idor-cover.png' : post.image}`);
 
       // SEO Logic: Update Structured Data (JSON-LD)
       const schemaScript = document.createElement('script');
@@ -203,11 +216,15 @@ export const BlogPost: React.FC = () => {
         if (ogTitle && originalOgTitle) ogTitle.setAttribute('content', originalOgTitle);
         if (ogDesc && originalOgDesc) ogDesc.setAttribute('content', originalOgDesc);
         if (ogUrl && originalOgUrl) ogUrl.setAttribute('content', originalOgUrl);
+        if (ogType && originalOgType) ogType.setAttribute('content', originalOgType);
+        if (ogImg && originalOgImg) ogImg.setAttribute('content', originalOgImg);
 
         // Restore Twitter metadata
+        if (twCard && originalTwCard) twCard.setAttribute('content', originalTwCard);
         if (twTitle && originalTwTitle) twTitle.setAttribute('content', originalTwTitle);
         if (twDesc && originalTwDesc) twDesc.setAttribute('content', originalTwDesc);
         if (twUrl && originalTwUrl) twUrl.setAttribute('content', originalTwUrl);
+        if (twImg && originalTwImg) twImg.setAttribute('content', originalTwImg);
 
         // Remove dynamic structured data
         const dynamicSchema = document.getElementById(`schema-${post.slug}`);
@@ -390,8 +407,11 @@ export const BlogPost: React.FC = () => {
     if (!post) return '';
     let c = post.content;
     const AUTO_LINKS = [
-      { phrase: 'Insecure Direct Object Reference', slug: 'idor-vulnerability-guide' },
-      { phrase: 'Broken Access Control', slug: 'broken-access-control-owasp-a01-analysis' }
+      { phrase: 'Insecure Direct Object Reference', slug: 'idor-security-analysis' },
+      { phrase: 'Broken Access Control', slug: 'broken-access-control-owasp-a01-analysis' },
+      { phrase: 'IDOR', slug: 'idor-security-analysis' },
+      { phrase: 'BAC', slug: 'broken-access-control-owasp-a01-analysis' },
+      { phrase: 'OWASP Top 10', slug: 'broken-access-control-owasp-a01-analysis' }
     ];
     AUTO_LINKS.forEach(({ phrase, slug }) => {
       if (slug === post.slug) return;

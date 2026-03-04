@@ -80,11 +80,14 @@ export const BlogPost: React.FC = () => {
       }
 
       // SEO Logic: Update Canonical Link
-      const canonicalLink = document.querySelector('link[rel="canonical"]');
+      let canonicalLink = document.querySelector('link[rel="canonical"]');
       const originalCanonical = canonicalLink?.getAttribute('href');
-      if (canonicalLink) {
-        canonicalLink.setAttribute('href', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
+      if (!canonicalLink) {
+        canonicalLink = document.createElement('link');
+        canonicalLink.setAttribute('rel', 'canonical');
+        document.head.appendChild(canonicalLink);
       }
+      canonicalLink.setAttribute('href', `https://manivarmacyber.pages.dev/blog/${post.slug}`);
 
       // SEO Logic: Update Open Graph Metadata
       const ogTitle = document.querySelector('meta[property="og:title"]');

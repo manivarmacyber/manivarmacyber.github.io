@@ -116,10 +116,9 @@ export const BlogPost: React.FC = () => {
 
       // Article specific metadata
       if (artTime) {
-        // Convert MARCH 03, 2026 to 2026-03-03
         try {
-          const isoDate = new Date(post.publishDate).toISOString().split('T')[0];
-          artTime.setAttribute('content', isoDate);
+          const dateOnly = new Date(post.publishDate).toISOString().split('T')[0];
+          artTime.setAttribute('content', `${dateOnly}T10:00:00+00:00`);
         } catch (e) {
           artTime.setAttribute('content', post.publishDate);
         }
@@ -127,8 +126,8 @@ export const BlogPost: React.FC = () => {
       if (artModTime) {
         try {
           const modDate = post.updatedDate || post.publishDate || new Date().toISOString();
-          const isoModDate = new Date(modDate).toISOString().split('T')[0];
-          artModTime.setAttribute('content', isoModDate);
+          const dateOnly = new Date(modDate).toISOString().split('T')[0];
+          artModTime.setAttribute('content', `${dateOnly}T10:00:00+00:00`);
         } catch (e) {
           artModTime.setAttribute('content', post.updatedDate || post.publishDate || '');
         }

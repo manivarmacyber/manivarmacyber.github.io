@@ -25,8 +25,8 @@ function generateBlogMetadata() {
         const title = post.title;
         // Escape quotes to prevent breaking HTML attributes
         const description = post.excerpt.replace(/"/g, '&quot;');
-        const url = `https://manivarmacyber.pages.dev/blog/${post.slug}`;
-        const image = `https://manivarmacyber.pages.dev${post.image}`;
+        const url = `https://manivarmacyber.github.io/manivarmacyber/blog/${post.slug}`;
+        const image = `https://manivarmacyber.github.io/manivarmacyber${post.image}`;
 
         let publishTime = post.publishDate;
         try { publishTime = new Date(post.publishDate).toISOString().split('T')[0] + 'T10:00:00+00:00'; } catch (e) { }

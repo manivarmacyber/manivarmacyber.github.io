@@ -85,7 +85,7 @@ function generateBlogMetadata() {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
   return {
-    base: '/',
+    base: '/manivarmacyber/',
     plugins: [
       react(),
       tailwindcss(),

@@ -14413,16 +14413,21 @@ const blogPosts = [
     image: "/bac-main-cover-v2.jpg",
     coverImage: "/bac-main-cover-v2.jpg",
     content: `
+## 01 EXECUTIVE SUMMARY
 Broken Access Control (BAC) is a critical security vulnerability where an application fails to properly restrict users from accessing unauthorized data or functionality. It enables privilege escalation, data exposure, and account compromise, making it OWASP Top 10 A01 and one of the most exploited web vulnerabilities globally.
 
 Broken Access Control has ascended to the #1 position in the most recent OWASP Top 10 due to several converging factors. Primary among these is the shift towards microservices and API-first architectures, where the "Trust Boundary" is often misplaced or entirely missing. Unlike injection attacks that rely on specific characters, BAC is a logical failure, making it difficult for traditional automated scanners and WAFs to detect without deep context of the business logic.
 
 This comprehensive research explores the mechanics of BAC vulnerabilities, their impact on enterprise systems, and the latest scoring standards using CVSS v4.0.
 
+## 02 INTRODUCTION
+The modern enterprise is built on complex distributed systems where identifying the user is only half the battle. Authentication confirms identity, but authorization—verifying what that identity is allowed to access—is consistently the weakest link in application security.
+
+## 03 SIMPLE EXPLANATION
+
 MARKER_BAC_FLOW
 
-## WHAT IS BROKEN ACCESS CONTROL?
-
+### WHAT IS BROKEN ACCESS CONTROL?
 Broken Access Control (BAC) is a policy-level failure where an application allows users to access resources or perform actions outside of their intended permissions. It occurs when:
 - Users can access other users' accounts (Horizontal Escalation).
 - Regular users can access administrative functions (Vertical Escalation).
@@ -14430,16 +14435,13 @@ Broken Access Control (BAC) is a policy-level failure where an application allow
 
 MARKER_CONCEPTUAL_BAC
 
-## TYPES OF BROKEN ACCESS CONTROL
-
+### TYPES OF BROKEN ACCESS CONTROL
 Broken Access Control isn't a single flaw but a family of vulnerabilities. Below is an infographic mapping the most common types encountered in the field.
 
 MARKER_BAC_INFOGRAPHIC
 
 It is fundamentally a failure of the **Authorization** mechanism, distinct from Authentication (which only verifies identity).
-
 Broken Access Control is categorized as a high-impact vulnerability because it strikes at the heart of data confidentiality and system integrity.
-
 - **Data Confidentiality Breach**: BAC leads to mass exposure of Personal Identifiable Information (PII), medical records, or financial data.
 - **System Takeover**: Vertical escalation allows attackers to gain administrative rights, leading to full system compromise.
 - **Logical Complexity**: Because BAC is a business logic flaw, it cannot be easily blocked by traditional WAFs (Web Application Firewalls).
@@ -14448,57 +14450,63 @@ Broken Access Control is categorized as a high-impact vulnerability because it s
 
 <!-- AD_PLACEHOLDER_1 -->
 
-## TYPES OF VULNERABILITIES UNDER BAC
-
+### TYPES OF VULNERABILITIES UNDER BAC
 Broken Access Control manifests in various forms across modern architectures. Below are the primary types encountered in professional security research:
+1. Insecure Direct Object Reference (IDOR)
+2. Horizontal Privilege Escalation
+3. Vertical Privilege Escalation
+4. Missing Function Level Access Control
+5. JWT & Session Token Manipulation
+6. API Authorization Failures
+7. Cloud IAM Misconfigurations
 
-### 1. Insecure Direct Object Reference (IDOR)
-Accessing or modifying objects (users, files, records) by manipulating unique identifiers in request parameters.
+## 04 TECHNICAL DEEP DIVE
+Broken Access Control occurs at the authorization layer. It represents a fundamental disconnect between the session management system and the data access layer.
 
-### 2. Horizontal Privilege Escalation
-An attacker accesses resources belonging to another user with the same privilege level (e.g., User A accessing User B's private messages).
+## 05 ATTACK WORKFLOW
+1. **Reconnaissance**: Identifying APIs and endpoints executing privileged actions.
+2. **Session Generation**: Attaining a low-privileged authenticated session.
+3. **Parameter Fuzzing**: Modifying identifiers, roles, or endpoints.
+4. **Bypass Execution**: Accessing the unauthorized data or function.
 
-### 3. Vertical Privilege Escalation
-A standard user gaining access to functionality reserved for higher-privileged roles (e.g., a customer accessing an /admin/ dashboard).
+## 06 APPLICATION ARCHITECTURE FAILURE POINTS
+Typically found in monolithic legacy code where authorization is decentralized, or in modern microservices where the API gateway fails to enforce tenant isolation before passing the request to downstream services.
 
-### 4. Missing Function Level Access Control
-Endpoints that perform sensitive actions (DELETE, POST) lacking server-side authorization checks, relying solely on UI-level hiding.
+## 07 ROOT CAUSE ANALYSIS
+- Implicit trust in user-provided parameters (IDOR).
+- Fail-open authorization logic.
+- Lack of centralized access control matrices (RBAC/ABAC).
 
-### 5. JWT & Session Token Manipulation
-Exploiting weak token signatures or insecurely stored roles inside cookies/tokens to impersonate other identities.
+## 08 CODE EXAMPLES (VULNERABLE VS SECURE)
+### Vulnerable Component
+\`\`\`javascript
+// Backend returns object blindly based on ID
+app.get('/api/resource/:id', (req, res) => {
+    db.find(req.params.id, (err, data) => res.json(data));
+});
+\`\`\`
+### Secure Component
+\`\`\`javascript
+// Backend authenticates ownership context
+app.get('/api/resource/:id', (req, res) => {
+    db.find({ id: req.params.id, owner_id: req.user.id }, (err, data) => {
+       if(!data) return res.status(403).send("Forbidden");
+       res.json(data);
+    });
+});
+\`\`\`
 
-### 6. API Authorization Failures
-Modern REST/GraphQL endpoints that fail to validate the relationship between the requester and the requested resource.
-
-### 7. Cloud IAM Misconfigurations
-Over-permissioned service accounts or cloud users allowing lateral movement within infrastructure (e.g., AWS S3 bucket exposure).
-
-## INDUSTRY-LEVEL SAMPLE BUG BOUNTY REPORT
-
-**Vulnerability Title**: Unauthorized Access to User Records via IDOR  
-**Asset**: \`https://banking-demo.local\`  
-**Severity**: High  
-
-### Summary
-The application's API endpoint responsible for retrieving account details (\`/api/v1/account\`) is vulnerable to Insecure Direct Object Reference (IDOR). While the application requires a valid session token, it fails to verify if the authenticated user owns the account ID requested in the parameters.
-
-### Steps to Reproduce (High-Level Only)
-1. Authenticate as **User A**.
-2. Intercept the network request to \`/api/v1/account?id=1045\`.
-3. Modify the \`id\` parameter to another valid value (e.g., \`1046\`).
-4. Observe the server response returning the full PII and transaction history for **User B**.
-
-### Impact
-- **Confidential Data Exposure**: PII and sensitive financial data leakage.
-- **Horizontal Privilege Escalation**: Ability to act on behalf of other users.
-- **Mass Data Extraction Potential**: Automated scraping of the entire user database.
+## 09 IMPACT ANALYSIS (CIA TRIAD)
+- **Confidentiality**: CRITICAL. Unauthorized data exposure of millions of records.
+- **Integrity**: HIGH. Unauthorized modification or deletion of data.
+- **Availability**: MEDIUM. Potential service disruption via resource exhaustion by an unauthorized user.
 
 <!-- AD_PLACEHOLDER_2 -->
 
 MARKER_CVSS_EVOLUTION
 
-## CVSS 3.1 BREAKDOWN
-
+## 10 CVSS ANALYSIS
+### CVSS 3.1 BREAKDOWN
 | Metric | Factor | Value |
 | :--- | :--- | :--- |
 | **AV** | Attack Vector | **Network (N)** |
@@ -14512,26 +14520,104 @@ MARKER_CVSS_EVOLUTION
 
 **Example Vector**: \`AV:N / AC:L / PR:L / UI:N / S:C / C:H / I:L / A:N\`
 
+## 11 INDUSTRY & COMPLIANCE IMPACT
+- **GDPR**: Significant fines for unauthorized disclosures.
+- **HIPAA**: Class-action liabilities for exposed medical records.
+- **SOC2**: Failure of access control audits.
+
 MARKER_PTES_OSSTMM
 
-## ENTERPRISE RISK ESCALATION MODEL
-
+## 12 DETECTION METHODOLOGIES
+### ENTERPRISE RISK ESCALATION MODEL
 1. **Stage 1 – Unauthorized object access**: Initial entry point.
 2. **Stage 2 – Privilege escalation**: Moving to unauthorized editing or admin access.
 3. **Stage 3 – Lateral movement**: Using escalated privilege to access internal systems.
 4. **Stage 4 – Mass data extraction**: Automated script harvesting records.
 5. **Stage 5 – Financial & reputational damage**: The ultimate business failure.
 
-## HOW TO FIX BROKEN ACCESS CONTROL (REMEDIATION)
+## 13 MANUAL TESTING CHECKLIST
+- Test all API endpoints by swapping session tokens.
+- Fuzz sequential IDs.
+- Check methods (e.g., changing GET to PUT or DELETE).
 
+## 14 AUTOMATED TESTING TOOLS
+- **Burp Suite (Autorize)**
+- **OWASP ZAP**
+- **Postman** (Automated assertion scripts)
+
+## 15 PREVENTION STRATEGY
+- Deny by default.
+- Centralize authorization logic.
+
+## 16 COMMON DEVELOPER MISTAKES
+- Relying on hidden routing on the frontend.
+- Hardcoding static permissions instead of attribute-based checks.
+
+## 17 BUG BOUNTY REPORT EXAMPLE
+### INDUSTRY-LEVEL SAMPLE BUG BOUNTY REPORT
+**Vulnerability Title**: Unauthorized Access to User Records via IDOR  
+**Asset**: \`https://banking-demo.local\`  
+**Severity**: High  
+
+#### Summary
+The application's API endpoint responsible for retrieving account details (\`/api/v1/account\`) is vulnerable to Insecure Direct Object Reference (IDOR). While the application requires a valid session token, it fails to verify if the authenticated user owns the account ID requested in the parameters.
+
+#### Steps to Reproduce (High-Level Only)
+1. Authenticate as **User A**.
+2. Intercept the network request to \`/api/v1/account?id=1045\`.
+3. Modify the \`id\` parameter to another valid value (e.g., \`1046\`).
+4. Observe the server response returning the full PII and transaction history for **User B**.
+
+#### Impact
+- **Confidential Data Exposure**: PII and sensitive financial data leakage.
+- **Horizontal Privilege Escalation**: Ability to act on behalf of other users.
+- **Mass Data Extraction Potential**: Automated scraping of the entire user database.
+
+## 18 VULNERABILITY COMPARISON
+| Feature | BAC | IDOR | HPE |
+| :--- | :--- | :--- | :--- |
+| **Scope** | Broadest (A01 umbrella) | Technical object reference | Lateral account movement |
+
+## 19 REMEDIATION STRATEGY
 Fixing BAC requires a defense-in-depth approach centered on server-side validation.
 
 - **Implement Deny-by-Default**: All access should be blocked unless an explicit "allow" rule exists.
-- **Resource-Based Authorization**: Verify ownership for every request. Use session data, not client IDs, to fetch records (e.g., \`SELECT FROM items WHERE owner_id = ? AND item_id = ?\`).
-- **Centralized Authorization Service**: Use a single, audit-able gateway or library for all authorization logic to avoid fragmented security.
+- **Server-Side Authorization Validation**: Validate permissions on every single request. 
+- **Role Based Access Control (RBAC)**: Ensure that API endpoints rigidly adhere to the role matrix.
+- **Ownership validation**: Verify ownership for every request. Use session data, not client IDs, to fetch records (e.g., \`SELECT FROM items WHERE owner_id = ? AND item_id = ?\`).
+- **Centralized authorization middleware**: Use a single, audit-able gateway or library for all authorization logic to avoid fragmented security.
+- **Secure API design**: Prevent exposing internal identifiers if possible.
 - **Principle of Least Privilege**: Ensure accounts and services have ONLY the permissions required for their task.
-- **Disable Client-Side Security Reliance**: Never assume that hiding a button in the UI prevents an attacker from calling the underlying API.
 - **Continuous Logging & Alerting**: Log all authorization failures and set alerts for IDOR-style iteration patterns.
+
+### Express.js Example
+\`\`\`javascript
+const requireRole = (role) => (req, res, next) => {
+    if (req.user.role !== role) return res.status(403).json({ error: "Access Denied" });
+    next();
+};
+app.delete('/api/admin/users', requireRole('ADMIN'), adminController.deleteUser);
+\`\`\`
+
+## 20 OSI MODEL MAPPING
+| OSI Layer | Role in Vulnerability |
+| :--- | :--- |
+| **Layer 7 – Application** | **Primary attack surface (authorization logic)** fails to restrict access. |
+| **Layer 6 – Presentation** | **Data manipulation possibilities** in JSON/XML payloads. |
+| **Layer 5 – Session** | **Session misuse or token manipulation** enabling unauthorized actions. |
+| **Layer 4 – Transport** | **TLS protects data in transit**, masking the attack from passive sniffing. |
+| **Layer 3 – Network** | **Routing only**, unaffected. |
+| **Layer 2 – Data Link** | **Not relevant**. |
+| **Layer 1 – Physical** | **Not relevant**. |
+
+These vulnerabilities occur at the Application Layer because authentication and authorization are software constructs built into the application code, operating far above network routing protocols.
+
+## 21 KEY TAKEAWAYS
+- Access control is not a feature; it is an overarching architecture spanning the entire system.
+- Decentralized authorization inevitably leads to Broken Access Control.
+
+## 22 STRATEGIC CONCLUSION
+Broken Access Control represents the ultimate logical failure in enterprise security. By embracing a deny-by-default architecture, strictly validating ownership, and abstracting authorization logic into centralized middleware, organizations can systemically eradicate A01 vulnerabilities at scale.
 
 <!-- AD_PLACEHOLDER_3 -->
     `
@@ -14578,7 +14664,7 @@ To understand IDOR, we must clarify the difference between **Authentication** an
 
 **IDOR** is a flaw where every key in the hotel is a "master key" for the room number written on it. If you have the key for Room 201, but you scratch out "201" and write "202", the lock on Room 202 opens for you. The system trusted the number on the key (the user input) instead of checking the hotel database to see if you were actually assigned to that room.
 
-## TECHNICAL DEEP DIVE
+## 04 TECHNICAL DEEP DIVE
 
 ### HOW IDOR WORKS INTERNALLY
 At its core, IDOR is any request where the user can manipulate an identifier to access a resource they shouldn't.
@@ -14589,6 +14675,19 @@ At its core, IDOR is any request where the user can manipulate an identifier to 
 
 MARKER_IDOR_FLOW
 
+## 05 ATTACK WORKFLOW
+
+1.  **Reconnaissance**: The attacker maps the application, identifying API endpoints that accept numeric IDs (e.g., \`/api/files/download/5501\`).
+2.  **Session Establishment**: The attacker logs in legitimately as User A.
+3.  **Identifier Extraction**: The attacker notes their own valid ID (5501).
+4.  **Parameter Tampering**: Using an interception proxy, the attacker changes the ID to 5502.
+5.  **Authorization Bypass**: The backend verifies User A's session token is valid but fails to verify if User A owns file 5502.
+6.  **Data Exfiltration**: The server responds with User B's file.
+
+## 06 APPLICATION ARCHITECTURE FAILURE POINTS
+
+IDOR typically occurs at the intersection of the routing layer and the database layer. In modern MVC frameworks, the router successfully maps the request to the correct controller, and the authentication middleware successfully decodes the JWT or session cookie. However, the controller then passes the raw, untrusted ID directly to the Object Relational Mapper (ORM) without passing the user context. This creates a architectural blind spot where the database retrieves data purely by primary key, completely decoupled from the user's identity.
+
 ### API-LEVEL IDOR
 In RESTful APIs, resources are accessed via predictable paths:
 - \`GET /api/users/123/profile\`
@@ -14596,7 +14695,7 @@ In RESTful APIs, resources are accessed via predictable paths:
 
 In GraphQL, IDORs are even more subtle, often occurring within deeply nested queries where the parent object is authorized, but the child object resolver lacks an ownership check.
 
-## ROOT CAUSE ANALYSIS
+## 07 ROOT CAUSE ANALYSIS
 
 1. **Developer Information Oversight**: Assuming that knowing a "secret" ID (like a UUID) is the same as having authorization.
 2. **Framework Misconfigurations**: Relying on global middleware that only checks if a session exists, without granular per-object validation.
@@ -14605,7 +14704,7 @@ In GraphQL, IDORs are even more subtle, often occurring within deeply nested que
 
 <!-- AD_PLACEHOLDER_2 -->
 
-## CODE EXAMPLES: FROM VULNERABLE TO SECURE
+## 08 CODE EXAMPLES: FROM VULNERABLE TO SECURE
 
 ### THE VULNERABLE ENDPOINT (NODE.JS)
 \`\`\`javascript
@@ -14633,7 +14732,7 @@ app.get('/api/order/:id', isAuthenticated, async (req, res) => {
 });
 \`\`\`
 
-## IMPACT ANALYSIS
+## 09 IMPACT ANALYSIS (CIA TRIAD)
 
 | Triad Pillar | Impact Level | Description |
 | :--- | :--- | :--- |
@@ -14641,14 +14740,28 @@ app.get('/api/order/:id', isAuthenticated, async (req, res) => {
 | **Integrity** | **HIGH** | Unauthorized modification of prices, account settings, or administrative data. |
 | **Availability** | **MEDIUM** | Unauthorized deletion of records or triggering of resource-heavy functions. |
 
-### BUSINESS & REGULATORY CONSEQUENCES
+MARKER_IDOR_CVSS
+
+## 10 CVSS ANALYSIS
+
+| Metric | Factor | Value |
+| :--- | :--- | :--- |
+| **AV** | Attack Vector | **Network (N)** |
+| **AC** | Attack Complexity | **Low (L)** |
+| **PR** | Privileges Required | **Low (L)** |
+| **UI** | User Interaction | **None (N)** |
+| **S** | Scope | **Unchanged (U)** |
+| **C** | Confidentiality | **High (H)** |
+| **I** | Integrity | **High (H)** |
+| **A** | Availability | **Low (L)** |
+
+## 11 INDUSTRY & COMPLIANCE IMPACT
+
 - **GDPR**: Massive fines (up to 4% of global turnover) for failing to protect European data.
 - **HIPAA**: Criminal and civil penalties for exposed Patient Health Information (PHI).
 - **PCI-DSS**: Loss of merchant processing privileges if credit card data is leaked.
 
-MARKER_IDOR_CVSS
-
-## DETECTION METHODOLOGIES
+## 12 DETECTION METHODOLOGIES
 
 MARKER_PTES_OSSTMM
 
@@ -14692,7 +14805,55 @@ MARKER_PTES_OSSTMM
 
 MARKER_IDOR_COMPARISON
 
-## KEY TAKEAWAYS
+## 18 VULNERABILITY COMPARISON
+
+| Feature | IDOR | BAC | Horizontal Privilege Escalation |
+| :--- | :--- | :--- | :--- |
+| **Definition** | Manipulating a direct reference to an object. | Any failure to properly restrict access. | Accessing peer-level data. |
+| **Scope** | Point-specific exploit mechanism. | Broad category encompassing IDOR. | A logical result of IDOR or BAC. |
+| **Fix** | Indirect references or ownership checks. | Uniform authorization policies. | Strict data isolation. |
+
+## 19 REMEDIATION STRATEGY
+
+Fixing Insecure Direct Object Reference requires shifting from trusting client inputs to validating data ownership on the server.
+
+- **Server-Side Authorization Validation**: Never rely on hidden fields, predictable URLs, or client-side UI restrictions to protect objects.
+- **Role-Based Access Control (RBAC)**: Ensure the querying user possesses the specific role required to view the requested object type.
+- **Ownership Validation**: Always append \`user_id = CURRENT_USER\` to database queries.
+- **Centralized Authorization Middleware**: Use established authorization libraries rather than custom \`if/else\` blocks scattered throughout the codebase.
+- **Secure API Design**: Use Indirect Object References (e.g., session-mapped per-user IDs) or use robust UUIDs *in conjunction* with ownership checks. 
+- **Principle of Least Privilege**: Limit the scope of data returned by the API; never perform \`SELECT *\` if only displaying a username.
+
+### Secure API Implementation snippet:
+\`\`\`python
+# Implementing Object-Level Authorization (Python/FastAPI)
+@app.get("/api/documents/{document_id}")
+async def get_document(document_id: str, current_user: User = Depends(get_current_user)):
+    # The database query explicitly demands ownership
+    document = await db.execute(
+        "SELECT * FROM documents WHERE id = :doc_id AND owner_id = :user_id",
+        {"doc_id": document_id, "user_id": current_user.id}
+    )
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found or access denied")
+    return document
+\`\`\`
+
+## 20 OSI MODEL MAPPING
+
+Like most implementation-level web vulnerabilities, IDOR is purely an Application Layer failure. 
+
+| OSI Layer | Role in Vulnerability |
+| :--- | :--- |
+| **Layer 7 – Application** | **Primary attack surface.** The web application fails to validate if the user owns the data requested. |
+| **Layer 6 – Presentation** | The attacker manipulates parameter encoding (e.g., JSON tampering) to deliver the malicious ID. |
+| **Layer 5 – Session** | The active session is abused to extract unauthorized data. |
+| **Layer 4 – Transport** | TLS protects the exfiltrated data from network sniffing, ironically aiding the attacker. |
+| **Layer 3 – Network** | Routing only; functions normally. |
+| **Layer 2 – Data Link** | Not relevant. |
+| **Layer 1 – Physical** | Not relevant. |
+
+## 21 KEY TAKEAWAYS
 - **Logins are entry points, not permissions.**
 - **IDOR is a failure to check 'Whose data is this?'.**
 - **Authorization must happen in the backend, never just hidden in the frontend.**
@@ -14917,9 +15078,51 @@ Testers should systematically inspect:
 | **Logic** | Peer-to-Peer access | Identifier manipulation | Broad authorization fail |
 | **Example** | User A sees User B's mail | Changing \`/file/1\` to \`/file/2\` | Accessing \`/admin\` as User |
 
-## KEY TAKEAWAYS
+## 19. REMEDIATION STRATEGY
 
-- **HPE is about lateral data access.**
+Fixing Horizontal Privilege Escalation requires a robust, defense-in-depth approach centered on server-side validation.
+
+- **Server-Side Authorization Validation**: Never trust client-provided IDs. Always validate the relationship between the authenticated session and the requested object ID.
+- **Role-Based Access Control (RBAC)**: Ensure that users are strictly segmented and cannot natively interact with objects outside their assigned roles.
+- **Ownership Validation**: Every database query fetching user data MUST include a filter for the \`owner_id\` or \`user_id\`.
+- **Centralized Authorization Middleware**: Build a single source of truth for authorization checks (e.g., using Casl or OPA in Node.js) rather than writing ad-hoc logic in every controller.
+- **Secure API Design**: Prefer APIs that don't rely on IDs for self-referential data (e.g., use \`GET /api/me/profile\` instead of \`GET /api/users/123/profile\`).
+- **Principle of Least Privilege**: Ensure that service accounts, API tokens, and user sessions process only the bare minimum data required.
+
+### Secure API Middleware Example (Node.js)
+\`\`\`javascript
+const requireOwnership = async (req, res, next) => {
+    const resourceId = req.params.id;
+    const userId = req.user.id;
+    
+    // Validate ownership before allowing the request to proceed to the controller
+    const isOwner = await db.verifyOwnership(resourceId, userId);
+    if (!isOwner) {
+        return res.status(403).json({ error: "Horizontal Privilege Escalation Attempt Detected" });
+    }
+    next();
+};
+
+app.get('/api/v2/financial-reports/:id', requireOwnership, getReportController);
+\`\`\`
+
+## 20. OSI MODEL MAPPING
+
+Horizontal Privilege Escalation is a logical flaw that occurs at the highest layer of the network stack. It does not exploit the network routing or the transport encryption, but rather the business logic executing the request.
+
+| OSI Layer | Role in Vulnerability |
+| :--- | :--- |
+| **Layer 7 – Application** | **Primary attack surface.** The authorization logic fails to validate resource ownership. |
+| **Layer 6 – Presentation** | Attackers manipulate the data format (e.g., JSON payload manipulation) to alter identifiers. |
+| **Layer 5 – Session** | The session token is valid, but abused to access data outside its granted scope. |
+| **Layer 4 – Transport** | Not relevant. TLS works perfectly, protecting the *stolen* data in transit. |
+| **Layer 3 – Network** | Not relevant. Routers forward the HTTP request normally. |
+| **Layer 2 – Data Link** | Not relevant. |
+| **Layer 1 – Physical** | Not relevant. |
+
+Because the transport and network layers are functioning exactly as designed, traditional firewalls cannot block HPE. Only Application-Layer analysis (Layer 7 WAFs and SAST/DAST) or robust business logic testing can identify it.
+
+## 21. KEY TAKEAWAYS
 - **Authentication is identity; Authorization is permission.**
 - **Sequential IDs are dangerous but UUIDs aren't a "fix" for authorization.**
 - **Centralized authorization libraries are better than ad-hoc checks.**

@@ -20,7 +20,7 @@ export const Skills: React.FC = () => {
   const skillBadgeStyle = {
     background: 'rgba(204,34,0,0.06)',
     border: '1px solid rgba(204,34,0,0.18)',
-    color: 'rgba(204,100,80,0.9)',
+    color: '#ffffff',
   };
 
   return (
@@ -28,7 +28,7 @@ export const Skills: React.FC = () => {
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
         <div className="space-y-4">
-          <div className="flex items-center gap-3" style={{ color: '#cc2200' }}>
+          <div className="flex items-center gap-3" style={{ color: '#ffffff' }}>
             <div className="w-8 h-[1px]" style={{ background: '#cc2200' }} />
             <span className="text-[10px] font-mono tracking-[0.3em] uppercase">SYSTEM_CAPABILITIES</span>
           </div>
@@ -45,12 +45,12 @@ export const Skills: React.FC = () => {
           <div className="flex items-center gap-6 relative">
             <div className="absolute left-0 w-[3px] h-10 opacity-80" style={{ background: '#cc2200' }} />
             <div className="ml-6 p-3 rounded-2xl"
-              style={{ background: 'rgba(204,34,0,0.10)', border: '1px solid rgba(204,34,0,0.22)', color: '#cc2200' }}>
+              style={{ background: 'rgba(204,34,0,0.10)', border: '1px solid rgba(204,34,0,0.22)', color: '#ffffff' }}>
               <Target size={28} />
             </div>
             <div>
               <h3 className="text-2xl font-orbitron font-black text-text-primary tracking-widest uppercase">OFFENSIVE SECURITY</h3>
-              <p className="text-[10px] font-mono tracking-[0.4em] uppercase font-bold" style={{ color: '#cc2200' }}>Infiltration & Research</p>
+              <p className="text-[10px] font-mono tracking-[0.4em] uppercase font-bold" style={{ color: '#ffffff' }}>Infiltration & Research</p>
             </div>
           </div>
 
@@ -72,12 +72,12 @@ export const Skills: React.FC = () => {
           <div className="flex items-center gap-6 relative">
             <div className="absolute left-0 w-[3px] h-10 opacity-80" style={{ background: '#cc2200' }} />
             <div className="ml-6 p-3 rounded-xl"
-              style={{ background: 'rgba(204,34,0,0.10)', border: '1px solid rgba(204,34,0,0.22)', color: '#cc2200' }}>
+              style={{ background: 'rgba(204,34,0,0.10)', border: '1px solid rgba(204,34,0,0.22)', color: '#ffffff' }}>
               <Shield size={28} />
             </div>
             <div>
               <h3 className="text-2xl font-orbitron font-black text-text-primary tracking-widest uppercase">DEFENSIVE SECURITY</h3>
-              <p className="text-[10px] font-mono tracking-[0.4em] uppercase font-bold" style={{ color: '#cc2200' }}>Mitigation & Strategy</p>
+              <p className="text-[10px] font-mono tracking-[0.4em] uppercase font-bold" style={{ color: '#ffffff' }}>Mitigation & Strategy</p>
             </div>
           </div>
 
@@ -100,7 +100,7 @@ export const Skills: React.FC = () => {
         <div className="cyber-card p-8 group transition-all">
           <div className="flex items-center gap-6 mb-12">
             <div className="p-4 rounded-2xl group-hover:scale-110 transition-transform"
-              style={{ background: 'rgba(204,34,0,0.10)', border: '1px solid rgba(204,34,0,0.22)', color: '#cc2200' }}>
+              style={{ background: 'rgba(204,34,0,0.10)', border: '1px solid rgba(204,34,0,0.22)', color: '#ffffff' }}>
               <Cpu size={24} />
             </div>
             <h3 className="text-xl font-orbitron font-black text-text-primary uppercase tracking-tight italic">TECHNICAL PLATFORMS</h3>
@@ -108,7 +108,7 @@ export const Skills: React.FC = () => {
           <div className="flex flex-wrap gap-4">
             {platforms.map((p, i) => (
               <span key={i} className="px-6 py-3 rounded-2xl text-[10px] font-mono font-black tracking-widest"
-                style={{ background: 'rgba(204,34,0,0.10)', border: '1px solid rgba(204,34,0,0.22)', color: '#cc2200' }}>
+                style={{ background: 'rgba(204,34,0,0.10)', border: '1px solid rgba(204,34,0,0.22)', color: '#ffffff' }}>
                 {p}
               </span>
             ))}
@@ -118,7 +118,7 @@ export const Skills: React.FC = () => {
         <div className="cyber-card p-8 group transition-all">
           <div className="flex items-center gap-6 mb-12">
             <div className="p-4 rounded-2xl group-hover:scale-110 transition-transform"
-              style={{ background: 'rgba(204,34,0,0.10)', border: '1px solid rgba(204,34,0,0.22)', color: '#cc2200' }}>
+              style={{ background: 'rgba(204,34,0,0.10)', border: '1px solid rgba(204,34,0,0.22)', color: '#ffffff' }}>
               <Brain size={24} />
             </div>
             <h3 className="text-xl font-orbitron font-black text-text-primary uppercase tracking-tight italic">PROFESSIONAL SOFT SKILLS</h3>
@@ -126,7 +126,7 @@ export const Skills: React.FC = () => {
           <div className="flex flex-wrap gap-4">
             {softSkills.map((s, i) => (
               <span key={i} className="px-6 py-3 rounded-xl text-[10px] font-mono font-black tracking-widest"
-                style={{ background: 'rgba(204,34,0,0.10)', border: '1px solid rgba(204,34,0,0.22)', color: '#cc2200' }}>
+                style={{ background: 'rgba(204,34,0,0.10)', border: '1px solid rgba(204,34,0,0.22)', color: '#ffffff' }}>
                 {s}
               </span>
             ))}

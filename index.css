@@ -37,12 +37,12 @@ body {
   --color-accent-red: #cc2200;
   --color-accent-violet: #8B0000;
   --color-accent-glow: rgba(204, 34, 0, 0.35);
-  --color-text-primary: #f1e8e8;
-  --color-text-secondary: #a89090;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #f0f0f0;
   --color-border: rgba(180, 30, 20, 0.18);
   --color-card-bg: rgba(22, 5, 5, 0.80);
   --color-selection-bg: #cc2200;
-  --color-selection-text: #fff0f0;
+  --color-selection-text: #ffffff;
 
   /* Transitions */
   --transition-speed: 0.35s;

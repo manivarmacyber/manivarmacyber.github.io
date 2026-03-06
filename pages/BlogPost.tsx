@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { Layout } from '../components/Layout';
 import { blogPosts } from '../data/blogPosts';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import {
   Calendar, Clock, User, Share2, Linkedin, Twitter,
   MessageCircle, ArrowLeft, ArrowRight, Tag, Shield, Target,
@@ -22,14 +23,47 @@ const AdBlock: React.FC = () => {
   }, []);
 
   return (
-    <div className="my-16 py-8 bg-white/[0.01] border border-white/5 rounded-2xl flex flex-col items-center justify-center min-h-[100px] overflow-hidden">
+    <div className="my-12 py-8 bg-white/[0.01] border border-white/5 rounded-2xl flex flex-col items-center justify-center min-h-[120px] overflow-hidden">
       <span className="text-[10px] font-mono text-text-primary/10 uppercase tracking-[0.4em] mb-4">ADVERTISEMENT</span>
-      <ins className="adsbygoogle"
-        style={{ display: 'block' }}
-        data-ad-client="ca-pub-7367345153052165"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
+      <div className="w-full min-h-[90px] flex items-center justify-center">
+        <ins className="adsbygoogle"
+          style={{ display: 'block', width: '100%', minHeight: '90px' }}
+          data-ad-client="ca-pub-7367345153052165"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+      </div>
     </div>
+  );
+};
+
+const TableOfContents: React.FC<{ content: string }> = ({ content }) => {
+  const headings = content
+    .split('\n')
+    .filter(line => line.startsWith('## '))
+    .map(line => line.replace('## ', '').trim());
+
+  if (headings.length === 0) return null;
+
+  return (
+    <nav className="mb-12 p-8 bg-white/[0.02] border border-white/5 rounded-3xl">
+      <h3 className="text-xs font-orbitron font-black text-accent-cyan uppercase tracking-[0.4em] mb-6 flex items-center gap-2">
+        <FileText size={14} />
+        Navigation Protocol
+      </h3>
+      <ul className="space-y-3">
+        {headings.map((heading, i) => (
+          <li key={i}>
+            <a
+              href={`#${heading.toLowerCase().replace(/[^\w]/g, '-')}`}
+              className="text-sm text-text-secondary hover:text-accent-cyan transition-colors flex items-center gap-2 group"
+            >
+              <span className="text-[10px] font-mono text-accent-cyan/40 group-hover:text-accent-cyan transition-colors">0{i + 1}</span>
+              {heading}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };
 
@@ -47,6 +81,7 @@ export const BlogPost: React.FC = () => {
   const messaging = getMessaging(app);
 
   React.useEffect(() => {
+    // Inject AdSense script dynamically to avoid "publisher content" warnings on other pages.
     const existingScript = document.getElementById('adsense-script');
     if (!existingScript) {
       const script = document.createElement('script');
@@ -56,6 +91,14 @@ export const BlogPost: React.FC = () => {
       script.id = "adsense-script";
       document.head.appendChild(script);
     }
+
+    // Cleanup when leaving the blog post page.
+    return () => {
+      const scriptToRemove = document.getElementById('adsense-script');
+      if (scriptToRemove) {
+        document.head.removeChild(scriptToRemove);
+      }
+    };
   }, []);
 
   React.useEffect(() => {
@@ -150,26 +193,58 @@ export const BlogPost: React.FC = () => {
         "description": post.excerpt,
         "author": {
           "@type": "Person",
-          "name": "Manikanta Varma",
-          "url": "https://manivarmacyber.pages.dev/"
+          "name": "G Manikanta Varma",
+          "url": "https://manivarmacyber.github.io/"
         },
         "datePublished": post.publishDate,
-        "image": `https://manivarmacyber.pages.dev${post.image}`,
+        "dateModified": modifiedTimeIso,
+        "image": `https://manivarmacyber.github.io${post.image}`,
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": `https://manivarmacyber.pages.dev/blog/${post.slug}`
+          "@id": `https://manivarmacyber.github.io/blog/${post.slug}`
         },
         "publisher": {
           "@type": "Organization",
           "name": "Mani Varma Cybersecurity Research",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://manivarmacyber.pages.dev/logo.png"
+            "url": "https://manivarmacyber.github.io/profile.jpg"
           }
         }
       };
       schemaScript.text = JSON.stringify(schemaData);
       document.head.appendChild(schemaScript);
+
+      // SEO Logic: Breadcrumb Structured Data
+      const breadcrumbScript = document.createElement('script');
+      breadcrumbScript.type = 'application/ld+json';
+      breadcrumbScript.id = `breadcrumb-${post.slug}`;
+      const breadcrumbData = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://manivarmacyber.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": "https://manivarmacyber.github.io/blog"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": post.title,
+            "item": `https://manivarmacyber.github.io/blog/${post.slug}`
+          }
+        ]
+      };
+      breadcrumbScript.text = JSON.stringify(breadcrumbData);
+      document.head.appendChild(breadcrumbScript);
 
       const storedLikes = localStorage.getItem(`blog-likes-${post.id}`);
       const userLiked = localStorage.getItem(`blog-liked-${post.id}`);
@@ -252,9 +327,9 @@ export const BlogPost: React.FC = () => {
 
         // Remove dynamic structured data
         const dynamicSchema = document.getElementById(`schema-${post.slug}`);
-        if (dynamicSchema) {
-          dynamicSchema.remove();
-        }
+        const dynamicBreadcrumb = document.getElementById(`breadcrumb-${post.slug}`);
+        if (dynamicSchema) dynamicSchema.remove();
+        if (dynamicBreadcrumb) dynamicBreadcrumb.remove();
       };
     }
   }, [post]);
@@ -627,6 +702,67 @@ export const BlogPost: React.FC = () => {
     </div>
   );
 
+  const HPEAttackWorkflow: React.FC = () => (
+    <div className="my-16 flex flex-col items-center gap-10">
+      <div className="flex flex-col md:flex-row items-center gap-12 max-w-4xl w-full">
+        {[
+          { icon: User, label: "LOGIN", sub: "User Access" },
+          { icon: Search, label: "CAPTURE", sub: "Proxy Intercept" },
+          { icon: Database, label: "MODIFY", sub: "ID Manipulation" },
+          { icon: Zap, label: "EXPLOIT", sub: "Access Leak" }
+        ].map((step, i) => (
+          <React.Fragment key={i}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="flex flex-col items-center gap-4 group"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-accent-cyan/10 border border-accent-cyan/20 flex items-center justify-center text-accent-cyan group-hover:bg-accent-cyan/20 transition-colors">
+                <step.icon size={24} />
+              </div>
+              <div className="text-center">
+                <div className="text-[10px] font-mono text-accent-cyan font-black uppercase tracking-widest">{step.label}</div>
+                <div className="text-[8px] font-mono text-text-secondary uppercase opacity-60">{step.sub}</div>
+              </div>
+            </motion.div>
+            {i < 3 && <div className="hidden md:block w-12 h-px bg-white/10" />}
+          </React.Fragment>
+        ))}
+      </div>
+      <p className="font-mono text-[10px] text-text-secondary opacity-40 uppercase tracking-[0.4em] font-black italic text-center">
+        SYSTEMATIC EXECUTION: FROM AUTHENTICATION TO UNAUTHORIZED DATA LEAK
+      </p>
+    </div>
+  );
+
+  const HPEArchitecture: React.FC = () => (
+    <div className="my-16 p-10 bg-white/[0.01] border border-white/5 rounded-[3rem] overflow-hidden">
+      <div className="relative flex flex-col gap-6">
+        {[
+          { label: "CLIENT BROWSER", color: "text-text-primary", icon: Cpu },
+          { label: "WEB SERVER", color: "text-text-secondary", icon: Database },
+          { label: "AUTHZ MIDDLEWARE", color: "text-red-500", icon: ShieldAlert, highlight: true },
+          { label: "DATABASE LAYER", color: "text-accent-cyan", icon: Database }
+        ].map((layer, i) => (
+          <motion.div
+            key={i}
+            initial={{ x: -20, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            className={`p-6 rounded-2xl border ${layer.highlight ? 'border-red-500/30 bg-red-500/5' : 'border-white/5 bg-white/[0.02]'} flex items-center justify-between`}
+          >
+            <div className="flex items-center gap-4">
+              <layer.icon size={20} className={layer.color} />
+              <span className={`font-orbitron font-black text-xs uppercase tracking-[0.3em] ${layer.color}`}>{layer.label}</span>
+            </div>
+            {layer.highlight && (
+              <span className="font-mono text-[9px] text-red-500 font-black uppercase tracking-widest animate-pulse">FAILURE POINT: MISSING OWNERSHIP CHECK</span>
+            )}
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+
   const PTESOSSTMMComparison: React.FC = () => (
     <div className="my-16 grid grid-cols-1 md:grid-cols-2 gap-8">
       <div className="p-10 bg-white/[0.02] border border-white/5 rounded-[2.5rem] relative overflow-hidden group hover:border-accent-cyan/30 transition-all">
@@ -710,29 +846,34 @@ export const BlogPost: React.FC = () => {
     h1: ({ ...props }) => (
       <h1 {...props} className="font-orbitron text-4xl md:text-5xl font-[800] tracking-tighter mb-8 leading-[1.1] text-text-primary uppercase italic" />
     ),
-    h2: ({ ...props }) => (
-      <div className="flex items-center gap-6 mt-16 mb-8 group/h2">
-        <div className="p-3 bg-accent-cyan/10 border border-accent-cyan/20 rounded-2xl text-accent-cyan group-hover/h2:scale-110 transition-transform">
-          {props.children?.toString().includes('EXECUTIVE') ? <Shield size={24} /> :
-            props.children?.toString().includes('WHAT IS') ? <Search size={24} /> :
-              props.children?.toString().includes('WHY') ? <ShieldAlert size={24} className="text-accent-cyan" /> :
-                props.children?.toString().includes('TYPES') ? <Database size={24} /> :
-                  props.children?.toString().includes('CVSS') ? <ShieldAlert size={24} className="text-accent-cyan" /> :
-                    props.children?.toString().includes('METHODOLOGY') ? <Target size={24} className="text-accent-cyan" /> :
-                      props.children?.toString().includes('HOW TO FIX') ? <CheckCircle2 size={24} className="text-accent-cyan" /> :
-                        <Zap size={24} />}
+    h2: ({ ...props }) => {
+      const id = props.children?.toString().toLowerCase().replace(/[^\w]/g, '-');
+      return (
+        <div className="flex items-center gap-6 mt-20 mb-10 group/h2" id={id}>
+          <div className="p-3 bg-accent-cyan/10 border border-accent-cyan/20 rounded-2xl text-accent-cyan group-hover/h2:scale-110 transition-transform">
+            {props.children?.toString().includes('EXECUTIVE') ? <Shield size={24} /> :
+              props.children?.toString().includes('WHAT IS') ? <Search size={24} /> :
+                props.children?.toString().includes('WHY') ? <ShieldAlert size={24} className="text-accent-cyan" /> :
+                  props.children?.toString().includes('TYPES') ? <Database size={24} /> :
+                    props.children?.toString().includes('CVSS') ? <ShieldAlert size={24} className="text-accent-cyan" /> :
+                      props.children?.toString().includes('METHODOLOGY') ? <Target size={24} className="text-accent-cyan" /> :
+                        props.children?.toString().includes('HOW TO FIX') ? <CheckCircle2 size={24} className="text-accent-cyan" /> :
+                          <Zap size={24} />}
+          </div>
+          <h2 {...props} className="text-2xl md:text-3xl font-orbitron font-[800] tracking-[0.3px] leading-none text-text-primary flex flex-wrap gap-2 uppercase italic">
+            {props.children}
+          </h2>
         </div>
-        <h2 {...props} className="text-2xl md:text-3xl font-orbitron font-[800] tracking-[0.3px] leading-none text-text-primary flex flex-wrap gap-2">
-          {props.children}
-        </h2>
-      </div>
-    ),
+      );
+    },
     h3: ({ ...props }) => (
       <h3 {...props} className="text-lg font-orbitron font-bold text-text-primary uppercase tracking-wider mt-10 mb-4" />
     ),
     p: ({ children, node, ...props }: any) => {
       // Logic for plain-text markers (HTML comments are stripped by ReactMarkdown)
       const content = children?.toString()?.trim();
+      if (content === 'MARKER_HPE_WORKFLOW') return <HPEAttackWorkflow />;
+      if (content === 'MARKER_HPE_ARCHITECTURE') return <HPEArchitecture />;
       if (content === 'MARKER_BAC_INFOGRAPHIC') return <BACInfographic />;
       if (content === 'MARKER_CVSS_EVOLUTION') return <CVSSComparison />;
       if (content === 'MARKER_BAC_FLOW') return (
@@ -805,6 +946,33 @@ export const BlogPost: React.FC = () => {
       }
       return <a href={href} className="text-accent-cyan hover:underline decoration-accent-cyan/30 underline-offset-4" target="_blank" rel="noopener noreferrer">{children}</a>;
     },
+    table: ({ children }: any) => (
+      <div className="my-12 overflow-x-auto rounded-3xl border border-white/5 bg-white/[0.01]">
+        <table className="w-full border-collapse text-left">
+          {children}
+        </table>
+      </div>
+    ),
+    thead: ({ children }: any) => (
+      <thead className="bg-accent-cyan/[0.03] border-b border-white/10 uppercase font-orbitron">
+        {children}
+      </thead>
+    ),
+    th: ({ children }: any) => (
+      <th className="py-6 px-6 text-[10px] font-black text-accent-cyan tracking-[0.3em]">
+        {children}
+      </th>
+    ),
+    td: ({ children }: any) => (
+      <td className="py-5 px-6 text-sm text-text-secondary border-b border-white/[0.03]">
+        {children}
+      </td>
+    ),
+    tr: ({ children }: any) => (
+      <tr className="hover:bg-white/[0.02] transition-colors duration-300">
+        {children}
+      </tr>
+    ),
   };
 
   return (
@@ -895,11 +1063,13 @@ export const BlogPost: React.FC = () => {
 
             <div className="flex flex-col lg:flex-row gap-20">
               <div className="flex-grow">
+                <TableOfContents content={post.content} />
                 <div className="blog-content">
                   {contentParts.map((part, index) => (
                     <React.Fragment key={index}>
                       <ReactMarkdown
                         components={components as any}
+                        remarkPlugins={[remarkGfm]}
                       >
                         {part}
                       </ReactMarkdown>

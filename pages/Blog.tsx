@@ -7,16 +7,21 @@ import { Calendar, Clock, User, ArrowRight, Tag } from 'lucide-react';
 
 export const Blog: React.FC = () => {
   React.useEffect(() => {
-    const script = document.createElement('script');
-    script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=pub-7367345153052165";
-    script.async = true;
-    script.crossOrigin = "anonymous";
-    script.id = "adsense-script";
-    document.head.appendChild(script);
+    const existingScript = document.getElementById('adsense-script');
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7367345153052165";
+      script.async = true;
+      script.crossOrigin = "anonymous";
+      script.id = "adsense-script";
+      document.head.appendChild(script);
+    }
 
     return () => {
-      const existingScript = document.getElementById('adsense-script');
-      if (existingScript) document.head.removeChild(existingScript);
+      const scriptToRemove = document.getElementById('adsense-script');
+      if (scriptToRemove) {
+        document.head.removeChild(scriptToRemove);
+      }
     };
   }, []);
 

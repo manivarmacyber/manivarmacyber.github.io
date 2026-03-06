@@ -102,6 +102,23 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       outDir: 'dist',
+      minify: 'lightningcss',
+      cssMinify: true,
+      reportCompressedSize: false,
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+            'vendor-motion': ['motion'],
+            'vendor-icons': ['lucide-react'],
+            'vendor-firebase': ['firebase/app', 'firebase/firestore', 'firebase/messaging'],
+          },
+          assetFileNames: 'assets/[name]-[hash][extname]',
+          chunkFileNames: 'assets/[name]-[hash].js',
+          entryFileNames: 'assets/[name]-[hash].js',
+        },
+      },
     }
   };
 });

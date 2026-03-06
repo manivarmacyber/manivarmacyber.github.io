@@ -19,9 +19,8 @@ export const FestivalEngine: React.FC = () => {
             return;
         }
 
-        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        const activeAccent = isLight ? festival.darkAccent : festival.accent;
-        const activePastel = isLight ? festival.pastelAccent : festival.accent + '22';
+        const activeAccent = festival.accent;
+        const activePastel = festival.accent + '22';
 
         // Set festival accent and override primary cyan for theme unification
         document.documentElement.style.setProperty('--festival-accent', activeAccent);

@@ -22,7 +22,6 @@ import { OperationalAchievements } from './components/OperationalAchievements';
 import { LiveProjects } from './components/LiveProjects';
 import { EducationSection } from './components/EducationSection';
 import { TacticalProjects } from './components/TacticalProjects';
-import { FeaturedResearch } from './components/FeaturedResearch';
 
 const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
@@ -105,11 +104,6 @@ const HomePage = () => (
       {/* 10. Why Choose Me */}
       <section id="why">
         <WhyChooseMe />
-      </section>
-
-      {/* 10.5 Latest Research - SEO Internal Linking Hub */}
-      <section id="featured-research">
-        <FeaturedResearch />
       </section>
 
       {/* 11. Tactical Response */}

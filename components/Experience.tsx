@@ -63,7 +63,8 @@ export const Experience: React.FC = () => {
           {experiences.map((exp, i) => (
             <div key={exp.id} className={`relative flex flex-col ${exp.side === 'left' ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center justify-center gap-12 group`}>
               {/* Timeline Dot */}
-              <div className="absolute left-6 lg:left-1/2 top-0 lg:top-1/2 w-4 h-4 bg-accent-cyan rounded-full -translate-x-1/2 lg:-translate-y-1/2 shadow-[0_0_8px_var(--color-accent-cyan)] z-20 group-hover:scale-125 transition-transform opacity-80" />
+              <div className="absolute left-6 lg:left-1/2 top-0 lg:top-1/2 w-4 h-4 rounded-full -translate-x-1/2 lg:-translate-y-1/2 z-20 group-hover:scale-125 transition-transform opacity-90"
+                style={{ background: '#cc2200', boxShadow: '0 0 10px rgba(204,34,0,0.8), 0 0 20px rgba(204,34,0,0.4)' }} />
 
               {/* Content Card */}
               <motion.div

@@ -1,19 +1,19 @@
 import { BlogPost } from '../types';
 
 export const blogPosts: BlogPost[] = [
-  {
-    id: '1',
-    title: 'Broken Access Control (BAC) – Industry-Level Exploitation Analysis & Enterprise Risk Model',
-    slug: 'broken-access-control-owasp-a01-analysis',
-    excerpt: 'Deep dives into IDOR, privilege escalation, and enterprise authorization failures. This whitepaper maps BAC to PTES, OSSTMM, and CVSS 3.1 frameworks.',
-    publishDate: 'MARCH 02, 2026',
-    updatedDate: 'MARCH 04, 2026',
-    author: 'Mani Varma',
-    tags: ['OWASP TOP 10', 'PENETRATION TESTING', 'ARCHITECTURAL RISK', 'AD-READY'],
-    readingTime: '20 MIN READ',
-    image: '/bac-main-cover-v2.jpg',
-    coverImage: '/bac-main-cover-v2.jpg',
-    content: `
+    {
+        id: '1',
+        title: 'Broken Access Control (BAC) – Industry-Level Exploitation Analysis & Enterprise Risk Model',
+        slug: 'broken-access-control-owasp-a01-analysis',
+        excerpt: 'Deep dives into IDOR, privilege escalation, and enterprise authorization failures. This whitepaper maps BAC to PTES, OSSTMM, and CVSS 3.1 frameworks.',
+        publishDate: 'MARCH 02, 2026',
+        updatedDate: 'MARCH 04, 2026',
+        author: 'Mani Varma',
+        tags: ['OWASP TOP 10', 'PENETRATION TESTING', 'ARCHITECTURAL RISK', 'AD-READY'],
+        readingTime: '20 MIN READ',
+        image: '/bac-main-cover-v2.jpg',
+        coverImage: '/bac-main-cover-v2.jpg',
+        content: `
 ## 01 EXECUTIVE SUMMARY
 Broken Access Control (BAC) is a critical security vulnerability where an application fails to properly restrict users from accessing unauthorized data or functionality. It enables privilege escalation, data exposure, and account compromise, making it OWASP Top 10 A01 and one of the most exploited web vulnerabilities globally.
 
@@ -222,20 +222,20 @@ Broken Access Control represents the ultimate logical failure in enterprise secu
 
 <!-- AD_PLACEHOLDER_3 -->
     `
-  },
-  {
-    id: '2',
-    title: 'IDOR Vulnerability Explained | Cybersecurity Guide',
-    slug: 'idor-security-analysis',
-    excerpt: 'Learn how Insecure Direct Object Reference (IDOR) vulnerabilities work, how attackers exploit them, and how developers can prevent them.',
-    publishDate: 'MARCH 03, 2026',
-    updatedDate: 'MARCH 04, 2026',
-    author: 'Mani Varma',
-    tags: ['OWASP TOP 10', 'PENETRATION TESTING', 'AUTHORIZATION', 'AD-READY'],
-    readingTime: '25 MIN READ',
-    image: '/idor-cover.jpg',
-    coverImage: '/images/idor-cover.png',
-    content: `
+    },
+    {
+        id: '2',
+        title: 'IDOR Vulnerability Explained | Cybersecurity Guide',
+        slug: 'idor-security-analysis',
+        excerpt: 'Learn how Insecure Direct Object Reference (IDOR) vulnerabilities work, how attackers exploit them, and how developers can prevent them.',
+        publishDate: 'MARCH 03, 2026',
+        updatedDate: 'MARCH 04, 2026',
+        author: 'Mani Varma',
+        tags: ['OWASP TOP 10', 'PENETRATION TESTING', 'AUTHORIZATION', 'AD-READY'],
+        readingTime: '25 MIN READ',
+        image: '/idor-cover.jpg',
+        coverImage: '/images/idor-cover.png',
+        content: `
 Access control is the cornerstone of any secure application, yet it remains one of the most fragile layers in modern software architecture. Among the myriad of ways access control can fail, Insecure Direct Object Reference (IDOR) stands out as the most deceptive, often hiding behind a simple integer or UUID in a URL.
 
 This whitepaper explores the technical anatomy of IDOR, its impact on the enterprise, and the strategic methodologies required to detect and prevent it at scale.
@@ -465,19 +465,19 @@ IDOR remains one of the most profitable vulnerabilities for attackers due to its
 
 Security practitioners must shift their focus from perimeter defense to **Logical Integrity**. Every database query and every API resolver must be treated as a trust boundary. Only by enforcing authorization at every layer can we move away from the "silent breach" and toward a truly resilient enterprise.
 `
-  },
-  {
-    id: '3',
-    title: 'Horizontal Privilege Escalation – Industry-Level Exploitation Analysis & Enterprise Risk Model',
-    slug: 'horizontal-privilege-escalation-owasp-a01',
-    excerpt: 'A deep dive into Horizontal Privilege Escalation (OWASP A01). Learn how attackers exploit logical flaws to access peer data and how to build resilient authorization architectures.',
-    publishDate: 'MARCH 06, 2026',
-    author: 'Mani Varma',
-    tags: ['OWASP TOP 10', 'PENETRATION TESTING', 'AUTHORIZATION', 'AD-READY'],
-    readingTime: '30 MIN READ',
-    image: '/hpe-cover.jpg',
-    coverImage: '/hpe-cover.jpg',
-    content: `
+    },
+    {
+        id: '3',
+        title: 'Horizontal Privilege Escalation – Industry-Level Exploitation Analysis & Enterprise Risk Model',
+        slug: 'horizontal-privilege-escalation-owasp-a01',
+        excerpt: 'A deep dive into Horizontal Privilege Escalation (OWASP A01). Learn how attackers exploit logical flaws to access peer data and how to build resilient authorization architectures.',
+        publishDate: 'MARCH 06, 2026',
+        author: 'Mani Varma',
+        tags: ['OWASP TOP 10', 'PENETRATION TESTING', 'AUTHORIZATION', 'AD-READY'],
+        readingTime: '30 MIN READ',
+        image: '/hpe-cover.jpg',
+        coverImage: '/hpe-cover.jpg',
+        content: `
 ## EXECUTIVE SUMMARY
 
 Horizontal Privilege Escalation(HPE) is a critical sub- category of ** Broken Access Control(OWASP A01) ** where an attacker bypasses authorization mechanisms to access resources or data belonging to another user with the same privilege level.Unlike vertical escalation, where a user seeks administrative rights, HPE is about "lateral movement" within a user tier—accessing a peer's private messages, financial records, or personal profiles.
@@ -732,5 +732,260 @@ Because the transport and network layers are functioning exactly as designed, tr
 
 Authorization is the final line of defense between an authenticated user and sensitive data. For a modern enterprise, enforcing authorization at every layer—from the API gateway to the database query—is not optional. Horizontal Privilege Escalation is a test of an application's logical integrity. By moving toward a **Zero-Trust, Context-Aware** authorization model, organizations can prevent silent breaches and build truly resilient cybersecurity foundations.
 `
-  }
+    },
+    {
+        id: '4',
+        title: 'Vertical Privilege Escalation – Industry-Level Exploitation Analysis & Enterprise Risk Model',
+        slug: 'vertical-privilege-escalation-security-analysis',
+        excerpt: 'A deep dive into Vertical Privilege Escalation (OWASP A01). Learn how attackers exploit logical flaws to escalate from normal users to administrators and how to build resilient authorization architectures.',
+        publishDate: 'MARCH 06, 2026',
+        author: 'Mani Varma',
+        tags: ['OWASP TOP 10', 'PENETRATION TESTING', 'AUTHORIZATION', 'AD-READY'],
+        readingTime: '35 MIN READ',
+        image: '/vpe-cover.jpg',
+        coverImage: '/vpe-cover.jpg',
+        content: `
+## 01 EXECUTIVE SUMMARY
+
+Vertical Privilege Escalation (VPE) is one of the most critical access control vulnerabilities in modern web applications. It occurs when a user with lower-level permissions successfully maneuvers the application logic to gain access to functions or data reserved for higher-privileged roles, typically administrators. While horizontal escalation is about accessing peer data, VPE is about "ascending" the hierarchy.
+
+In the current landscape of sprawling cloud infrastructures and complex API ecosystems, VPE represents a systemic risk. It often bypasses the "Perimeter Defense" because the attacker is already a legitimate, authenticated user. The failure is not in identifying who the user is, but in strictly enforcing what they are allowed to do. This whitepaper provides a comprehensive analysis of the VPE attack surface, root causes, and strategic remediation frameworks.
+
+## 02 INTRODUCTION – THE SILENT PRIVILEGE BREACH
+
+Consider a standard enterprise SaaS platform. A junior employee logs in to view their own task dashboard. However, by observing the network traffic, they notice an endpoint like \`/api/user/profile\`. Curious, they try navigating to \`/api/admin/config\`. Instead of a 403 Forbidden error, the server returns the full system configuration, including database credentials and API keys.
+
+### REALISTIC ATTACK SCENARIO:
+1.  **Normal user login**: The attacker logs in with valid, low-level credentials.
+2.  **Hidden admin endpoint discovered**: Through directory brute-forcing or JS file analysis, the attacker finds \`/admin-panel\`.
+3.  **Role parameter manipulated**: The attacker modifies their session token or a POST body parameter from \`role: "user"\` to \`role: "admin"\`.
+4.  **Authorization validation fails**: The backend checks if the user is authenticated (they are) but fails to verify if their role permits access to the admin function.
+5.  **Admin access granted**: The attacker gains full control over the system.
+
+This happens because many developers treat authentication as a binary state—if a user is "logged in," they are implicitly trusted.
+
+## 03 SIMPLE EXPLANATION – THE HOTEL KEY ANALOGY
+
+To understand the difference between Horizontal and Vertical escalation, let's look at a hotel:
+
+- **Horizontal Escalation**: You have a key to Room 201. You find a way to make your key open Room 202 (a peer's room).
+- **Vertical Escalation**: You have a key to Room 201. You find a way to make your key open the **Manager's Vault** or the **Security Operations Center**.
+
+In plain English, Vertical Privilege Escalation is like a guest using their room key to gain access to the hotel's master controls. It is the jump from a "User" to a "Superuser."
+
+## 04 TECHNICAL DEEP DIVE
+
+### ROLE-BASED ACCESS CONTROL (RBAC)
+Most systems use RBAC, where permissions are grouped into roles (e.g., Guest, Editor, Admin). VPE occurs when the mapping between the session and the role is either client-controlled or insufficiently validated at the endpoint level.
+
+### AUTHORIZATION MIDDLEWARE
+In modern frameworks (Express, Spring, Django), authorization middleware is the first line of defense. If this middleware is poorly configured or skipped for certain routes, VPE is inevitable.
+
+### PRIVILEGE VALIDATION LOGIC
+The core of VPE is a failure in logic. The server might check:
+\`\`\`javascript
+if (req.isAuthenticated()) { 
+    // Proceed to sensitive admin function
+}
+\`\`\`
+Instead of:
+\`\`\`javascript
+if (req.user.role === 'ADMIN') {
+    // Proceed
+}
+\`\`\`
+
+## 05 ATTACK WORKFLOW
+
+![Attack Workflow Diagram](/vpe-workflow.jpg)
+
+1.  **User Login**: Attacker enters valid credentials.
+2.  **Normal User Role Assigned**: The server issues a session token marked as "User."
+3.  **Attacker Intercepts Request**: Using tools like Burp Suite, the attacker captures a request to a sensitive endpoint.
+4.  **Role Parameter Modified**: The attacker changes \`isAdmin=false\` to \`isAdmin=true\` in the request body.
+5.  **Server Fails Authorization Check**: The server blindly trusts the modified parameter.
+6.  **Admin Panel Access Gained**: The attacker is redirected to the administrative interface.
+
+## 06 APPLICATION ARCHITECTURE FAILURE POINTS
+
+![Architecture Diagram](/vpe-architecture.jpg)
+
+In a typical multi-tier architecture, the failure usually occurs at the **Application Logic** or **Authorization Middleware** layer. 
+- **Client Browser**: The attacker initiates the manipulation here.
+- **Web Server**: Forwards the request without inspection.
+- **Application Logic**: Fails to implement granular role checks.
+- **Authorization Middleware**: Either missing, misconfigured, or bypassed.
+- **Database**: Executes the privileged query because it was told to by the application.
+
+## 07 ROOT CAUSE ANALYSIS – WHY DEVELOPERS MISS IT
+ 
+![Root Cause Diagram](/vpe-root-cause.jpg)
+
+Developers often fall into these traps:
+- **Missing Role Validation**: Assuming that "hiding" a button in the UI is sufficient security.
+- **Trusting Client-Side Parameters**: Assuming parameters sent from the browser are immutable.
+- **Hidden Admin Endpoints**: Believing in "Security through Obscurity."
+- **Improper Middleware Ordering**: Placing the authorization check *after* the logic that handles the data.
+- **Weak Access Control Policies**: Relying on complex, hard-to-maintain \`if/else\` chains instead of a centralized policy engine.
+
+## 08 CODE EXAMPLES – VULNERABLE VS SECURE
+
+### 1. VULNERABLE BACKEND (NODE.JS)
+\`\`\`javascript
+// VULNERABLE: Only checks for authentication, not role
+app.post('/api/admin/delete-user', (req, res) => {
+    if (req.session.user) { // Only checks if logged in
+        db.users.delete(req.body.userId);
+        res.send("User deleted");
+    }
+});
+\`\`\`
+
+### 2. SECURE ROLE VALIDATION
+\`\`\`javascript
+// SECURE: Explicitly verifies the ADMIN role
+app.post('/api/admin/delete-user', (req, res) => {
+    if (req.user && req.user.role === 'ADMIN') {
+        db.users.delete(req.body.userId);
+        res.send("User deleted");
+    } else {
+        res.status(403).send("Unauthorized");
+    }
+});
+\`\`\`
+
+### 3. MIDDLEWARE-BASED AUTHORIZATION
+\`\`\`javascript
+// BEST PRACTICE: Centralized middleware
+const isAdmin = (req, res, next) => {
+    if (req.user && req.user.role === 'ADMIN') {
+        next();
+    } else {
+        res.status(403).json({ error: "Access Denied: Admin Privileges Required" });
+    }
+};
+
+app.post('/api/admin/settings', isAdmin, (req, res) => {
+    // Admin logic here
+});
+\`\`\`
+
+## 09 IMPACT ANALYSIS (CIA TRIAD)
+
+Vertical Privilege Escalation has a devastating impact on the entire security triad.
+
+| Triad Pillar | Impact Level | Description |
+| :--- | :--- | :--- |
+| **Confidentiality** | **CRITICAL** | Attacker gains access to ALL user data, system configs, and intellectual property. |
+| **Integrity** | **CRITICAL** | Attacker can modify system settings, create backdoors, or delete the entire database. |
+| **Availability** | **CRITICAL** | Attacker can shut down services, wipe servers, or lock out legitimate administrators. |
+
+## 10 CVSS ANALYSIS – SCORING THE RISK
+
+VPE vulnerabilities almost always result in Critical scores because they represent a total loss of control.
+
+| Version | Severity | Score | Why? |
+| :--- | :--- | :--- | :--- |
+| **CVSS v2** | **High** | **9.0** | High impact on C, I, and A. |
+| **CVSS v3.1** | **Critical** | **9.9** | \`PR:L / UI:N / S:C / C:H / I:H / A:H\` - High impact with Scope change. |
+| **CVSS v4.0** | **Critical** | **9.8** | Emphasizes the failure of the logical security boundary. |
+
+## 11 INDUSTRY & COMPLIANCE IMPACT
+
+- **GDPR**: Breach of administrative accounts is the "worst-case scenario" for data privacy, leading to maximum fines.
+- **HIPAA**: Administrative access allows the theft of entire patient databases, triggering mandatory federal reporting.
+- **PCI-DSS**: A compromised admin panel can lead to the installation of card-scraping malware across the entire site.
+
+## 12 DETECTION METHODOLOGIES
+
+### 12.1 PTES METHODOLOGY
+| Phase | Action |
+| :--- | :--- |
+| **Intelligence Gathering** | Mapping out admin-only subdomains or URL paths. |
+| **Threat Modeling** | Identifying functions that should be restricted (user management, billing). |
+| **Exploitation** | Attempting to access admin functions with a "user" cookie. |
+
+### 12.2 OSSTMM METHODOLOGY
+Focuses on the **Operational Trust** level. Is the authorization enforced at the source, or only at the edge?
+
+## 13 MANUAL TESTING CHECKLIST
+
+- [ ] Can a regular user access \`/admin\`, \`/dashboard/settings\`, or \`/api/config\`?
+- [ ] What happens if I change \`user_role=member\` to \`user_role=admin\` in a cookie?
+- [ ] Are administrative APIs (DELETE, PUT, PATCH) accessible to standard users?
+- [ ] Does the application rely on "hidden" fields for role assignment?
+
+## 14 AUTOMATED TESTING TOOLS
+
+- **Burp Suite**: Use **Autorize** to automatically attempt every request with different privilege levels.
+- **OWASP ZAP**: Use the **Access Control** tab to define roles and scan for leaks.
+- **ffuf**: Use wordlists to find "hidden" admin endpoints (e.g., \`/backup\`, \`/internal\`).
+- **Postman**: Automate RBAC tests by running collections with different environment variables for tokens.
+
+## 15 PREVENTION STRATEGY
+
+- **Role-Based Access Control (RBAC)**: Maintain a clear, server-side matrix of roles and permissions.
+- **Server-Side Validation**: Never trust role parameters received from the client.
+- **Deny-by-Default**: Every request is forbidden unless a specific rule allows it.
+- **Secure Middleware Enforcement**: Use a battle-tested authorization library.
+- **Zero-Trust Model**: Re-validate permissions for every sensitive action, regardless of session age.
+
+## 16 COMMON DEVELOPER MISTAKES
+
+1.  **Frontend-Only Security**: Hiding the "Admin" button but leaving the \`/api/delete\` route unprotected.
+2.  **Inconsistent Authorization**: Checking for admin rights on the web UI but forgetting to check them on the Mobile API.
+3.  **Hardcoded Roles**: Building static \`if (id === 1)\` checks instead of using dynamic roles.
+
+## 17 BUG BOUNTY REPORT EXAMPLE
+
+**Title**: Vertical Privilege Escalation via Role Parameter Tampering in Profile Update  
+**Summary**: Any user can elevate themselves to "Superadmin" by modifying the \`role\` field in the profile update request.  
+**Steps to Reproduce**:
+1. Login as standard user.
+2. Go to \`/settings/profile\`.
+3. Intercept the \`PATCH\` request.
+4. Add \`"role": "admin"\` to the JSON payload.
+5. Re-login; observe administrative privileges gained.  
+**Impact**: Full System Compromise.  
+**CVSS Score**: 10.0 (Critical)  
+**Recommendation**: Explicitly whitelist fields that can be updated by users.
+
+## 18 VULNERABILITY COMPARISON
+
+| Feature | Vertical Privilege Escalation | Horizontal Privilege Escalation | IDOR |
+| :--- | :--- | :--- | :--- |
+| **Direction** | Upward (User → Admin) | Lateral (User A → User B) | Direct (Manipulation of ID) |
+| **Impact** | System-Wide | User-Specific | Resource-Specific |
+| **Root Cause** | Role validation failure | Ownership validation failure | Untrusted identifier |
+
+## 19 REMEDIATION STRATEGY
+
+- **Centralized Authorization Middleware**: Ensure every request passes through a singular, audited security layer.
+- **Strict Server-Side Role Validation**: Use session storage (Redis/DB) for roles, never client cookies.
+- **Ownership Verification**: Before editing a record, ensure the user either *owns* it or is an authorized admin.
+- **Principle of Least Privilege**: Grant only the minimal access needed for a task.
+
+## 20 OSI MODEL MAPPING
+
+| OSI Layer | Role in Vulnerability |
+| :--- | :--- |
+| **Layer 7 – Application** | **Primary attack surface.** Authorization logic failure. |
+| **Layer 6 – Presentation** | Manipulation of data payloads (JSON/XML). |
+| **Layer 5 – Session** | Abuse of authenticated session tokens. |
+| **Layer 4 – Transport** | TLS protects the attack traffic from eavesdropping. |
+| **Layer 3 – Network** | Routing remains normal. |
+| **Layer 2 – Data Link** | Not relevant. |
+| **Layer 1 – Physical** | Not relevant. |
+
+## 21 KEY TAKEAWAYS
+
+- **For Developers**: Never trust the client. Security starts and ends on the server.
+- **For Security Engineers**: Focus on business logic. Automated scanners often miss these flaws.
+- **For Hunters**: Look for mismatches between the UI and the API.
+
+## 22 STRATEGIC CONCLUSION
+
+Vertical Privilege Escalation is not just a bug; it is a fundamental architectural failure. In a world where "Data is the New Oil," the loss of administrative control is the ultimate disaster. By enforcing authorization at every layer and adopting a Zero-Trust mindset, we can build applications that are not just functioning, but secure by design.
+    `
+    }
 ];

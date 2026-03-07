@@ -200,18 +200,26 @@ const requireRole = (role) => (req, res, next) => {
 app.delete('/api/admin/users', requireRole('ADMIN'), adminController.deleteUser);
 \`\`\`
 
-## 20 OSI MODEL MAPPING
-| OSI Layer | Role in Vulnerability |
-| :--- | :--- |
-| **Layer 7 – Application** | **Primary attack surface (authorization logic)** fails to restrict access. |
-| **Layer 6 – Presentation** | **Data manipulation possibilities** in JSON/XML payloads. |
-| **Layer 5 – Session** | **Session misuse or token manipulation** enabling unauthorized actions. |
-| **Layer 4 – Transport** | **TLS protects data in transit**, masking the attack from passive sniffing. |
-| **Layer 3 – Network** | **Routing only**, unaffected. |
-| **Layer 2 – Data Link** | **Not relevant**. |
-| **Layer 1 – Physical** | **Not relevant**. |
+## 20 OSI Model Layer Mapping
 
-These vulnerabilities occur at the Application Layer because authentication and authorization are software constructs built into the application code, operating far above network routing protocols.
+Primary OSI Layer Affected:
+Application Layer (Layer 7)
+
+| OSI Layer | Function | Relation to this Vulnerability |
+| :--- | :--- | :--- |
+| Layer 7 – Application | Web apps, APIs, backend logic | PRIMARY ATTACK LAYER |
+| Layer 6 – Presentation | Encryption / formatting | Not directly involved |
+| Layer 5 – Session | Session handling | Minor relation |
+| Layer 4 – Transport | TCP / UDP delivery | Not involved |
+| Layer 3 – Network | IP routing | Not involved |
+| Layer 2 – Data Link | Frame transmission | Not involved |
+| Layer 1 – Physical | Hardware signals | Not involved |
+
+### Why this attack occurs in the Application Layer
+Authorization logic, API validation, and backend business logic operate in Layer 7.
+
+### Why it does NOT occur in other layers
+Transport, network, and lower layers only handle packet transmission and do not enforce application-level authorization.
 
 ## 21 KEY TAKEAWAYS
 - Access control is not a feature; it is an overarching architecture spanning the entire system.
@@ -440,19 +448,26 @@ async def get_document(document_id: str, current_user: User = Depends(get_curren
     return document
 \`\`\`
 
-## 20 OSI MODEL MAPPING
+## 20 OSI Model Layer Mapping
 
-Like most implementation-level web vulnerabilities, IDOR is purely an Application Layer failure. 
+Primary OSI Layer Affected:
+Application Layer (Layer 7)
 
-| OSI Layer | Role in Vulnerability |
-| :--- | :--- |
-| **Layer 7 – Application** | **Primary attack surface.** The web application fails to validate if the user owns the data requested. |
-| **Layer 6 – Presentation** | The attacker manipulates parameter encoding (e.g., JSON tampering) to deliver the malicious ID. |
-| **Layer 5 – Session** | The active session is abused to extract unauthorized data. |
-| **Layer 4 – Transport** | TLS protects the exfiltrated data from network sniffing, ironically aiding the attacker. |
-| **Layer 3 – Network** | Routing only; functions normally. |
-| **Layer 2 – Data Link** | Not relevant. |
-| **Layer 1 – Physical** | Not relevant. |
+| OSI Layer | Function | Relation to this Vulnerability |
+| :--- | :--- | :--- |
+| Layer 7 – Application | Web apps, APIs, backend logic | PRIMARY ATTACK LAYER |
+| Layer 6 – Presentation | Encryption / formatting | Not directly involved |
+| Layer 5 – Session | Session handling | Minor relation |
+| Layer 4 – Transport | TCP / UDP delivery | Not involved |
+| Layer 3 – Network | IP routing | Not involved |
+| Layer 2 – Data Link | Frame transmission | Not involved |
+| Layer 1 – Physical | Hardware signals | Not involved |
+
+### Why this attack occurs in the Application Layer
+Authorization logic, API validation, and backend business logic operate in Layer 7.
+
+### Why it does NOT occur in other layers
+Transport, network, and lower layers only handle packet transmission and do not enforce application-level authorization.
 
 ## 21 KEY TAKEAWAYS
 - **Logins are entry points, not permissions.**
@@ -707,21 +722,26 @@ const requireOwnership = async (req, res, next) => {
 app.get('/api/v2/financial-reports/:id', requireOwnership, getReportController);
 \`\`\`
 
-## 20. OSI MODEL MAPPING
+## 20 OSI Model Layer Mapping
 
-Horizontal Privilege Escalation is a logical flaw that occurs at the highest layer of the network stack. It does not exploit the network routing or the transport encryption, but rather the business logic executing the request.
+Primary OSI Layer Affected:
+Application Layer (Layer 7)
 
-| OSI Layer | Role in Vulnerability |
-| :--- | :--- |
-| **Layer 7 – Application** | **Primary attack surface.** The authorization logic fails to validate resource ownership. |
-| **Layer 6 – Presentation** | Attackers manipulate the data format (e.g., JSON payload manipulation) to alter identifiers. |
-| **Layer 5 – Session** | The session token is valid, but abused to access data outside its granted scope. |
-| **Layer 4 – Transport** | Not relevant. TLS works perfectly, protecting the *stolen* data in transit. |
-| **Layer 3 – Network** | Not relevant. Routers forward the HTTP request normally. |
-| **Layer 2 – Data Link** | Not relevant. |
-| **Layer 1 – Physical** | Not relevant. |
+| OSI Layer | Function | Relation to this Vulnerability |
+| :--- | :--- | :--- |
+| Layer 7 – Application | Web apps, APIs, backend logic | PRIMARY ATTACK LAYER |
+| Layer 6 – Presentation | Encryption / formatting | Not directly involved |
+| Layer 5 – Session | Session handling | Minor relation |
+| Layer 4 – Transport | TCP / UDP delivery | Not involved |
+| Layer 3 – Network | IP routing | Not involved |
+| Layer 2 – Data Link | Frame transmission | Not involved |
+| Layer 1 – Physical | Hardware signals | Not involved |
 
-Because the transport and network layers are functioning exactly as designed, traditional firewalls cannot block HPE. Only Application-Layer analysis (Layer 7 WAFs and SAST/DAST) or robust business logic testing can identify it.
+### Why this attack occurs in the Application Layer
+Authorization logic, API validation, and backend business logic operate in Layer 7.
+
+### Why it does NOT occur in other layers
+Transport, network, and lower layers only handle packet transmission and do not enforce application-level authorization.
 
 ## 21. KEY TAKEAWAYS
 - **Authentication is identity; Authorization is permission.**
@@ -965,17 +985,26 @@ Focuses on the **Operational Trust** level. Is the authorization enforced at the
 - **Ownership Verification**: Before editing a record, ensure the user either *owns* it or is an authorized admin.
 - **Principle of Least Privilege**: Grant only the minimal access needed for a task.
 
-## 20 OSI MODEL MAPPING
+## 20 OSI Model Layer Mapping
 
-| OSI Layer | Role in Vulnerability |
-| :--- | :--- |
-| **Layer 7 – Application** | **Primary attack surface.** Authorization logic failure. |
-| **Layer 6 – Presentation** | Manipulation of data payloads (JSON/XML). |
-| **Layer 5 – Session** | Abuse of authenticated session tokens. |
-| **Layer 4 – Transport** | TLS protects the attack traffic from eavesdropping. |
-| **Layer 3 – Network** | Routing remains normal. |
-| **Layer 2 – Data Link** | Not relevant. |
-| **Layer 1 – Physical** | Not relevant. |
+Primary OSI Layer Affected:
+Application Layer (Layer 7)
+
+| OSI Layer | Function | Relation to this Vulnerability |
+| :--- | :--- | :--- |
+| Layer 7 – Application | Web apps, APIs, backend logic | PRIMARY ATTACK LAYER |
+| Layer 6 – Presentation | Encryption / formatting | Not directly involved |
+| Layer 5 – Session | Session handling | Minor relation |
+| Layer 4 – Transport | TCP / UDP delivery | Not involved |
+| Layer 3 – Network | IP routing | Not involved |
+| Layer 2 – Data Link | Frame transmission | Not involved |
+| Layer 1 – Physical | Hardware signals | Not involved |
+
+### Why this attack occurs in the Application Layer
+Authorization logic, API validation, and backend business logic operate in Layer 7.
+
+### Why it does NOT occur in other layers
+Transport, network, and lower layers only handle packet transmission and do not enforce application-level authorization.
 
 ## 21 KEY TAKEAWAYS
 

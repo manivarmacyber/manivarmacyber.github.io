@@ -36,4 +36,8 @@
     <loc>https://manivarmacyber.github.io/blog/vertical-privilege-escalation-security-analysis</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://manivarmacyber.github.io/blog/forced-browsing-owasp-a01-analysis</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>

@@ -1077,7 +1077,7 @@ In Single-Page Applications (SPAs), the frontend routing might prevent unauthori
 
 ## 05 ATTACK WORKFLOW
 
-![Forced Browsing Attack Workflow Pipeline](/forced-browsing-attack.jpeg)
+![Forced Browsing Attack Workflow Pipeline](/forced-browsing-architecture.jpeg)
 
 The sequence of a Forced Browsing attack is methodical and often automated:
 
@@ -1090,7 +1090,7 @@ The sequence of a Forced Browsing attack is methodical and often automated:
 
 ## 06 APPLICATION ARCHITECTURE
 
-![Forced Browsing Application Architecture Vulnerability](/forced-browsing-architecture.jpeg)
+![Forced Browsing Application Architecture Vulnerability](/forced-browsing-attack.jpeg)
 
 Where does this authorization failure occur?
 

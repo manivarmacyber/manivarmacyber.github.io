@@ -13,7 +13,7 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#1a0000" />
+  <meta name="theme-color" content="#0F172A" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="google-site-verification" content="to1aKJeBXge_9EB5pSn3_BgRn5vp-H3RXWhtHhwk3ds" />
 
@@ -39,8 +39,14 @@
   <script>
     (function () {
       try {
-        const savedTheme = localStorage.getItem('theme');
-        const theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const savedTheme = localStorage.getItem('site-theme');
+        let theme;
+        if (savedTheme === 'dark' || savedTheme === 'light') {
+          theme = savedTheme;
+        } else {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.className = theme;
         document.documentElement.setAttribute('data-theme', theme);
       } catch (e) {
         console.error('Theme initialization failed', e);
@@ -126,12 +132,12 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap"
     rel="stylesheet">
-  <script type="module" crossorigin src="/assets/index-D4NXuyaz.js"></script>
+  <script type="module" crossorigin src="/assets/index-27-C6JbY.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/vendor-react-DuYvkfAG.js">
   <link rel="modulepreload" crossorigin href="/assets/vendor-motion-B455kXd6.js">
-  <link rel="modulepreload" crossorigin href="/assets/vendor-icons-DsfUrXaL.js">
+  <link rel="modulepreload" crossorigin href="/assets/vendor-icons-DwJiFlDI.js">
   <link rel="modulepreload" crossorigin href="/assets/vendor-firebase-D3y9K_CC.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-BouNb_ai.css">
+  <link rel="stylesheet" crossorigin href="/assets/index-EvqPkesh.css">
 
   <!-- Initial SEO Metadata Injected via Vite SSG -->
   <title>Horizontal Privilege Escalation – Industry-Level Exploitation Analysis & Enterprise Risk Model</title>

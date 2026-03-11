@@ -49,36 +49,37 @@ export const Experience: React.FC = () => {
     <div id="journey" className="py-20">
       <div className="flex flex-col items-center gap-6 mb-20 text-center">
         <h2 className="text-3xl md:text-5xl font-orbitron font-[800] text-text-primary uppercase tracking-tighter leading-none italic">
-          PROFESSIONAL <span className="text-accent-cyan text-glow-cyan">JOURNEY</span>
+          PROFESSIONAL <span className="text-accent-primary">JOURNEY</span>
         </h2>
-        <div className="w-1/4 h-px bg-border" />
+        <div className="w-1/4 h-px bg-border-color" />
       </div>
 
       <div className="container-progressive relative px-0">
         {/* Central Timeline Line */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-accent-violet/20 -translate-x-1/2 hidden lg:block" />
-        <div className="absolute left-6 top-0 bottom-0 w-[2px] bg-accent-violet/20 lg:hidden" />
+        <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-border-color/20 -translate-x-1/2 hidden lg:block" />
+        <div className="absolute left-6 top-0 bottom-0 w-[2px] bg-border-color/20 lg:hidden" />
 
         <div className="space-y-24">
           {experiences.map((exp, i) => (
             <div key={exp.id} className={`relative flex flex-col ${exp.side === 'left' ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center justify-center gap-12 group`}>
               {/* Timeline Dot */}
               <div className="absolute left-6 lg:left-1/2 top-0 lg:top-1/2 w-4 h-4 rounded-full -translate-x-1/2 lg:-translate-y-1/2 z-20 group-hover:scale-125 transition-transform opacity-90"
-                style={{ background: '#cc2200', boxShadow: '0 0 10px rgba(204,34,0,0.8), 0 0 20px rgba(204,34,0,0.4)' }} />
+                style={{ background: 'var(--accent-primary)', boxShadow: '0 0 10px var(--accent-glow), 0 0 20px var(--accent-glow-subtle)' }} />
 
               {/* Content Card */}
               <motion.div
                 initial={{ opacity: 0, x: exp.side === 'left' ? -30 : 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className={`w-full lg:w-[45%] glass-card p-8 border-border relative overflow-hidden bg-card-bg transition-all hover:border-accent-cyan/20 group/card`}
+                className={`w-full lg:w-[45%] p-8 border border-border-color relative overflow-hidden transition-all hover:border-accent-primary/20 group/card rounded-[2rem]`}
+                style={{ background: 'var(--bg-card)' }}
               >
                 <div className="space-y-6">
-                  <span className="block text-[10px] font-mono text-accent-cyan uppercase tracking-[0.4em] font-black">{exp.title}</span>
+                  <span className="block text-[10px] font-mono text-accent-primary uppercase tracking-[0.4em] font-black">{exp.title}</span>
                   <ul className="space-y-4">
                     {exp.details.map((detail, idx) => (
-                      <li key={idx} className="flex gap-4 text-text-secondary text-sm leading-relaxed font-medium">
-                        <span className="text-accent-cyan">▹</span>
+                      <li key={idx} className="flex gap-4 text-text-muted text-sm leading-relaxed font-medium">
+                        <span className="text-accent-primary">▹</span>
                         <span className="group-hover/card:text-text-primary transition-colors">{detail}</span>
                       </li>
                     ))}
@@ -88,7 +89,7 @@ export const Experience: React.FC = () => {
 
               {/* Info Block (Date & Org) */}
               <div className={`w-full lg:w-[45%] flex flex-col ${exp.side === 'left' ? 'lg:items-start pl-16 lg:pl-0' : 'lg:items-end pr-0 lg:pr-0 pl-16 lg:pl-0'} space-y-4`}>
-                <span className="text-base font-mono text-accent-violet uppercase tracking-[0.4em] font-black italic">{exp.period}</span>
+                <span className="text-base font-mono text-accent-primary uppercase tracking-[0.4em] font-black italic opacity-70">{exp.period}</span>
                 <h3 className="text-2xl md:text-3xl font-orbitron font-bold text-text-primary uppercase tracking-tighter leading-none italic max-w-sm">
                   {exp.organization}
                 </h3>

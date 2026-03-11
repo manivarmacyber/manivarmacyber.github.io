@@ -242,7 +242,7 @@ Broken Access Control represents the ultimate logical failure in enterprise secu
         tags: ['OWASP TOP 10', 'PENETRATION TESTING', 'AUTHORIZATION', 'AD-READY'],
         readingTime: '25 MIN READ',
         image: '/idor-cover.jpg',
-        coverImage: '/images/idor-cover.png',
+        coverImage: '/idor-cover.jpg',
         content: `
 Access control is the cornerstone of any secure application, yet it remains one of the most fragile layers in modern software architecture. Among the myriad of ways access control can fail, Insecure Direct Object Reference (IDOR) stands out as the most deceptive, often hiding behind a simple integer or UUID in a URL.
 

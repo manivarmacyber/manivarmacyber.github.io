@@ -26,28 +26,30 @@ export const CookieNotice: React.FC = () => {
           exit={{ y: 100, opacity: 0 }}
           className="fixed bottom-8 left-8 right-8 md:left-auto md:right-8 md:w-96 z-[100]"
         >
-          <div className="glass-card p-6 border-border shadow-2xl bg-card-bg">
+          <div className="p-6 border border-border-color shadow-2xl rounded-2xl"
+            style={{ background: 'var(--bg-card)' }}
+          >
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-full bg-accent-cyan/10 flex items-center justify-center text-accent-cyan shrink-0">
+              <div className="w-10 h-10 rounded-full bg-accent-primary/10 flex items-center justify-center text-accent-primary shrink-0">
                 <Cookie size={20} />
               </div>
               <div className="space-y-4">
                 <div>
                   <h4 className="font-orbitron font-bold text-sm mb-1 uppercase tracking-widest text-text-primary">Cookie Protocol</h4>
-                  <p className="text-text-secondary text-xs leading-relaxed">
+                  <p className="text-text-muted text-xs leading-relaxed">
                     We use cookies to optimize system performance and analyze traffic patterns. By continuing, you authorize these protocols.
                   </p>
                 </div>
                 <div className="flex gap-3">
                   <button
                     onClick={accept}
-                    className="flex-grow bg-accent-cyan text-black font-orbitron font-bold text-[10px] py-2 rounded uppercase tracking-widest hover:bg-accent-cyan/90 hover:shadow-[0_0_15px_rgba(0,230,255,0.4)] transition-all"
+                    className="flex-grow bg-accent-primary text-black font-orbitron font-bold text-[10px] py-2 rounded uppercase tracking-widest hover:bg-accent-primary/90 hover:shadow-[0_0_15px_var(--accent-glow)] transition-all"
                   >
                     Authorize
                   </button>
                   <button
                     onClick={() => setIsVisible(false)}
-                    className="px-4 border border-border text-text-secondary hover:text-text-primary transition-colors rounded"
+                    className="px-4 border border-border-color text-text-muted hover:text-text-primary transition-colors rounded"
                   >
                     <X size={14} />
                   </button>

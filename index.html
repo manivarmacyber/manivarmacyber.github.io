@@ -13,7 +13,7 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#1a0000" />
+  <meta name="theme-color" content="#0F172A" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="google-site-verification" content="to1aKJeBXge_9EB5pSn3_BgRn5vp-H3RXWhtHhwk3ds" />
 
@@ -39,8 +39,14 @@
   <script>
     (function () {
       try {
-        const savedTheme = localStorage.getItem('theme');
-        const theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const savedTheme = localStorage.getItem('site-theme');
+        let theme;
+        if (savedTheme === 'dark' || savedTheme === 'light') {
+          theme = savedTheme;
+        } else {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.className = theme;
         document.documentElement.setAttribute('data-theme', theme);
       } catch (e) {
         console.error('Theme initialization failed', e);
@@ -64,7 +70,7 @@
   <meta property="og:title" content="Mani Varma | Cybersecurity Research & Vulnerability Analysis" />
   <meta property="og:description"
     content="Deep technical cybersecurity research and vulnerability analysis. Specialized whitepapers on modern web vulnerabilities and penetration testing methodologies." />
-  <meta property="og:image" content="https://manivarmacyber.github.io/profile.jpg" />
+  <meta property="og:image" content="https://manivarmacyber.github.io/profile-refined.png" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
@@ -72,7 +78,7 @@
   <meta name="twitter:title" content="Mani Varma | Cybersecurity Research & Vulnerability Analysis" />
   <meta name="twitter:description"
     content="Deep technical cybersecurity research and vulnerability analysis. Specialized whitepapers on modern web vulnerabilities and penetration testing methodologies." />
-  <meta name="twitter:image" content="https://manivarmacyber.github.io/profile.jpg" />
+  <meta name="twitter:image" content="https://manivarmacyber.github.io/profile-refined.png" />
 
   <!-- Structured Data -->
   <script type="application/ld+json">

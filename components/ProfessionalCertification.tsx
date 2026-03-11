@@ -6,13 +6,13 @@ export const ProfessionalCertification: React.FC = () => {
   return (
     <div id="certifications" className="py-20">
       <div className="flex flex-col items-center gap-6 mb-16 text-center">
-        <div className="flex items-center gap-3 text-accent-cyan mb-2">
-          <div className="w-8 h-[1px] bg-accent-cyan" />
+        <div className="flex items-center gap-3 text-accent-primary mb-2">
+          <div className="w-8 h-[1px] bg-accent-primary" />
           <span className="text-[10px] font-mono tracking-[0.3em] uppercase">PROFESSIONAL CREDENTIALS</span>
-          <div className="w-8 h-[1px] bg-accent-cyan" />
+          <div className="w-8 h-[1px] bg-accent-primary" />
         </div>
         <h2 className="text-3xl md:text-5xl font-orbitron font-black text-text-primary uppercase tracking-tighter leading-none italic">
-          CORE <span className="text-accent-cyan opacity-80">VERIFICATION</span>
+          CORE <span className="text-accent-primary opacity-80">VERIFICATION</span>
         </h2>
       </div>
 
@@ -22,7 +22,8 @@ export const ProfessionalCertification: React.FC = () => {
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="glass-card p-8 md:p-12 border-border relative overflow-hidden group text-center space-y-6 bg-card-bg"
+          className="p-8 md:p-12 border border-border-color relative overflow-hidden group text-center space-y-6 rounded-[2rem]"
+          style={{ background: 'var(--bg-card)' }}
         >
           {/* Large Shield Watermark */}
           <div className="absolute top-1/2 right-12 -translate-y-1/2 pointer-events-none opacity-[0.03] select-none scale-125">
@@ -31,22 +32,22 @@ export const ProfessionalCertification: React.FC = () => {
 
           <div className="space-y-6 relative z-10">
             <div className="flex items-center justify-center gap-4 mb-4">
-              <div className="h-px w-12 bg-accent-cyan/20" />
-              <span className="text-[10px] font-mono text-accent-cyan uppercase tracking-[0.6em] font-black">REGULATED LICENSE_001</span>
-              <div className="h-px w-12 bg-accent-cyan/20" />
+              <div className="h-px w-12 bg-accent-primary/20" />
+              <span className="text-[10px] font-mono text-accent-primary uppercase tracking-[0.6em] font-black">REGULATED LICENSE_001</span>
+              <div className="h-px w-12 bg-accent-primary/20" />
             </div>
 
             <h3 className="text-3xl md:text-5xl font-orbitron font-black text-text-primary uppercase tracking-tighter leading-none italic">
-              CEH MASTER <span className="text-accent-cyan text-glow-cyan">V12</span>
+              CEH MASTER <span className="text-accent-primary" style={{ textShadow: '0 0 10px var(--accent-glow)' }}>V12</span>
             </h3>
 
-            <p className="text-sm md:text-base text-text-secondary font-medium max-w-3xl mx-auto">
+            <p className="text-sm md:text-base text-text-muted font-medium max-w-3xl mx-auto">
               Certified Ethical Hacker (Theory & Practical) — Validating advanced penetration testing and security assessment capabilities.
             </p>
           </div>
 
           <div className="flex justify-center relative z-10">
-            <div className="px-8 py-3 bg-accent-cyan/10 border border-border rounded-full font-mono text-[10px] text-text-secondary tracking-[0.4em] font-black">
+            <div className="px-8 py-3 bg-accent-primary/10 border border-border-color rounded-full font-mono text-[10px] text-text-muted tracking-[0.4em] font-black">
               EC-COUNCIL_VERIFIED
             </div>
           </div>
@@ -56,11 +57,11 @@ export const ProfessionalCertification: React.FC = () => {
               href="https://drive.google.com/drive/folders/1gmcFKsNRS-cTQx5SYgpeBpp_orv0renT?usp=drive_link"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-center gap-4 px-10 py-4 border border-accent-cyan/20 bg-accent-cyan/5 text-text-primary font-orbitron font-bold text-xs uppercase tracking-[0.4em] rounded-2xl transition-all hover:bg-accent-cyan/10 hover:border-accent-cyan/50 hover:shadow-[0_0_20px_rgba(0,219,233,0.15)] shadow-xl relative overflow-hidden active:scale-[0.98] w-full sm:w-auto"
+              className="group flex items-center justify-center gap-4 px-10 py-4 border border-accent-primary/20 bg-accent-primary/5 text-text-primary font-orbitron font-bold text-xs uppercase tracking-[0.4em] rounded-2xl transition-all hover:bg-accent-primary/10 hover:border-accent-primary/50 hover:shadow-[0_0_20px_var(--accent-glow-subtle)] shadow-xl relative overflow-hidden active:scale-[0.98] w-full sm:w-auto"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-text-primary/[0.05] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 skew-x-[-20deg]" />
               <span>VERIFY LICENSE DATA (SECURE)</span>
-              <Shield size={18} className="text-accent-cyan group-hover:rotate-12 transition-transform" />
+              <Shield size={18} className="text-accent-primary group-hover:rotate-12 transition-transform" />
             </a>
           </div>
         </motion.div>
@@ -68,11 +69,11 @@ export const ProfessionalCertification: React.FC = () => {
         {/* Other Certifications */}
         <div className="space-y-12">
           <div className="flex items-center gap-6 group">
-            <div className="p-3 bg-accent-violet/10 border border-accent-violet/20 rounded-xl text-accent-violet">
+            <div className="p-3 bg-accent-secondary/10 border border-accent-secondary/20 rounded-xl text-accent-secondary">
               <FileCheck size={24} />
             </div>
             <h3 className="text-xl md:text-2xl font-orbitron font-black text-text-primary uppercase tracking-tight italic">
-              OTHER <span className="text-accent-violet">CERTIFICATIONS</span>
+              OTHER <span className="text-accent-secondary">CERTIFICATIONS</span>
             </h3>
           </div>
 
@@ -85,18 +86,19 @@ export const ProfessionalCertification: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="glass-card p-8 border-border bg-card-bg transition-all flex items-center gap-8 group block cursor-pointer"
+              className="p-8 border border-border-color transition-all flex items-center gap-8 group block cursor-pointer rounded-3xl"
+              style={{ background: 'var(--bg-card)' }}
             >
-              <div className="p-4 bg-accent-cyan/10 border border-accent-cyan/20 rounded-xl text-accent-cyan group-hover:scale-110 transition-transform">
+              <div className="p-4 bg-accent-primary/10 border border-accent-primary/20 rounded-xl text-accent-primary group-hover:scale-110 transition-transform">
                 <Trophy size={24} />
               </div>
               <div className="space-y-2 flex-grow">
                 <h4 className="text-sm md:text-base font-orbitron font-black text-text-primary uppercase leading-tight">
-                  OTHER <span className="text-accent-cyan">CERTIFICATIONS</span>
+                  OTHER <span className="text-accent-primary">CERTIFICATIONS</span>
                 </h4>
-                <p className="text-xs text-text-secondary font-medium">Verified record of cybersecurity excellence and institutional recognition.</p>
+                <p className="text-xs text-text-muted font-medium">Verified record of cybersecurity excellence and institutional recognition.</p>
               </div>
-              <div className="text-text-secondary/40 group-hover:text-accent-cyan transition-colors">
+              <div className="text-text-muted/40 group-hover:text-accent-primary transition-colors">
                 <ExternalLink size={16} />
               </div>
             </motion.a>

@@ -30,38 +30,114 @@ body {
   --space-6: 48px;
   --space-8: 64px;
 
-  /* ── DARK MODE (default) — Cyber Tiger Red/Black Theme ── */
-  --color-bg: #080000;
-  --color-nav-bg: rgba(8, 0, 0, 0.90);
-  --color-accent-cyan: #cc2200;
-  --color-accent-red: #cc2200;
-  --color-accent-violet: #8B0000;
-  --color-accent-glow: rgba(204, 34, 0, 0.35);
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #f0f0f0;
-  --color-border: rgba(180, 30, 20, 0.18);
-  --color-card-bg: rgba(22, 5, 5, 0.80);
-  --color-selection-bg: #cc2200;
-  --color-selection-text: #ffffff;
+  /* ── DARK MODE (default) — Cyber Purple ── */
+  --bg-primary: #0B0F19;
+  --bg-nav: rgba(11, 15, 25, 0.92);
+  --bg-card: #161B22;
 
-  /* Transitions */
-  --transition-speed: 0.35s;
+  --accent-primary: #8B5CF6;
+  --accent-secondary: #22D3EE;
+  --accent-glow: rgba(139, 92, 246, 0.4);
+  --accent-glow-subtle: rgba(139, 92, 246, 0.15);
+
+  --text-primary: #E5E7EB;
+  --text-heading: #FFFFFF;
+  --text-muted: #9CA3AF;
+
+  --border-color: #1F2937;
+  --selection-bg: #8B5CF6;
+  --selection-text: #ffffff;
+
+  /* Severity Tokens */
+  --severity-critical: #EF4444;
+  --severity-high: #F97316;
+  --severity-medium: #F59E0B;
+  --severity-low: #22C55E;
+  --severity-critical-glow: rgba(239, 68, 68, 0.4);
+  --severity-high-glow: rgba(249, 115, 22, 0.4);
+
+  /* Legacy mapping for compatibility */
+  --color-bg: var(--bg-primary);
+  --color-accent-cyan: var(--accent-primary);
+  --color-accent-red: var(--accent-primary);
+  --color-accent-violet: var(--accent-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-muted);
+  --color-border: var(--border-color);
+  --color-card-bg: var(--bg-card);
+
+  /* Transitions - Hyprland Inspired */
+  --transition-speed: 0.4s;
   --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-zoom: scale(1.02);
+  --transition-blur: blur(8px);
+
+  /* Blending for images */
+  --theme-blend-mode: normal;
+  --theme-mask-image: none;
 }
 
-/* ── LIGHT MODE — keep functional, red tinted ── */
+
+/* profile blend */
+.profile-blend-img {
+  mix-blend-mode: multiply;
+}
+
+[data-theme="light"] .profile-blend-img {
+  mix-blend-mode: multiply;
+}
+
+.wayland-transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+  background: var(--bg-primary);
+  opacity: 0;
+  backdrop-filter: blur(0px);
+  transition: opacity var(--transition-speed) var(--transition-timing),
+    backdrop-filter var(--transition-speed) var(--transition-timing),
+    transform var(--transition-speed) var(--transition-timing);
+  transform: scale(1);
+}
+
+.wayland-transition-active .wayland-transition-overlay {
+  opacity: 1;
+  backdrop-filter: var(--transition-blur);
+  transform: var(--transition-zoom);
+}
+
+.wayland-transition-active #root {
+  filter: var(--transition-blur);
+  transform: var(--transition-zoom);
+  opacity: 0.7;
+  transition: transform var(--transition-speed) var(--transition-timing),
+    filter var(--transition-speed) var(--transition-timing),
+    opacity var(--transition-speed) var(--transition-timing);
+}
+
+/* ── LIGHT MODE — Cyber Purple ── */
 [data-theme='light'] {
-  --color-bg: #1a0000;
-  --color-nav-bg: rgba(20, 0, 0, 0.94);
-  --color-accent-cyan: #cc2200;
-  --color-accent-red: #cc2200;
-  --color-accent-violet: #8B0000;
-  --color-text-primary: #f5e8e8;
-  --color-text-secondary: #c4a0a0;
-  --color-border: rgba(180, 30, 20, 0.20);
-  --color-card-bg: rgba(30, 5, 5, 0.85);
-  --color-selection-bg: #cc2200;
-  --color-selection-text: #fff0f0;
+  --bg-primary: #F8FAFC;
+  --bg-nav: rgba(248, 250, 252, 0.96);
+  --bg-card: #FFFFFF;
+
+  --accent-primary: #7C3AED;
+  --accent-secondary: #0891B2;
+  --accent-glow: rgba(124, 58, 237, 0.25);
+  --accent-glow-subtle: rgba(124, 58, 237, 0.08);
+
+  --text-primary: #000000;
+  --text-heading: #000000;
+  --text-muted: #334155;
+
+  --border-color: #E2E8F0;
+  --selection-bg: #7C3AED;
+  --selection-text: #ffffff;
+
+  /* Blending for images */
+  --theme-blend-mode: normal;
+  --theme-mask-image: none;
 }
 
 /* ─────────────────────────────────────────────
@@ -72,11 +148,30 @@ body {
   --font-orbitron: var(--font-orbitron);
   --font-mono: var(--font-mono);
 
-  --color-bg: var(--color-bg);
-  --color-accent-cyan: var(--color-accent-cyan);
-  --color-accent-violet: var(--color-accent-violet);
-  --color-text-primary: var(--color-text-primary);
-  --color-text-secondary: var(--color-text-secondary);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-nav: var(--bg-nav);
+  --color-bg-card: var(--bg-card);
+
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-glow: var(--accent-glow);
+  --color-accent-glow-subtle: var(--accent-glow-subtle);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-heading: var(--text-heading);
+  --color-text-muted: var(--text-muted);
+
+  --color-border-color: var(--border-color);
+
+  --color-severity-critical: var(--severity-critical);
+  --color-severity-high: var(--severity-high);
+  --color-severity-medium: var(--severity-medium);
+  --color-severity-low: var(--severity-low);
+
+  /* Legacy names mapping */
+  --color-bg: var(--bg-primary);
+  --color-accent-cyan: var(--accent-primary);
+  --color-accent-violet: var(--accent-secondary);
 }
 
 /* ─────────────────────────────────────────────
@@ -102,7 +197,9 @@ body {
     position: relative;
     transition:
       background-color var(--transition-speed) var(--transition-timing),
-      color var(--transition-speed) var(--transition-timing);
+      color var(--transition-speed) var(--transition-timing),
+      transform var(--transition-speed) var(--transition-timing),
+      filter var(--transition-speed) var(--transition-timing);
   }
 
   /* Very subtle noise grain */
@@ -113,54 +210,73 @@ body {
     opacity: 0.012;
     pointer-events: none;
     z-index: 60;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3F%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
+}
 
-  /* ── Accessibility: visible focus ring ── */
-  :focus-visible {
-    outline: 2px solid var(--color-accent-cyan);
-    outline-offset: 3px;
-    border-radius: 4px;
-  }
+.hero-gradient {
+  background: radial-gradient(circle at top right, var(--accent-glow-subtle), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(34, 211, 238, 0.05), transparent 40%);
+}
 
-  /* Typography */
-  p {
-    font-size: clamp(1rem, 1vw, 1.05rem);
-    line-height: 1.7;
-    letter-spacing: 0.012em;
-    color: var(--color-text-secondary);
-    margin-bottom: 1.25rem;
-    max-width: 65ch;
-  }
+/* ── Accessibility: visible focus ring ── */
+:focus-visible {
+  outline: 2px solid var(--color-accent-cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: var(--color-text-primary);
-    font-weight: 700;
-    line-height: 1.2;
-  }
+/* Typography */
+p {
+  font-size: clamp(1rem, 1vw, 1.05rem);
+  line-height: 1.7;
+  letter-spacing: 0.012em;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.25rem;
+  max-width: 65ch;
+}
 
-  h1 {
-    font-size: clamp(1.6rem, 5vw, 4.0rem);
-    font-weight: 800;
-    letter-spacing: 0.5px;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-text-heading);
+  font-weight: 700;
+  line-height: 1.2;
+}
 
-  h2 {
-    font-size: clamp(1.25rem, 2.8vw, 2.2rem);
-    font-weight: 700;
-    letter-spacing: 0.3px;
-  }
+h1 {
+  font-size: clamp(1.6rem, 5vw, 4.0rem);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
 
-  /* Selection */
-  ::selection {
-    background: var(--color-selection-bg);
-    color: var(--color-selection-text);
-  }
+h2 {
+  font-size: clamp(1.25rem, 2.8vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-selection-bg);
+  color: var(--color-selection-text);
+}
+
+/* Global Transitions for UI Elements */
+a,
+button,
+.cyber-card,
+.glass-card {
+  transition:
+    background-color var(--transition-speed) var(--transition-timing),
+    border-color var(--transition-speed) var(--transition-timing),
+    transform var(--transition-speed) var(--transition-timing),
+    filter var(--transition-speed) var(--transition-timing),
+    box-shadow var(--transition-speed) var(--transition-timing),
+    opacity var(--transition-speed) var(--transition-timing);
 }
 
 /* ─────────────────────────────────────────────
@@ -172,12 +288,12 @@ body {
 
   0%,
   100% {
-    filter: drop-shadow(0 0 8px rgba(204, 34, 0, 0.6)) drop-shadow(0 0 20px rgba(204, 34, 0, 0.3));
+    filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4)) drop-shadow(0 0 20px rgba(139, 92, 246, 0.2));
     transform: scale(1);
   }
 
   50% {
-    filter: drop-shadow(0 0 20px rgba(204, 34, 0, 0.9)) drop-shadow(0 0 40px rgba(204, 34, 0, 0.5));
+    filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.7)) drop-shadow(0 0 40px rgba(139, 92, 246, 0.4));
     transform: scale(1.04);
   }
 }
@@ -316,24 +432,22 @@ body {
   }
 
   .glass-card:hover {
-    border-color: rgba(204, 34, 0, 0.35);
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.6),
-      0 0 24px rgba(204, 34, 0, 0.20),
-      0 0 0 1px rgba(204, 34, 0, 0.12);
+    border-color: var(--accent-primary);
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
   }
 
   /* ── Cyber Card — enhanced variant ── */
   .cyber-card {
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    background: linear-gradient(135deg, rgba(25, 5, 5, 0.85) 0%, rgba(15, 2, 2, 0.92) 100%);
-    border: 1px solid rgba(180, 30, 20, 0.22);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
     border-radius: 14px;
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(204, 34, 0, 0.03);
+    transition: all 0.3s var(--transition-timing);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), inset 0 0 20px var(--accent-glow-subtle);
   }
 
   .cyber-card::before {
@@ -343,14 +457,13 @@ body {
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(204, 34, 0, 0.6), transparent);
+    background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+    opacity: 0.5;
   }
 
   .cyber-card:hover {
-    border-color: rgba(204, 34, 0, 0.45);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6),
-      0 0 30px rgba(204, 34, 0, 0.25),
-      inset 0 0 20px rgba(204, 34, 0, 0.05);
+    border-color: var(--accent-primary);
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.15);
     transform: translateY(-4px);
   }
 
@@ -492,12 +605,10 @@ body {
     color: var(--color-accent-violet);
   }
 
-  /* ── Hero Grid — Red circuit lines ── */
-  .hero-grid {
-    background-image:
-      linear-gradient(to right, rgba(204, 34, 0, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(204, 34, 0, 0.05) 1px, transparent 1px);
-    background-size: 48px 48px;
+  /* ── Hero Gradient ── */
+  .hero-gradient {
+    background: radial-gradient(circle at top right, var(--accent-glow-subtle), transparent 40%),
+      radial-gradient(circle at bottom left, rgba(34, 211, 238, 0.05), transparent 40%);
   }
 
   /* ── Container ── */
@@ -522,19 +633,26 @@ body {
     padding-bottom: var(--space-8);
   }
 
-  /* ── Grid Background — Red circuit ── */
-  .grid-bg {
-    background-image:
-      linear-gradient(to right, rgba(204, 34, 0, 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(204, 34, 0, 0.04) 1px, transparent 1px);
+  /* ── Tech Background ── */
+  .tech-bg {
+    background-image: radial-gradient(var(--accent-glow-subtle) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 
   /* ── Circuit background overlay ── */
   .circuit-bg {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cg stroke='%23cc2200' stroke-width='0.5' stroke-opacity='0.08' fill='none'%3E%3Cpath d='M0 100 H120 V60 H300 V100 H400'/%3E%3Cpath d='M0 200 H80 V240 H200 V180 H320 V240 H400'/%3E%3Cpath d='M0 300 H160 V340 H280 V300 H400'/%3E%3Cpath d='M100 0 V80 H60 V200 H100 V400'/%3E%3Cpath d='M200 0 V120 H240 V280 H200 V400'/%3E%3Cpath d='M300 0 V60 H340 V160 H300 V400'/%3E%3Ccircle cx='120' cy='100' r='4' fill='%23cc2200' fill-opacity='0.12'/%3E%3Ccircle cx='200' cy='180' r='4' fill='%23cc2200' fill-opacity='0.12'/%3E%3Ccircle cx='320' cy='240' r='4' fill='%23cc2200' fill-opacity='0.12'/%3E%3Ccircle cx='80' cy='240' r='3' fill='%23cc2200' fill-opacity='0.1'/%3E%3Ccircle cx='280' cy='300' r='3' fill='%23cc2200' fill-opacity='0.1'/%3E%3Ccircle cx='160' cy='340' r='3' fill='%23cc2200' fill-opacity='0.1'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cg stroke='%238B5CF6' stroke-width='0.5' stroke-opacity='0.1' fill='none'%3E%3Cpath d='M0 100 H120 V60 H300 V100 H400'/%3E%3Cpath d='M0 200 H80 V240 H200 V180 H320 V240 H400'/%3E%3Cpath d='M0 300 H160 V340 H280 V300 H400'/%3E%3Cpath d='M100 0 V80 H60 V200 H100 V400'/%3E%3Cpath d='M200 0 V120 H240 V280 H200 V400'/%3E%3Cpath d='M300 0 V60 H340 V160 H300 V400'/%3E%3Ccircle cx='120' cy='100' r='3' fill='%238B5CF6' fill-opacity='0.12'/%3E%3Ccircle cx='200' cy='180' r='3' fill='%238B5CF6' fill-opacity='0.12'/%3E%3Ccircle cx='320' cy='240' r='3' fill='%238B5CF6' fill-opacity='0.12'/%3E%3C/g%3E%3C/svg%3E");
     background-size: 400px 400px;
     background-repeat: repeat;
+    opacity: 1;
+  }
+
+  [data-theme='light'] .circuit-bg {
+    opacity: 0.4;
+  }
+
+  [data-theme='light'] .tech-bg {
+    opacity: 0.3;
   }
 }
 

@@ -13,17 +13,17 @@ export const FeaturedResearch: React.FC = () => {
             <div className="container-progressive relative z-10">
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
                     <div className="space-y-4">
-                        <div className="flex items-center gap-3 text-accent-cyan font-mono text-[10px] uppercase tracking-[0.4em] font-black">
+                        <div className="flex items-center gap-3 text-accent-primary font-mono text-[10px] uppercase tracking-[0.4em] font-black">
                             <ShieldAlert size={14} />
                             <span>Technical Intelligence</span>
                         </div>
                         <h2 className="text-4xl md:text-5xl font-orbitron font-[800] tracking-tighter text-text-primary uppercase italic">
-                            LATEST <span className="text-accent-cyan">RESEARCH</span>
+                            LATEST <span className="text-accent-primary">RESEARCH</span>
                         </h2>
                     </div>
                     <Link
                         to="/blog"
-                        className="group flex items-center gap-3 text-text-secondary hover:text-accent-cyan transition-colors font-orbitron font-bold text-xs tracking-[0.3em] uppercase"
+                        className="group flex items-center gap-3 text-text-muted hover:text-accent-primary transition-colors font-orbitron font-bold text-xs tracking-[0.3em] uppercase"
                     >
                         Access Repository <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
@@ -39,7 +39,10 @@ export const FeaturedResearch: React.FC = () => {
                             transition={{ delay: index * 0.1 }}
                         >
                             <Link to={`/blog/${post.slug}`} className="group block h-full">
-                                <div className="glass-card h-full flex flex-col border-white/5 bg-white/[0.01] hover:bg-white/[0.03] hover:border-accent-cyan/20 transition-all duration-500 overflow-hidden">
+                                <div className="h-full flex flex-col border border-border-color transition-all duration-500 overflow-hidden rounded-3xl"
+                                    style={{ background: 'var(--bg-card)' }}
+                                    onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent-primary-faded)'}
+                                    onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border-color)'}>
                                     {/* Image Container */}
                                     <div className="relative aspect-[16/9] overflow-hidden">
                                         <img
@@ -47,29 +50,29 @@ export const FeaturedResearch: React.FC = () => {
                                             alt={post.title}
                                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-bg/80 via-transparent to-transparent" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-bg-primary-fallback/80 via-transparent to-transparent" />
                                         <div className="absolute bottom-4 left-4">
-                                            <span className="px-3 py-1 bg-accent-cyan/90 backdrop-blur-md text-black text-[8px] font-mono font-black uppercase tracking-widest rounded-md">
+                                            <span className="px-3 py-1 bg-accent-primary/90 backdrop-blur-md text-white text-[8px] font-mono font-black uppercase tracking-widest rounded-md">
                                                 {post.tags[0]}
                                             </span>
                                         </div>
                                     </div>
 
                                     <div className="p-8 flex flex-col flex-grow space-y-4">
-                                        <div className="flex items-center gap-4 text-[9px] font-mono text-text-secondary font-bold uppercase tracking-widest">
-                                            <span className="flex items-center gap-1.5"><BookOpen size={10} className="text-accent-cyan" /> {post.readingTime}</span>
+                                        <div className="flex items-center gap-4 text-[9px] font-mono text-text-muted font-bold uppercase tracking-widest">
+                                            <span className="flex items-center gap-1.5"><BookOpen size={10} className="text-accent-primary" /> {post.readingTime}</span>
                                             <span>{post.publishDate}</span>
                                         </div>
 
-                                        <h3 className="text-lg font-orbitron font-black text-text-primary group-hover:text-accent-cyan transition-colors line-clamp-2 leading-tight uppercase italic">
+                                        <h3 className="text-lg font-orbitron font-black text-text-primary group-hover:text-accent-primary transition-colors line-clamp-2 leading-tight uppercase italic">
                                             {post.title}
                                         </h3>
 
-                                        <p className="text-sm text-text-secondary line-clamp-3 font-medium leading-relaxed flex-grow">
+                                        <p className="text-sm text-text-muted line-clamp-3 font-medium leading-relaxed flex-grow">
                                             {post.excerpt}
                                         </p>
 
-                                        <div className="pt-4 flex items-center gap-2 text-accent-cyan font-mono text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 text-right justify-end">
+                                        <div className="pt-4 flex items-center gap-2 text-accent-primary font-mono text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 text-right justify-end">
                                             DECRYPT ARTICLE <ArrowRight size={12} />
                                         </div>
                                     </div>

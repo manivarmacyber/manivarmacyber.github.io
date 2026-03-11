@@ -15,7 +15,7 @@ export const FestivalEngine: React.FC = () => {
     useEffect(() => {
         if (!festival || isDisabled) {
             document.documentElement.style.removeProperty('--festival-accent');
-            document.documentElement.style.removeProperty('--color-accent-cyan');
+            document.documentElement.style.removeProperty('--accent-primary');
             return;
         }
 
@@ -27,11 +27,11 @@ export const FestivalEngine: React.FC = () => {
         document.documentElement.style.setProperty('--festival-accent-soft', activePastel);
 
         // Use higher contrast accent for primary cyan to ensure text legibility
-        document.documentElement.style.setProperty('--color-accent-cyan', activeAccent);
+        document.documentElement.style.setProperty('--accent-primary', activeAccent);
 
         return () => {
             document.documentElement.style.removeProperty('--festival-accent');
-            document.documentElement.style.removeProperty('--color-accent-cyan');
+            document.documentElement.style.removeProperty('--accent-primary');
         };
     }, [festival, isDisabled]);
 
@@ -103,10 +103,11 @@ export const FestivalEngine: React.FC = () => {
                                 onClick={toggleFestival}
                                 aria-label={isDisabled ? `Enable ${festival.name} overlay` : `Disable ${festival.name} overlay`}
                                 className={`group relative flex items-center gap-3 px-5 py-2.5 rounded-full border backdrop-blur-xl transition-all duration-400 shadow-2xl ${isDisabled
-                                    ? 'bg-card-bg/20 border-border text-text-secondary hover:text-text-primary'
-                                    : 'bg-card-bg/80 border-accent-cyan/30 text-text-primary hover:border-accent-cyan'
+                                    ? 'border-border-color text-text-muted hover:text-text-primary'
+                                    : 'border-accent-primary/30 text-text-primary hover:border-accent-primary'
                                     }`}
                                 style={{
+                                    background: 'var(--bg-card)',
                                     borderColor: !isDisabled ? festival.accent + '44' : undefined,
                                 }}
                             >

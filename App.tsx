@@ -133,7 +133,7 @@ const App: React.FC = () => {
     <Router>
       <ScrollToTop />
       <PageTracker />
-      <div className="min-h-screen selection:bg-accent-cyan selection:text-black">
+      <div className="min-h-screen selection:bg-accent-primary selection:text-white overflow-x-hidden">
         <AppContent />
         <CookieNotice />
       </div>
@@ -141,9 +141,70 @@ const App: React.FC = () => {
   );
 };
 
+/* ── Hyprland swww — butter-smooth circle reveal on content ── */
+const PageTransition: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <motion.div
+    initial={{
+      clipPath: 'circle(0% at 50% 44%)',
+      opacity: 0.6,
+    }}
+    animate={{
+      clipPath: 'circle(150% at 50% 44%)',
+      opacity: 1,
+    }}
+    exit={{
+      opacity: 0,
+      scale: 0.97,
+      filter: 'blur(5px)',
+    }}
+    transition={{
+      clipPath: { duration: 0.68, ease: [0.16, 1, 0.3, 1] },
+      opacity: { duration: 0.68, ease: 'easeOut' },
+      scale: { duration: 0.18, ease: 'easeIn' },
+      filter: { duration: 0.18, ease: 'easeIn' },
+    }}
+    style={{ willChange: 'clip-path, opacity' }}
+  >
+    {children}
+  </motion.div>
+);
+
 const AppContent = () => {
   const location = useLocation();
   const [activeSection, setActiveSection] = useState('home');
+  const [themeMode, setThemeMode] = useState<'dark' | 'light' | 'auto'>(() => {
+    const saved = localStorage.getItem('site-theme');
+    if (saved === 'dark' || saved === 'light' || saved === 'auto') return saved;
+    return 'auto';
+  });
+
+  const getEffectiveTheme = () => {
+    if (themeMode === 'auto') {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    return themeMode;
+  };
+
+  const theme = getEffectiveTheme();
+
+  useEffect(() => {
+    const effectiveTheme = getEffectiveTheme();
+    document.documentElement.className = effectiveTheme;
+    document.documentElement.setAttribute('data-theme', effectiveTheme);
+  }, [themeMode]);
+
+  useEffect(() => {
+    if (themeMode === 'auto') {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const handleChange = () => {
+        const effectiveTheme = mediaQuery.matches ? 'dark' : 'light';
+        document.documentElement.className = effectiveTheme;
+        document.documentElement.setAttribute('data-theme', effectiveTheme);
+      };
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
+    }
+  }, [themeMode]);
 
   useEffect(() => {
     if (location.pathname === '/') {
@@ -157,16 +218,33 @@ const AppContent = () => {
     }
   }, [location.pathname]);
 
+  const toggleTheme = (newMode?: 'dark' | 'light' | 'auto') => {
+    let mode: 'dark' | 'light' | 'auto';
+
+    if (newMode) {
+      mode = newMode;
+    } else {
+      if (themeMode === 'dark') mode = 'light';
+      else if (themeMode === 'light') mode = 'auto';
+      else mode = 'dark';
+    }
+
+    setThemeMode(mode);
+    localStorage.setItem('site-theme', mode);
+  };
+
   return (
-    <Layout activeSection={activeSection}>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:slug" element={<BlogPost />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
+    <Layout activeSection={activeSection} theme={theme} toggleTheme={toggleTheme} themeMode={themeMode}>
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
+          <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
+          <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
+          <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+          <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
+          <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+        </Routes>
+      </AnimatePresence>
     </Layout>
   );
 };

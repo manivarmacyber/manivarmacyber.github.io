@@ -69,7 +69,7 @@ export const OperationalAchievements: React.FC = () => {
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
-                                className={`p-8 border border-border-color flex flex-col md:flex-row items-start md:items-center gap-10 group transition-all block cursor-pointer hover:border-accent-primary/20 rounded-3xl`}
+                                className={`p-6 md:p-8 border border-border-color flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10 group transition-all block cursor-pointer hover:border-accent-primary/20 rounded-3xl`}
                                 style={{ background: 'var(--bg-card)' }}
                             >
                                 <div className={`p-5 ${item.bg} rounded-2xl border ${item.border} ${item.color} group-hover:scale-110 transition-transform`}>
@@ -91,7 +91,7 @@ export const OperationalAchievements: React.FC = () => {
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
-                                className={`p-8 border border-border-color flex flex-col md:flex-row items-start md:items-center gap-10 group transition-all rounded-3xl`}
+                                className={`p-6 md:p-8 border border-border-color flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10 group transition-all rounded-3xl`}
                                 style={{ background: 'var(--bg-card)' }}
                             >
                                 <div className={`p-5 ${item.bg} rounded-2xl border ${item.border} ${item.color}`}>

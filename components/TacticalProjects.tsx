@@ -9,11 +9,11 @@ export const TacticalProjects: React.FC = () => {
             <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-8 container-progressive px-0">
                 <motion.div
                     whileHover={{ y: -5 }}
-                    className="p-8 border border-border-color transition-all group rounded-3xl"
+                    className="p-6 md:p-8 border border-border-color transition-all group rounded-[2rem] sm:rounded-3xl"
                     style={{ background: 'var(--bg-card)' }}
                 >
-                    <div className="flex items-center gap-8 mb-10">
-                        <div className="p-5 bg-accent-primary/10 border border-accent-primary/20 rounded-2xl text-accent-primary group-hover:scale-110 transition-transform shadow-[0_0_20px_var(--accent-glow-subtle)]">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 mb-8 sm:mb-10">
+                        <div className="p-4 sm:p-5 bg-accent-primary/10 border border-accent-primary/20 rounded-2xl text-accent-primary group-hover:scale-110 transition-transform shadow-[0_0_20px_var(--accent-glow-subtle)]">
                             <Clock size={32} />
                         </div>
                         <div>
@@ -37,11 +37,11 @@ export const TacticalProjects: React.FC = () => {
 
                 <motion.div
                     whileHover={{ y: -5 }}
-                    className="p-8 border border-border-color transition-all group rounded-3xl"
+                    className="p-6 md:p-8 border border-border-color transition-all group rounded-[2rem] sm:rounded-3xl"
                     style={{ background: 'var(--bg-card)' }}
                 >
-                    <div className="flex items-center gap-8 mb-10">
-                        <div className="p-5 bg-accent-primary/10 border border-accent-primary/20 rounded-2xl text-accent-primary group-hover:scale-110 transition-transform shadow-[0_0_20px_var(--accent-glow-subtle)]">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 mb-8 sm:mb-10">
+                        <div className="p-4 sm:p-5 bg-accent-primary/10 border border-accent-primary/20 rounded-2xl text-accent-primary group-hover:scale-110 transition-transform shadow-[0_0_20px_var(--accent-glow-subtle)]">
                             <ShieldCheck size={32} />
                         </div>
                         <div>
@@ -69,7 +69,7 @@ export const TacticalProjects: React.FC = () => {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.98 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    className="p-8 md:p-12 border border-border-color relative overflow-hidden group rounded-[2.5rem]"
+                    className="p-6 sm:p-8 md:p-12 border border-border-color relative overflow-hidden group rounded-[2rem] sm:rounded-[2.5rem]"
                     style={{ background: 'var(--bg-card)' }}
                 >
                     {/* Decorative cyan dot indicator */}

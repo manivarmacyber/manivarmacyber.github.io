@@ -36,7 +36,7 @@ export const WhyChooseMe: React.FC = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
-                        className="cyber-card p-8 text-center group cursor-default"
+                        className="cyber-card p-6 sm:p-8 text-center group cursor-default"
                         style={{ background: 'var(--bg-card-gradient)' }}
                     >
                         <div

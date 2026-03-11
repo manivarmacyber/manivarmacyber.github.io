@@ -5,8 +5,7 @@ import { Download, MessageSquare, Terminal } from 'lucide-react';
 /* ── Animated hero profile photo — full blend ── */
 const CyberShieldGraphic: React.FC = () => (
   <motion.div
-    className="relative flex items-center justify-center"
-    style={{ width: 520, height: 580 }}
+    className="relative flex items-center justify-center w-[280px] h-[320px] sm:w-[360px] sm:h-[400px] md:w-[480px] md:h-[540px] lg:w-[580px] lg:h-[650px] xl:w-[640px] xl:h-[720px] max-w-full"
     animate={{ y: [0, -6, 0] }}
     transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
   >
@@ -100,7 +99,7 @@ export const Hero: React.FC = () => {
                 {['CEH MASTER V12', 'NCIIPC CONTRIBUTOR', 'IBR ACHIEVER'].map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 rounded-full text-[8px] md:text-[9px] font-mono font-bold
+                    className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] md:text-xs font-mono font-bold
                       uppercase tracking-[0.18em] transition-all duration-200"
                     style={{
                       border: '1px solid var(--border-color)',
@@ -131,9 +130,9 @@ export const Hero: React.FC = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 href="https://drive.google.com/uc?export=download&id=1YaNxcLwMoInBADwMBoBE_dquYQqFRuKQ"
-                className="px-7 py-3.5 font-orbitron font-bold text-[0.65rem]
+                className="px-6 py-3.5 sm:px-7 sm:py-4 font-orbitron font-bold text-[0.65rem] sm:text-[0.7rem] md:text-xs
                   uppercase tracking-[0.18em] transition-all rounded-xl flex items-center
-                  justify-center gap-2.5 w-full sm:w-auto"
+                  justify-center gap-2 w-full sm:w-auto"
                 style={{
                   background: 'var(--accent-primary)',
                   color: '#fff',
@@ -151,8 +150,8 @@ export const Hero: React.FC = () => {
                 href="https://drive.google.com/file/d/1YaNxcLwMoInBADwMBoBE_dquYQqFRuKQ/view?usp=drivesdk"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-7 py-3.5 font-orbitron font-bold text-[0.65rem] uppercase tracking-[0.18em]
-                  transition-all rounded-xl flex items-center justify-center gap-2.5 w-full sm:w-auto"
+                className="px-6 py-3.5 sm:px-7 sm:py-4 font-orbitron font-bold text-[0.65rem] sm:text-[0.7rem] md:text-xs uppercase tracking-[0.18em]
+                  transition-all rounded-xl flex items-center justify-center gap-2 w-full sm:w-auto"
                 style={{
                   background: 'transparent',
                   border: '1px solid var(--border-color)',
@@ -176,8 +175,8 @@ export const Hero: React.FC = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-7 py-3.5 font-orbitron font-bold text-[0.65rem] uppercase tracking-[0.18em]
-                  transition-all rounded-xl flex items-center justify-center gap-2.5 w-full sm:w-auto"
+                className="px-6 py-3.5 sm:px-7 sm:py-4 font-orbitron font-bold text-[0.65rem] sm:text-[0.7rem] md:text-xs uppercase tracking-[0.18em]
+                  transition-all rounded-xl flex items-center justify-center gap-2 w-full sm:w-auto"
                 style={{
                   background: 'transparent',
                   border: '1px solid var(--border-color)',
@@ -197,7 +196,7 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="md:hidden mt-12 flex justify-center"
+          className="md:hidden mt-4 sm:mt-8 flex justify-center w-full"
         >
           <CyberShieldGraphic />
         </motion.div>
@@ -208,7 +207,7 @@ export const Hero: React.FC = () => {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.9, ease: 'easeOut', delay: 0.2 }}
-        className="hidden md:flex absolute right-[2%] lg:right-[8%] top-[42%] -translate-y-1/2 
+        className="hidden md:flex absolute right-[2%] lg:right-[5%] xl:right-[8%] top-[42%] -translate-y-1/2 
           justify-center pointer-events-none"
         style={{ zIndex: -1, opacity: 0.85 }}
       >

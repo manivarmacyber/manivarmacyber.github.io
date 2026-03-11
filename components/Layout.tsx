@@ -52,8 +52,8 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeSection = 'home'
         style={{ borderColor: 'var(--border-color)', background: 'var(--bg-nav)' }}>
 
         <div className="container-progressive relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-16">
-            <div className="space-y-8 col-span-1 md:col-span-1">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-16">
+            <div className="space-y-6 md:space-y-8 col-span-1 md:col-span-1">
               <div className="flex items-center gap-4 group">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center p-2.5 transition-all group-hover:scale-110"
                   style={{ background: 'var(--accent-glow-subtle)', border: '1px solid var(--border-color)' }}>
@@ -114,9 +114,9 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeSection = 'home'
             </div>
           </div>
 
-          <div className="mt-24 pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-8"
+          <div className="mt-16 md:mt-24 pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8"
             style={{ borderTop: '1px solid var(--border-color)' }}>
-            <div className="text-[10px] font-mono font-bold tracking-widest uppercase text-text-muted">
+            <div className="text-[9px] sm:text-[10px] font-mono font-bold tracking-widest uppercase text-text-muted text-center md:text-left">
               © {new Date().getFullYear()} G. MANIKANTA VARMA • ELITE SECURITY RESEARCHER
             </div>
 

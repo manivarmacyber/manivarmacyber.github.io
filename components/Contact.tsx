@@ -177,7 +177,7 @@ export const Contact: React.FC = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="space-y-5 p-8 rounded-2xl border transition-all"
+            className="space-y-4 sm:space-y-5 p-6 sm:p-8 rounded-2xl border transition-all"
             style={{
               background: 'var(--bg-card)',
               borderColor: 'var(--border-color)',
@@ -253,7 +253,7 @@ export const Contact: React.FC = () => {
             <button
               onClick={handleSubmit}
               disabled={status === 'submitting'}
-              className="w-full flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-orbitron font-bold text-sm uppercase tracking-widest transition-all bg-accent-primary text-white hover:brightness-110 active:scale-[0.98]"
+              className="w-full flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-orbitron font-bold text-xs sm:text-sm uppercase tracking-widest transition-all bg-accent-primary text-white hover:brightness-110 active:scale-[0.98]"
               style={{
                 opacity: !verified ? 0.6 : 1,
                 cursor: !verified ? 'not-allowed' : 'pointer',

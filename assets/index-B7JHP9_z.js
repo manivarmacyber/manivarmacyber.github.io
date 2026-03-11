@@ -15782,8 +15782,8 @@ const Layout = ({ children, activeSection = "home", theme, themeMode, toggleThem
             className: "relative z-10 mt-32 border-t border-border-color py-20 overflow-hidden",
             style: { borderColor: "var(--border-color)", background: "var(--bg-nav)" },
             children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "container-progressive relative z-10", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-16", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-8 col-span-1 md:col-span-1", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-16", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-6 md:space-y-8 col-span-1 md:col-span-1", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4 group", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       "div",
@@ -15870,10 +15870,10 @@ const Layout = ({ children, activeSection = "home", theme, themeMode, toggleThem
               /* @__PURE__ */ jsxRuntimeExports.jsxs(
                 "div",
                 {
-                  className: "mt-24 pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-8",
+                  className: "mt-16 md:mt-24 pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8",
                   style: { borderTop: "1px solid var(--border-color)" },
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-[10px] font-mono font-bold tracking-widest uppercase text-text-muted", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-[9px] sm:text-[10px] font-mono font-bold tracking-widest uppercase text-text-muted text-center md:text-left", children: [
                       "© ",
                       (/* @__PURE__ */ new Date()).getFullYear(),
                       " G. MANIKANTA VARMA • ELITE SECURITY RESEARCHER"
@@ -15910,8 +15910,7 @@ const Layout = ({ children, activeSection = "home", theme, themeMode, toggleThem
 const CyberShieldGraphic = () => /* @__PURE__ */ jsxRuntimeExports.jsxs(
   motion.div,
   {
-    className: "relative flex items-center justify-center",
-    style: { width: 520, height: 580 },
+    className: "relative flex items-center justify-center w-[280px] h-[320px] sm:w-[360px] sm:h-[400px] md:w-[480px] md:h-[540px] lg:w-[580px] lg:h-[650px] xl:w-[640px] xl:h-[720px] max-w-full",
     animate: { y: [0, -6, 0] },
     transition: { duration: 6, ease: "easeInOut", repeat: Infinity },
     children: [
@@ -16010,7 +16009,7 @@ const Hero = () => {
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap justify-center md:justify-start gap-2 pt-8", children: ["CEH MASTER V12", "NCIIPC CONTRIBUTOR", "IBR ACHIEVER"].map((tag) => /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "span",
                 {
-                  className: "px-3 py-1 rounded-full text-[8px] md:text-[9px] font-mono font-bold\n                      uppercase tracking-[0.18em] transition-all duration-200",
+                  className: "px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] md:text-xs font-mono font-bold\n                      uppercase tracking-[0.18em] transition-all duration-200",
                   style: {
                     border: "1px solid var(--border-color)",
                     background: "var(--accent-glow-subtle)",
@@ -16035,7 +16034,7 @@ const Hero = () => {
                   whileHover: { scale: 1.02 },
                   whileTap: { scale: 0.97 },
                   href: "https://drive.google.com/uc?export=download&id=1YaNxcLwMoInBADwMBoBE_dquYQqFRuKQ",
-                  className: "px-7 py-3.5 font-orbitron font-bold text-[0.65rem]\n                  uppercase tracking-[0.18em] transition-all rounded-xl flex items-center\n                  justify-center gap-2.5 w-full sm:w-auto",
+                  className: "px-6 py-3.5 sm:px-7 sm:py-4 font-orbitron font-bold text-[0.65rem] sm:text-[0.7rem] md:text-xs\n                  uppercase tracking-[0.18em] transition-all rounded-xl flex items-center\n                  justify-center gap-2 w-full sm:w-auto",
                   style: {
                     background: "var(--accent-primary)",
                     color: "#fff",
@@ -16056,7 +16055,7 @@ const Hero = () => {
                   href: "https://drive.google.com/file/d/1YaNxcLwMoInBADwMBoBE_dquYQqFRuKQ/view?usp=drivesdk",
                   target: "_blank",
                   rel: "noopener noreferrer",
-                  className: "px-7 py-3.5 font-orbitron font-bold text-[0.65rem] uppercase tracking-[0.18em]\n                  transition-all rounded-xl flex items-center justify-center gap-2.5 w-full sm:w-auto",
+                  className: "px-6 py-3.5 sm:px-7 sm:py-4 font-orbitron font-bold text-[0.65rem] sm:text-[0.7rem] md:text-xs uppercase tracking-[0.18em]\n                  transition-all rounded-xl flex items-center justify-center gap-2 w-full sm:w-auto",
                   style: {
                     background: "transparent",
                     border: "1px solid var(--border-color)",
@@ -16086,7 +16085,7 @@ const Hero = () => {
                     var _a;
                     return (_a = document.getElementById("contact")) == null ? void 0 : _a.scrollIntoView({ behavior: "smooth" });
                   },
-                  className: "px-7 py-3.5 font-orbitron font-bold text-[0.65rem] uppercase tracking-[0.18em]\n                  transition-all rounded-xl flex items-center justify-center gap-2.5 w-full sm:w-auto",
+                  className: "px-6 py-3.5 sm:px-7 sm:py-4 font-orbitron font-bold text-[0.65rem] sm:text-[0.7rem] md:text-xs uppercase tracking-[0.18em]\n                  transition-all rounded-xl flex items-center justify-center gap-2 w-full sm:w-auto",
                   style: {
                     background: "transparent",
                     border: "1px solid var(--border-color)",
@@ -16109,7 +16108,7 @@ const Hero = () => {
           initial: { opacity: 0, y: 20 },
           animate: { opacity: 1, y: 0 },
           transition: { duration: 0.7, delay: 0.3 },
-          className: "md:hidden mt-12 flex justify-center",
+          className: "md:hidden mt-4 sm:mt-8 flex justify-center w-full",
           children: /* @__PURE__ */ jsxRuntimeExports.jsx(CyberShieldGraphic, {})
         }
       )
@@ -16120,7 +16119,7 @@ const Hero = () => {
         initial: { opacity: 0, scale: 0.9 },
         animate: { opacity: 1, scale: 1 },
         transition: { duration: 0.9, ease: "easeOut", delay: 0.2 },
-        className: "hidden md:flex absolute right-[2%] lg:right-[8%] top-[42%] -translate-y-1/2 \n          justify-center pointer-events-none",
+        className: "hidden md:flex absolute right-[2%] lg:right-[5%] xl:right-[8%] top-[42%] -translate-y-1/2 \n          justify-center pointer-events-none",
         style: { zIndex: -1, opacity: 0.85 },
         children: /* @__PURE__ */ jsxRuntimeExports.jsx(CyberShieldGraphic, {})
       }
@@ -16162,7 +16161,7 @@ const WhyChooseMe = () => {
         initial: { opacity: 0, y: 20 },
         whileInView: { opacity: 1, y: 0 },
         transition: { delay: i * 0.1 },
-        className: "cyber-card p-8 text-center group cursor-default",
+        className: "cyber-card p-6 sm:p-8 text-center group cursor-default",
         style: { background: "var(--bg-card-gradient)" },
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -16789,7 +16788,7 @@ const Contact = () => {
                 whileInView: { opacity: 1, x: 0 },
                 viewport: { once: true },
                 transition: { duration: 0.5 },
-                className: "space-y-5 p-8 rounded-2xl border transition-all",
+                className: "space-y-4 sm:space-y-5 p-6 sm:p-8 rounded-2xl border transition-all",
                 style: {
                   background: "var(--bg-card)",
                   borderColor: "var(--border-color)",
@@ -16894,7 +16893,7 @@ const Contact = () => {
                     {
                       onClick: handleSubmit,
                       disabled: status === "submitting",
-                      className: "w-full flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-orbitron font-bold text-sm uppercase tracking-widest transition-all bg-accent-primary text-white hover:brightness-110 active:scale-[0.98]",
+                      className: "w-full flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-orbitron font-bold text-xs sm:text-sm uppercase tracking-widest transition-all bg-accent-primary text-white hover:brightness-110 active:scale-[0.98]",
                       style: {
                         opacity: !verified ? 0.6 : 1,
                         cursor: !verified ? "not-allowed" : "pointer",
@@ -31264,7 +31263,7 @@ const OperationalAchievements = () => {
           initial: { opacity: 0, x: -20 },
           whileInView: { opacity: 1, x: 0 },
           viewport: { once: true },
-          className: `p-8 border border-border-color flex flex-col md:flex-row items-start md:items-center gap-10 group transition-all block cursor-pointer hover:border-accent-primary/20 rounded-3xl`,
+          className: `p-6 md:p-8 border border-border-color flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10 group transition-all block cursor-pointer hover:border-accent-primary/20 rounded-3xl`,
           style: { background: "var(--bg-card)" },
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `p-5 ${item.bg} rounded-2xl border ${item.border} ${item.color} group-hover:scale-110 transition-transform`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(item.icon, { size: 32 }) }),
@@ -31282,7 +31281,7 @@ const OperationalAchievements = () => {
           initial: { opacity: 0, x: -20 },
           whileInView: { opacity: 1, x: 0 },
           viewport: { once: true },
-          className: `p-8 border border-border-color flex flex-col md:flex-row items-start md:items-center gap-10 group transition-all rounded-3xl`,
+          className: `p-6 md:p-8 border border-border-color flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10 group transition-all rounded-3xl`,
           style: { background: "var(--bg-card)" },
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `p-5 ${item.bg} rounded-2xl border ${item.border} ${item.color}`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(item.icon, { size: 32 }) }),
@@ -31417,11 +31416,11 @@ const TacticalProjects = () => {
         motion.div,
         {
           whileHover: { y: -5 },
-          className: "p-8 border border-border-color transition-all group rounded-3xl",
+          className: "p-6 md:p-8 border border-border-color transition-all group rounded-[2rem] sm:rounded-3xl",
           style: { background: "var(--bg-card)" },
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-8 mb-10", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-5 bg-accent-primary/10 border border-accent-primary/20 rounded-2xl text-accent-primary group-hover:scale-110 transition-transform shadow-[0_0_20px_var(--accent-glow-subtle)]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Clock, { size: 32 }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 mb-8 sm:mb-10", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-4 sm:p-5 bg-accent-primary/10 border border-accent-primary/20 rounded-2xl text-accent-primary group-hover:scale-110 transition-transform shadow-[0_0_20px_var(--accent-glow-subtle)]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Clock, { size: 32 }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-xl font-orbitron font-black text-text-primary uppercase tracking-tight italic", children: "QUICK RESPONSE TIME" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] font-mono text-text-muted uppercase tracking-[0.2em] font-black italic", children: "Professional Communication Guaranteed" })
@@ -31442,11 +31441,11 @@ const TacticalProjects = () => {
         motion.div,
         {
           whileHover: { y: -5 },
-          className: "p-8 border border-border-color transition-all group rounded-3xl",
+          className: "p-6 md:p-8 border border-border-color transition-all group rounded-[2rem] sm:rounded-3xl",
           style: { background: "var(--bg-card)" },
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-8 mb-10", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-5 bg-accent-primary/10 border border-accent-primary/20 rounded-2xl text-accent-primary group-hover:scale-110 transition-transform shadow-[0_0_20px_var(--accent-glow-subtle)]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ShieldCheck, { size: 32 }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 mb-8 sm:mb-10", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-4 sm:p-5 bg-accent-primary/10 border border-accent-primary/20 rounded-2xl text-accent-primary group-hover:scale-110 transition-transform shadow-[0_0_20px_var(--accent-glow-subtle)]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ShieldCheck, { size: 32 }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-xl font-orbitron font-black text-text-primary uppercase tracking-tight italic", children: "SECURITY & CONFIDENTIALITY" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] font-mono text-text-muted uppercase tracking-[0.2em] font-black italic", children: "Your Data and Communications are Secure" })
@@ -31469,7 +31468,7 @@ const TacticalProjects = () => {
       {
         initial: { opacity: 0, scale: 0.98 },
         whileInView: { opacity: 1, scale: 1 },
-        className: "p-8 md:p-12 border border-border-color relative overflow-hidden group rounded-[2.5rem]",
+        className: "p-6 sm:p-8 md:p-12 border border-border-color relative overflow-hidden group rounded-[2rem] sm:rounded-[2.5rem]",
         style: { background: "var(--bg-card)" },
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute top-12 left-12 flex items-center gap-4", children: [

@@ -23,15 +23,13 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeSection = 'home'
       {/* Wayland Transition Overlay */}
       <div className="wayland-transition-overlay" aria-hidden="true" />
 
-<<<<<<< HEAD
       {/* Wallpaper crossfade layer (light/dark) */}
       <div className="fixed inset-0 wallpaper-layer pointer-events-none z-[-1]" aria-hidden="true">
         <div className="wp-light" />
         <div className="wp-dark" />
       </div>
 
-=======
->>>>>>> f9c9ca0a7ba8a69214a1c68467ff8d4d1f99e180
+
       {/* Fixed Background — circuit + blueprint ambient */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
         {/* Circuit line pattern */}

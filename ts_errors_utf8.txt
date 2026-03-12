@@ -1,0 +1,67 @@
+﻿manivarmacyber.github.io-main/App.tsx(210,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/App.tsx(222,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/App.tsx(223,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/App.tsx(233,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/App.tsx(235,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/App.tsx(237,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Hero.tsx(3,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Hero.tsx(6,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Hero.tsx(8,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Hero.tsx(13,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Hero.tsx(15,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Hero.tsx(17,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Hero.tsx(82,37): error TS1005: '</' expected.
+manivarmacyber.github.io-main/components/Hero.tsx(83,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Hero.tsx(91,1): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+manivarmacyber.github.io-main/components/Hero.tsx(91,2): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+manivarmacyber.github.io-main/components/Hero.tsx(91,3): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+manivarmacyber.github.io-main/components/Hero.tsx(91,4): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+manivarmacyber.github.io-main/components/Hero.tsx(91,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+manivarmacyber.github.io-main/components/Hero.tsx(91,6): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+manivarmacyber.github.io-main/components/Hero.tsx(91,7): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+manivarmacyber.github.io-main/components/Hero.tsx(96,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Hero.tsx(98,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Hero.tsx(100,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Hero.tsx(109,51): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+manivarmacyber.github.io-main/components/Hero.tsx(110,1): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+manivarmacyber.github.io-main/components/Hero.tsx(110,2): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+manivarmacyber.github.io-main/components/Hero.tsx(110,3): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+manivarmacyber.github.io-main/components/Hero.tsx(110,4): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+manivarmacyber.github.io-main/components/Hero.tsx(110,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+manivarmacyber.github.io-main/components/Hero.tsx(110,6): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+manivarmacyber.github.io-main/components/Hero.tsx(110,7): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+manivarmacyber.github.io-main/components/Hero.tsx(212,31): error TS1005: '</' expected.
+manivarmacyber.github.io-main/components/Hero.tsx(213,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Hero.tsx(245,13): error TS1128: Declaration or statement expected.
+manivarmacyber.github.io-main/components/Hero.tsx(246,11): error TS1109: Expression expected.
+manivarmacyber.github.io-main/components/Hero.tsx(249,16): error TS1005: ';' expected.
+manivarmacyber.github.io-main/components/Hero.tsx(253,11): error TS1128: Declaration or statement expected.
+manivarmacyber.github.io-main/components/Hero.tsx(257,22): error TS1136: Property assignment expected.
+manivarmacyber.github.io-main/components/Hero.tsx(257,37): error TS1005: ';' expected.
+manivarmacyber.github.io-main/components/Hero.tsx(257,43): error TS1128: Declaration or statement expected.
+manivarmacyber.github.io-main/components/Hero.tsx(258,22): error TS1136: Property assignment expected.
+manivarmacyber.github.io-main/components/Hero.tsx(258,37): error TS1005: ';' expected.
+manivarmacyber.github.io-main/components/Hero.tsx(258,42): error TS1128: Declaration or statement expected.
+manivarmacyber.github.io-main/components/Hero.tsx(259,25): error TS1136: Property assignment expected.
+manivarmacyber.github.io-main/components/Hero.tsx(259,47): error TS1005: ';' expected.
+manivarmacyber.github.io-main/components/Hero.tsx(259,54): error TS1128: Declaration or statement expected.
+manivarmacyber.github.io-main/components/Hero.tsx(263,11): error TS1128: Declaration or statement expected.
+manivarmacyber.github.io-main/components/Hero.tsx(264,9): error TS1109: Expression expected.
+manivarmacyber.github.io-main/components/Hero.tsx(265,7): error TS1109: Expression expected.
+manivarmacyber.github.io-main/components/Hero.tsx(268,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Hero.tsx(295,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Hero.tsx(296,5): error TS1128: Declaration or statement expected.
+manivarmacyber.github.io-main/components/Hero.tsx(297,3): error TS1109: Expression expected.
+manivarmacyber.github.io-main/components/Hero.tsx(298,1): error TS1128: Declaration or statement expected.
+manivarmacyber.github.io-main/components/Layout.tsx(24,72): error TS1005: '</' expected.
+manivarmacyber.github.io-main/components/Layout.tsx(26,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Layout.tsx(33,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Layout.tsx(34,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/components/Layout.tsx(36,7): error TS2657: JSX expressions must have one parent element.
+manivarmacyber.github.io-main/components/Layout.tsx(60,7): error TS2657: JSX expressions must have one parent element.
+manivarmacyber.github.io-main/components/Layout.tsx(150,5): error TS1128: Declaration or statement expected.
+manivarmacyber.github.io-main/components/Layout.tsx(151,3): error TS1109: Expression expected.
+manivarmacyber.github.io-main/components/Layout.tsx(152,1): error TS1128: Declaration or statement expected.
+manivarmacyber.github.io-main/index.tsx(19,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/index.tsx(21,1): error TS1185: Merge conflict marker encountered.
+manivarmacyber.github.io-main/index.tsx(23,1): error TS1185: Merge conflict marker encountered.

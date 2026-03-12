@@ -219,7 +219,6 @@ body {
     radial-gradient(circle at bottom left, rgba(34, 211, 238, 0.05), transparent 40%);
 }
 
-<<<<<<< HEAD
 /* Wallpaper crossfade for theme transitions (Hyprland-like) */
 .wallpaper-layer {
   position: fixed;
@@ -255,8 +254,6 @@ body {
   opacity: 0;
 }
 
-=======
->>>>>>> f9c9ca0a7ba8a69214a1c68467ff8d4d1f99e180
 /* ── Accessibility: visible focus ring ── */
 :focus-visible {
   outline: 2px solid var(--color-accent-cyan);

@@ -23,7 +23,8 @@ const AdBlock: React.FC = () => {
   }, []);
 
   return (
-    <div className="my-12 py-8 bg-white/[0.01] border border-border-color rounded-2xl flex flex-col items-center justify-center min-h-[120px] overflow-hidden">
+    <div className="my-12 py-8 border border-border-color rounded-2xl flex flex-col items-center justify-center min-h-[120px] overflow-hidden"
+      style={{ background: 'var(--accent-glow-subtle)' }}>
       <span className="text-[10px] font-mono text-text-primary/10 uppercase tracking-[0.4em] mb-4">ADVERTISEMENT</span>
       <div className="w-full min-h-[90px] flex items-center justify-center">
         <ins className="adsbygoogle"
@@ -45,7 +46,8 @@ const TableOfContents: React.FC<{ content: string }> = ({ content }) => {
   if (headings.length === 0) return null;
 
   return (
-    <nav className="mb-12 p-8 bg-white/[0.02] border border-border-color rounded-3xl">
+    <nav className="mb-12 p-8 border border-border-color rounded-3xl"
+      style={{ background: 'var(--accent-glow-subtle)' }}>
       <h3 className="text-xs font-orbitron font-black text-accent-primary uppercase tracking-[0.4em] mb-6 flex items-center gap-2">
         <FileText size={14} />
         Navigation Protocol
@@ -747,7 +749,8 @@ export const BlogPost: React.FC = () => {
   );
 
   const HPEArchitecture: React.FC = () => (
-    <div className="my-16 p-10 bg-white/[0.01] border border-white/5 rounded-[3rem] overflow-hidden">
+    <div className="my-16 p-10 border border-border-color rounded-[3rem] overflow-hidden"
+      style={{ background: 'var(--accent-glow-subtle)' }}>
       <div className="relative flex flex-col gap-6">
         {[
           { label: "CLIENT BROWSER", color: "text-text-primary", icon: Cpu },
@@ -759,7 +762,8 @@ export const BlogPost: React.FC = () => {
             key={i}
             initial={{ x: -20, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
-            className={`p-6 rounded-2xl border ${layer.highlight ? 'border-red-500/30 bg-red-500/5' : 'border-border-color bg-white/[0.02]'} flex items-center justify-between`}
+            className={`p-6 rounded-2xl border ${layer.highlight ? 'border-red-500/30 bg-red-500/5' : 'border-border-color'} flex items-center justify-between`}
+            style={{ background: layer.highlight ? '' : 'var(--bg-card)' }}
           >
             <div className="flex items-center gap-4">
               <layer.icon size={20} className={layer.color} />

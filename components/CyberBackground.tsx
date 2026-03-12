@@ -43,8 +43,13 @@ export const CyberBackground: React.FC = () => {
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
 
+      // Get theme colors from computed styles
+      const style = getComputedStyle(document.documentElement);
+      const accentPrimary = style.getPropertyValue('--accent-primary').trim() || '#8B5CF6';
+      const accentGlowSubtle = style.getPropertyValue('--accent-glow-subtle').trim() || 'rgba(139, 92, 246, 0.15)';
+      
       // Draw Grid
-      ctx.strokeStyle = 'rgba(139, 92, 246, 0.05)';
+      ctx.strokeStyle = accentPrimary + '0D'; // Very subtle opacity
       ctx.lineWidth = 1;
       const gridSize = 50;
       
@@ -62,7 +67,7 @@ export const CyberBackground: React.FC = () => {
       }
 
       // Update and draw nodes
-      ctx.fillStyle = 'rgba(139, 92, 246, 0.3)';
+      ctx.fillStyle = accentPrimary + '4D'; // Approx 0.3 opacity
       nodes.forEach((node, i) => {
         node.x += node.vx;
         node.y += node.vy;
@@ -82,7 +87,7 @@ export const CyberBackground: React.FC = () => {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < 150) {
-            ctx.strokeStyle = `rgba(139, 92, 246, ${0.1 * (1 - dist / 150)})`;
+            ctx.strokeStyle = accentPrimary + Math.floor((0.1 * (1 - dist / 150)) * 255).toString(16).padStart(2, '0');
             ctx.beginPath();
             ctx.moveTo(node.x, node.y);
             ctx.lineTo(other.x, other.y);
@@ -97,7 +102,7 @@ export const CyberBackground: React.FC = () => {
 
       const gradient = ctx.createLinearGradient(pulseX, 0, pulseX + 300, 0);
       gradient.addColorStop(0, 'transparent');
-      gradient.addColorStop(0.5, 'rgba(139, 92, 246, 0.08)');
+      gradient.addColorStop(0.5, accentPrimary + '14'); // Approx 0.08 opacity
       gradient.addColorStop(1, 'transparent');
 
       ctx.fillStyle = gradient;

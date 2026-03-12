@@ -62,7 +62,7 @@ export const Hero: React.FC = () => {
 
   return (
     <div className="relative min-h-[88vh] flex flex-col items-center justify-center
-      pt-[48px] md:pt-[48px] sm:pt-[32px] pb-16 overflow-hidden bg-[#020205]">
+      pt-[48px] md:pt-[48px] sm:pt-[32px] pb-16 overflow-hidden bg-bg-primary">
 
         {/* Cyberpunk Background Animation */}
         <div className="absolute inset-0 z-0">
@@ -160,8 +160,8 @@ export const Hero: React.FC = () => {
                 <motion.a
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
-                  href="/resume/Manikanta_Varma_Resume.pdf"
-                  download
+                  href="https://drive.google.com/uc?export=download&id=1YaNxcLwMoInBADwMBoBE_dquYQqFRuKQ"
+                  download="Manikanta_Varma_Resume.pdf"
                   className="px-6 py-3.5 sm:px-7 sm:py-4 font-orbitron font-bold text-[0.65rem] sm:text-[0.7rem] md:text-xs
                     uppercase tracking-[0.18em] transition-all rounded-xl flex items-center
                     justify-center gap-2 flex-1 min-w-[140px] sm:flex-none sm:min-w-0"
@@ -179,7 +179,7 @@ export const Hero: React.FC = () => {
                 <motion.a
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
-                  href="/resume/Manikanta_Varma_Resume.pdf"
+                  href="https://drive.google.com/file/d/1YaNxcLwMoInBADwMBoBE_dquYQqFRuKQ/view?usp=drive_link"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-3.5 sm:px-7 sm:py-4 font-orbitron font-bold text-[0.65rem] sm:text-[0.7rem] md:text-xs uppercase tracking-[0.18em]

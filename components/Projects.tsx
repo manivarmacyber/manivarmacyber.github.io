@@ -34,22 +34,24 @@ export const Projects: React.FC = () => {
         {researchCards.map((card, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 1, scale: 0.98 }}
-            whileHover={{ scale: 1, borderColor: 'var(--accent-primary)' }}
-            transition={{ duration: 0.4 }}
+            initial={{ opacity: 0.1, y: 20 }}
+            whileInView={{ opacity: 0.3, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            whileHover={{ scale: 1, opacity: 1, borderColor: 'var(--accent-primary)' }}
+            transition={{ duration: 1.2 }}
             className="p-8 border border-border-color flex flex-col justify-between group transition-all min-h-[320px] rounded-3xl"
             style={{ background: 'var(--bg-card)' }}
           >
             <div className="space-y-6">
-              <div className="w-12 h-12 bg-accent-primary/10 border border-accent-primary/20 rounded-xl flex items-center justify-center text-accent-primary transition-colors">
+              <div className="w-12 h-12 bg-accent-primary/5 border border-accent-primary/10 rounded-xl flex items-center justify-center text-accent-primary/50 group-hover:text-accent-primary transition-colors">
                 <card.icon size={24} />
               </div>
 
               <div className="space-y-3">
-                <h3 className="text-xl font-orbitron font-black text-text-primary uppercase tracking-tight leading-tight transition-colors">
+                <h3 className="text-xl font-orbitron font-black text-text-primary/40 uppercase tracking-tight leading-tight transition-colors group-hover:text-text-primary">
                   {card.title}
                 </h3>
-                <p className="text-text-muted text-xs leading-relaxed transition-colors">
+                <p className="text-text-muted/40 text-xs leading-relaxed transition-colors group-hover:text-text-muted">
                   {card.desc}
                 </p>
               </div>

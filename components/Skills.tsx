@@ -3,19 +3,26 @@ import { motion } from 'motion/react';
 import { Target, Shield, Cpu, Brain, Zap, Terminal, Search, Lock, Activity } from 'lucide-react';
 
 export const Skills: React.FC = () => {
-  const offensiveSkills = [
-    "PENETRATION TESTING", "BUG HUNTING", "VAPT ASSESSMENT",
-    "WEB APP SECURITY", "LINUX OPERATIONS", "BURP-SUITE",
-    "NMAP", "NESSUS", "METASPLOIT",
-    "WIRESHARK", "SQLMAP", "NIKTO"
+  const securityTools = [
+    "BURP SUITE", "NMAP", "METASPLOIT", "WIRESHARK",
+    "GOBUSTER", "SQLMAP", "NESSUS", "NIKTO", "WAZUH"
   ];
 
-  const defensiveSkills = [
-    "SOC CONCEPTS", "THREAT ANALYSIS", "LOG COLLECTION", "WAZUH"
+  const networkingSkills = [
+    "TCP/IP", "HTTP / HTTPS", "SSL / TLS", "DNS"
   ];
 
-  const platforms = ["LINUX", "WINDOWS", "WEB APPLICATIONS"];
-  const softSkills = ["LOGICAL THINKING", "PROBLEM SOLVING", "COMMUNICATION"];
+  const networkSecurity = [
+    "NETWORK SECURITY FUNDAMENTALS", "FIREWALL BASICS"
+  ];
+
+  const frameworks = [
+    "OWASP TOP 10", "RESPONSIBLE DISCLOSURE"
+  ];
+
+  const platforms = [
+    "LINUX", "WINDOWS"
+  ];
 
   const skillBadgeStyle = {
     background: 'var(--accent-glow-subtle)',
@@ -38,9 +45,9 @@ export const Skills: React.FC = () => {
         </div>
       </div>
 
-      {/* Offensive vs Defensive */}
+      {/* Tools & Networking Column */}
       <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-16">
-        {/* Offensive Column */}
+        {/* Tools Column */}
         <div className="space-y-10">
           <div className="flex items-center gap-6 relative">
             <div className="absolute left-0 w-[3px] h-10 opacity-80" style={{ background: 'var(--accent-primary)' }} />
@@ -49,13 +56,13 @@ export const Skills: React.FC = () => {
               <Target size={28} />
             </div>
             <div>
-              <h3 className="text-2xl font-orbitron font-black text-text-primary tracking-widest uppercase">OFFENSIVE SECURITY</h3>
-              <p className="text-[10px] font-mono tracking-[0.4em] uppercase font-bold text-text-muted">Infiltration & Research</p>
+              <h3 className="text-2xl font-orbitron font-black text-text-primary tracking-widest uppercase">SECURITY TOOLS</h3>
+              <p className="text-[10px] font-mono tracking-[0.4em] uppercase font-bold text-text-muted">Analysis & Exploitation</p>
             </div>
           </div>
 
           <div className="flex flex-wrap gap-3 ml-6 md:ml-12">
-            {offensiveSkills.map((skill, i) => (
+            {securityTools.map((skill, i) => (
               <span key={i}
                 className="px-5 py-2.5 rounded-lg text-[10px] font-mono font-bold uppercase flex items-center gap-2 transition-all duration-200 cursor-default"
                 style={skillBadgeStyle}
@@ -67,22 +74,22 @@ export const Skills: React.FC = () => {
           </div>
         </div>
 
-        {/* Defensive Column */}
+        {/* Networking Column */}
         <div className="space-y-10">
           <div className="flex items-center gap-6 relative">
             <div className="absolute left-0 w-[3px] h-10 opacity-80" style={{ background: 'var(--accent-primary)' }} />
             <div className="ml-6 p-3 rounded-xl"
               style={{ background: 'var(--accent-glow-subtle)', border: '1px solid var(--border-color)', color: 'var(--accent-primary)' }}>
-              <Shield size={28} />
+              <Activity size={28} />
             </div>
             <div>
-              <h3 className="text-2xl font-orbitron font-black text-text-primary tracking-widest uppercase">DEFENSIVE SECURITY</h3>
-              <p className="text-[10px] font-mono tracking-[0.4em] uppercase font-bold text-text-muted">Mitigation & Strategy</p>
+              <h3 className="text-2xl font-orbitron font-black text-text-primary tracking-widest uppercase">NETWORKING & PROTOCOLS</h3>
+              <p className="text-[10px] font-mono tracking-[0.4em] uppercase font-bold text-text-muted">Infrastructure Fundamentals</p>
             </div>
           </div>
 
           <div className="flex flex-wrap gap-3 ml-6 md:ml-12">
-            {defensiveSkills.map((skill, i) => (
+            {networkingSkills.map((skill, i) => (
               <span key={i}
                 className="px-5 py-2.5 rounded-lg text-[10px] font-mono font-bold uppercase flex items-center gap-2 transition-all duration-200 cursor-default"
                 style={skillBadgeStyle}
@@ -95,18 +102,18 @@ export const Skills: React.FC = () => {
         </div>
       </div>
 
-      {/* Platforms vs Soft Skills */}
+      {/* Network Security, Frameworks & Platforms */}
       <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-16">
         <div className="cyber-card p-8 group transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.1)]">
           <div className="flex items-center gap-6 mb-12">
             <div className="p-4 rounded-2xl group-hover:scale-110 transition-transform"
               style={{ background: 'var(--accent-glow-subtle)', border: '1px solid var(--border-color)', color: 'var(--accent-secondary)' }}>
-              <Cpu size={24} />
+              <Shield size={24} />
             </div>
-            <h3 className="text-xl font-orbitron font-black text-text-primary uppercase tracking-tight italic">TECHNICAL <span className="text-accent-primary">PLATFORMS</span></h3>
+            <h3 className="text-xl font-orbitron font-black text-text-primary uppercase tracking-tight italic">NETWORK <span className="text-accent-primary">SECURITY</span></h3>
           </div>
           <div className="flex flex-wrap gap-4">
-            {platforms.map((p, i) => (
+            {networkSecurity.map((p, i) => (
               <span key={i} className="px-6 py-3 rounded-2xl text-[10px] font-mono font-black tracking-widest border border-border-color flex items-center gap-2 group-hover:border-accent-secondary/30 transition-all duration-300"
                 style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
                 <div className="w-1 h-1 rounded-full animate-pulse" style={{ background: 'var(--accent-secondary)' }} />
@@ -120,13 +127,32 @@ export const Skills: React.FC = () => {
           <div className="flex items-center gap-6 mb-12">
             <div className="p-4 rounded-2xl group-hover:scale-110 transition-transform"
               style={{ background: 'var(--accent-glow-subtle)', border: '1px solid var(--border-color)', color: 'var(--accent-primary)' }}>
-              <Brain size={24} />
+              <Search size={24} />
             </div>
-            <h3 className="text-xl font-orbitron font-black text-text-primary uppercase tracking-tight italic">PROFESSIONAL <span className="text-accent-primary">SOFT SKILLS</span></h3>
+            <h3 className="text-xl font-orbitron font-black text-text-primary uppercase tracking-tight italic">SECURITY <span className="text-accent-primary">FRAMEWORKS</span></h3>
           </div>
           <div className="flex flex-wrap gap-4">
-            {softSkills.map((s, i) => (
+            {frameworks.map((s, i) => (
               <span key={i} className="px-6 py-3 rounded-xl text-[10px] font-mono font-black tracking-widest border border-border-color flex items-center gap-2 group-hover:border-accent-primary/30 transition-all duration-300"
+                style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
+                <div className="w-1 h-1 rounded-full" style={{ background: 'var(--accent-primary)' }} />
+                {s}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="cyber-card p-8 group transition-all hover:shadow-[0_0_30px_rgba(236,72,153,0.1)]">
+          <div className="flex items-center gap-6 mb-12">
+            <div className="p-4 rounded-2xl group-hover:scale-110 transition-transform"
+              style={{ background: 'var(--accent-glow-subtle)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}>
+              <Cpu size={24} />
+            </div>
+            <h3 className="text-xl font-orbitron font-black text-text-primary uppercase tracking-tight italic">OPERATING <span className="text-accent-primary">SYSTEMS</span></h3>
+          </div>
+          <div className="flex flex-wrap gap-4">
+            {platforms.map((s, i) => (
+              <span key={i} className="px-6 py-3 rounded-xl text-[10px] font-mono font-black tracking-widest border border-border-color flex items-center gap-2 transition-all duration-300"
                 style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
                 <div className="w-1 h-1 rounded-full" style={{ background: 'var(--accent-primary)' }} />
                 {s}

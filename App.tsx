@@ -207,25 +207,62 @@ const AppContent = () => {
   }, [themeMode]);
 
   useEffect(() => {
-    // Prioritize hash-based anchors on the home page
-    if (location.pathname === '/' && location.hash) {
-      const id = location.hash.replace('#', '');
-      // Map known section ids to activeSection
-      const validSections = ['home', 'mission', 'experience', 'skills', 'certifications', 'achievements', 'operational-outputs', 'academic', 'education', 'why', 'tactical', 'feedback', 'contact'];
-      if (validSections.includes(id)) {
-        setActiveSection(id === 'home' ? 'home' : id);
-        return;
-      }
-    }
-
-    if (location.pathname === '/') {
-      setActiveSection('home');
-    } else if (location.pathname.startsWith('/blog')) {
+    // 1. Route-based top-level state syncing
+    if (location.pathname.startsWith('/blog')) {
       setActiveSection('blog');
+      return;
     } else if (location.pathname === '/about') {
       setActiveSection('about');
-    } else if (location.pathname === '/contact') {
-      setActiveSection('contact');
+      return;
+    } else if (location.pathname === '/privacy') {
+      setActiveSection('privacy');
+      return;
+    }
+
+    // 2. Scroll Spy for Home Page sections
+    if (location.pathname === '/') {
+      const navSections = [
+        'home', 'mission', 'experience', 'skills', 
+        'certifications', 'achievements', 'operational-outputs', 
+        'academic', 'education', 'why', 'tactical', 'feedback', 'contact'
+      ];
+
+      // Initial quick snap if navigated via hash click
+      if (location.hash) {
+        const id = location.hash.replace('#', '');
+        if (navSections.includes(id)) {
+          setActiveSection(id);
+        }
+      } else {
+        setActiveSection('home');
+      }
+
+      // IntersectionObserver for scroll spy
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveSection(entry.target.id);
+            }
+          });
+        },
+        {
+          rootMargin: '-30% 0px -60% 0px'
+        }
+      );
+
+      // Slightly delay observing to allow DOM routing transitions if any
+      const timeoutId = setTimeout(() => {
+        navSections.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) observer.observe(el);
+        });
+      }, 300);
+
+      return () => {
+        clearTimeout(timeoutId);
+        observer.disconnect();
+      };
     }
   }, [location.pathname, location.hash]);
 

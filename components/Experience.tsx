@@ -10,10 +10,11 @@ export const Experience: React.FC = () => {
       title: "CYBER SECURITY AND RISK (TRAINEE INTERN) - REMOTE",
       organization: "FN-CYBER, HYDERABAD",
       details: [
-        "Selected for an intensive cybersecurity internship trainee program with a focus on both offensive and defensive security practices.",
-        "Worked on a real-time penetration testing project, contributing to security assessments and professional reporting.",
-        "Trained in SOC operations with practical exposure to tools including SIEM, EDR, XDR, and SOAR.",
-        "Gained basic hands-on experience with the Wazuh platform in setting up endpoints, Monitoring, log collection and basic threat analysis."
+        "Conducted a Web Application Security Assessment on a Unode web server as part of a cybersecurity internship project.",
+        "Performed Vulnerability Assessment and Penetration Testing (VAPT) aligned with OWASP Top 10 risks.",
+        "Analyzed application security vulnerabilities and documented findings following professional penetration testing methodologies.",
+        "Contributed to the preparation of a professional Web Security Assessment Report under a CERT-In aligned cybersecurity training program.",
+        "Gained basic exposure to SOC concepts including SIEM monitoring and log analysis using the Wazuh platform."
       ],
       icon: Shield,
       side: 'left'
@@ -24,8 +25,9 @@ export const Experience: React.FC = () => {
       title: "SECURITY RESEARCHER - REMOTE",
       organization: "NCIIPC (NATIONAL CRITICAL INFORMATION INFRASTRUCTURE PROTECTION CENTRE)",
       details: [
-        "Actively engaged in individual vulnerability disclosure programs on platforms such as Open Bug Bounty, Hacker One, and the Bug crowd.",
-        "Successfully identified and responsibly disclosed security vulnerabilities to various organizations, contributing to the improvement of their overall cybersecurity posture."
+        "Participated in vulnerability disclosure and bug bounty programs on Open Bug Bounty, HackerOne, and Bugcrowd.",
+        "Conducted independent web application security testing and vulnerability research.",
+        "Identified and responsibly disclosed security vulnerabilities contributing to improved security posture."
       ],
       icon: Target,
       side: 'right'
@@ -36,9 +38,9 @@ export const Experience: React.FC = () => {
       title: "SECURITY ANALYST (INTERN) - REMOTE",
       organization: "CHAITANYA CYBER STRIX TECHNOLOGIES (CCST), HYDERABAD",
       details: [
-        "Conducted comprehensive security assessments and vulnerability scans on network infrastructure using tools such as [Burp, Nessus, etc.].",
-        "Assisted in developing and implementing security policies and procedures aimed at enhancing the organization's cybersecurity posture.",
-        "Contributed to incident response activities, including finding Vulnerability, and documented security findings to assist in post incident analysis."
+        "Conducted vulnerability assessments and security scans on network and web environments using tools such as Burp Suite and Nessus.",
+        "Assisted in implementing cybersecurity policies and security hardening practices.",
+        "Supported incident response activities including malware identification and documentation of security findings."
       ],
       icon: Cpu,
       side: 'left'

@@ -40,9 +40,11 @@ export const EducationSection: React.FC = () => {
                 {education.map((item, i) => (
                     <motion.div
                         key={i}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.1 }}
+                        initial={{ opacity: 0.1, y: 20 }}
+                        whileInView={{ opacity: 0.3, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        whileHover={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 1.2, delay: i * 0.1 }}
                         className="p-8 border border-border-color space-y-6 relative overflow-hidden group rounded-[2rem]"
                         style={{ background: 'var(--bg-card)' }}
                     >
@@ -55,10 +57,10 @@ export const EducationSection: React.FC = () => {
                         </div>
 
                         <div className="space-y-2">
-                            <h3 className="text-lg font-orbitron font-black text-text-primary uppercase tracking-tight leading-tight group-hover:text-accent-primary transition-colors">
+                             <h3 className="text-lg font-orbitron font-black text-text-primary/40 uppercase tracking-tight leading-tight group-hover:text-accent-primary transition-colors">
                                 {item.college}
                             </h3>
-                            <p className="text-[10px] font-mono text-accent-secondary font-black uppercase tracking-[0.2em]">
+                            <p className="text-[10px] font-mono text-accent-secondary/40 font-black uppercase tracking-[0.2em] group-hover:text-accent-secondary">
                                 {item.degree}
                             </p>
                         </div>

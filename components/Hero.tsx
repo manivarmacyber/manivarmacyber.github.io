@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 /* ── Animated hero profile photo — full blend ── */
 const CyberShieldGraphic: React.FC = () => (
   <motion.div
-    className="relative flex items-center justify-center w-[350px] h-[380px] sm:w-[420px] sm:h-[460px] md:w-[480px] md:h-[540px] lg:w-[580px] lg:h-[650px] xl:w-[640px] xl:h-[720px] max-w-full transform md:-translate-y-12 lg:-translate-y-20 xl:-translate-y-28"
+    className="relative flex items-center justify-center w-[400px] h-[440px] sm:w-[480px] sm:h-[520px] md:w-[500px] md:h-[560px] lg:w-[580px] lg:h-[650px] xl:w-[640px] xl:h-[720px] max-w-full transform md:-translate-y-12 lg:-translate-y-20 xl:-translate-y-28"
 
     animate={{ y: [0, -6, 0] }}
     transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}

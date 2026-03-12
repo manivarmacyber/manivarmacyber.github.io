@@ -78,7 +78,6 @@ function generateBlogMetadata() {
 
         fs.writeFileSync(path.join(blogDir, 'index.html'), updatedHtml);
       });
-<<<<<<< HEAD
 
       // Also generate a static /blog/index.html for the blog listing page
       try {
@@ -113,8 +112,6 @@ function generateBlogMetadata() {
         // non-fatal: don't break build if blog index generation fails
         console.warn('Failed to generate blog index HTML', e);
       }
-=======
->>>>>>> f9c9ca0a7ba8a69214a1c68467ff8d4d1f99e180
     }
   };
 }
@@ -137,13 +134,9 @@ export default defineConfig(({ mode }) => {
         '@': path.resolve(__dirname, '.'),
       }
     },
-    build: {
+        build: {
       outDir: 'dist',
-<<<<<<< HEAD
       minify: 'esbuild',
-=======
-      minify: 'lightningcss',
->>>>>>> f9c9ca0a7ba8a69214a1c68467ff8d4d1f99e180
       cssMinify: true,
       reportCompressedSize: false,
       chunkSizeWarningLimit: 1000,

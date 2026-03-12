@@ -207,6 +207,20 @@ const AppContent = () => {
   }, [themeMode]);
 
   useEffect(() => {
+<<<<<<< HEAD
+    // Prioritize hash-based anchors on the home page
+    if (location.pathname === '/' && location.hash) {
+      const id = location.hash.replace('#', '');
+      // Map known section ids to activeSection
+      const validSections = ['home', 'mission', 'experience', 'skills', 'certifications', 'achievements', 'operational-outputs', 'academic', 'education', 'why', 'tactical', 'feedback', 'contact'];
+      if (validSections.includes(id)) {
+        setActiveSection(id === 'home' ? 'home' : id);
+        return;
+      }
+    }
+
+=======
+>>>>>>> f9c9ca0a7ba8a69214a1c68467ff8d4d1f99e180
     if (location.pathname === '/') {
       setActiveSection('home');
     } else if (location.pathname.startsWith('/blog')) {
@@ -216,7 +230,11 @@ const AppContent = () => {
     } else if (location.pathname === '/contact') {
       setActiveSection('contact');
     }
+<<<<<<< HEAD
+  }, [location.pathname, location.hash]);
+=======
   }, [location.pathname]);
+>>>>>>> f9c9ca0a7ba8a69214a1c68467ff8d4d1f99e180
 
   const toggleTheme = (newMode?: 'dark' | 'light' | 'auto') => {
     let mode: 'dark' | 'light' | 'auto';

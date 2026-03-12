@@ -78,6 +78,40 @@ function generateBlogMetadata() {
 
         fs.writeFileSync(path.join(blogDir, 'index.html'), updatedHtml);
       });
+
+      // Also generate a static /blog/index.html for the blog listing page
+      try {
+        const blogIndexDir = path.join(distDir, 'blog');
+        if (!fs.existsSync(blogIndexDir)) {
+          fs.mkdirSync(blogIndexDir, { recursive: true });
+        }
+
+        const blogTitle = 'Blog | Mani Varma';
+        const blogDescription = 'Technical cybersecurity blog and writeups by G. Manikanta Varma.';
+        const blogUrl = 'https://manivarmacyber.github.io/blog';
+
+        let blogHtml = template
+          .replace(/<title>.*?<\/title>/, '')
+          .replace(/<meta name="title".*?>/, '')
+          .replace(/<meta name="description".*?>/, '')
+          .replace(/<meta property="og:type".*?>/, '')
+          .replace(/<meta property="og:url".*?>/, '')
+          .replace(/<meta property="og:title".*?>/, '')
+          .replace(/<meta property="og:description".*?>/, '')
+          .replace(/<meta property="og:image".*?>/, '')
+          .replace(/<meta name="twitter:url".*?>/, '')
+          .replace(/<meta name="twitter:title".*?>/, '')
+          .replace(/<meta name="twitter:description".*?>/, '')
+          .replace(/<meta name="twitter:image".*?>/, '');
+
+        const blogMeta = `\n  <title>${blogTitle}</title>\n  <meta name="title" content="${blogTitle}" />\n  <meta name="description" content="${blogDescription}" />\n  <link rel="canonical" href="${blogUrl}" />\n  <meta property="og:type" content="website" />\n  <meta property="og:url" content="${blogUrl}" />\n  <meta property="og:title" content="${blogTitle}" />\n  <meta property="og:description" content="${blogDescription}" />\n  <meta property="og:image" content="https://manivarmacyber.github.io/profile-refined.png" />\n`;
+
+        blogHtml = blogHtml.replace('</head>', `${blogMeta}\n</head>`);
+        fs.writeFileSync(path.join(blogIndexDir, 'index.html'), blogHtml);
+      } catch (e) {
+        // non-fatal: don't break build if blog index generation fails
+        console.warn('Failed to generate blog index HTML', e);
+      }
     }
   };
 }
@@ -100,9 +134,9 @@ export default defineConfig(({ mode }) => {
         '@': path.resolve(__dirname, '.'),
       }
     },
-    build: {
+        build: {
       outDir: 'dist',
-      minify: 'lightningcss',
+      minify: 'esbuild',
       cssMinify: true,
       reportCompressedSize: false,
       chunkSizeWarningLimit: 1000,

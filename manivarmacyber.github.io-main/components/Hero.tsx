@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
+<<<<<<< HEAD
+import { Download, MessageSquare, Terminal, BookOpen } from 'lucide-react';
+import { Link } from 'react-router-dom';
+=======
 import { Download, MessageSquare, Terminal } from 'lucide-react';
+>>>>>>> f9c9ca0a7ba8a69214a1c68467ff8d4d1f99e180
 
 /* ── Animated hero profile photo — full blend ── */
 const CyberShieldGraphic: React.FC = () => (
   <motion.div
+<<<<<<< HEAD
+    className="relative flex items-center justify-center w-[280px] h-[320px] sm:w-[360px] sm:h-[400px] md:w-[480px] md:h-[540px] lg:w-[580px] lg:h-[650px] xl:w-[640px] xl:h-[720px] max-w-full transform md:-translate-y-12 lg:-translate-y-20 xl:-translate-y-28"
+=======
     className="relative flex items-center justify-center w-[280px] h-[320px] sm:w-[360px] sm:h-[400px] md:w-[480px] md:h-[540px] lg:w-[580px] lg:h-[650px] xl:w-[640px] xl:h-[720px] max-w-full"
+>>>>>>> f9c9ca0a7ba8a69214a1c68467ff8d4d1f99e180
     animate={{ y: [0, -6, 0] }}
     transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
   >
@@ -71,20 +80,34 @@ export const Hero: React.FC = () => {
         style={{ background: 'linear-gradient(90deg, transparent, var(--accent-glow-subtle), transparent)', opacity: 0.3 }} />
 
       {/* Hero content container */}
+<<<<<<< HEAD
+      <div className="container mx-auto max-w-7xl px-4 relative z-10 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-12 items-center gap-6">
+          {/* Main Content Area (left) */}
+=======
       <div className="container-progressive relative z-10 w-full">
         <div className="grid grid-cols-1 items-center">
           {/* Main Content Area */}
+>>>>>>> f9c9ca0a7ba8a69214a1c68467ff8d4d1f99e180
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: 'easeOut' }}
+<<<<<<< HEAD
+            className="space-y-8 relative z-20 md:col-span-7 pr-0 md:pr-6 lg:pr-12 md:pl-8 lg:pl-12 xl:pl-16"
+=======
             className="space-y-8 pr-4 lg:pr-8 max-w-4xl relative z-20"
+>>>>>>> f9c9ca0a7ba8a69214a1c68467ff8d4d1f99e180
           >
             {/* Name block */}
             <div className="space-y-5">
               <div className="relative inline-block w-full">
                 <h1 className="font-orbitron font-[800] tracking-[0.5px] leading-[1.2] uppercase
+<<<<<<< HEAD
+                  text-[clamp(2rem,4vw,6rem)] lg:whitespace-nowrap">
+=======
                   text-[clamp(1.6rem,5vw,4.0rem)]">
+>>>>>>> f9c9ca0a7ba8a69214a1c68467ff8d4d1f99e180
                   <span className="text-text-primary">G. MANIKANTA </span>
                   <span className="text-accent-primary">VARMA</span>
                 </h1>
@@ -187,6 +210,62 @@ export const Hero: React.FC = () => {
                 <MessageSquare size={16} aria-hidden="true" />
                 <span>CONTACT ME</span>
               </motion.button>
+<<<<<<< HEAD
+
+              {/* Blog CTA */}
+              {(() => {
+                const MotionLink = motion(Link as any);
+                return (
+                  <MotionLink
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                    to="/blog"
+                    className="px-6 py-3.5 sm:px-7 sm:py-4 font-orbitron font-bold text-[0.65rem] sm:text-[0.7rem] md:text-xs uppercase tracking-[0.18em]
+                      transition-all rounded-xl flex items-center justify-center gap-2 w-full sm:w-auto"
+                    style={{
+                      background: 'transparent',
+                      border: '1px solid var(--border-color)',
+                      color: 'var(--accent-primary)',
+                    }}
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLElement).style.background = 'var(--accent-glow-subtle)';
+                      (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-hover)';
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLElement).style.background = 'transparent';
+                      (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-color)';
+                    }}
+                    aria-label="Open blog"
+                  >
+                    <BookOpen size={16} aria-hidden="true" />
+                    <span>BLOG</span>
+                  </MotionLink>
+                );
+              })()}
+            </div>
+          </motion.div>
+
+          {/* Right Content (profile image) */}
+          <div className="hidden md:flex items-center md:col-span-5 justify-end">
+            <div className="transform md:translate-x-8 lg:translate-x-12 xl:translate-x-20">
+              <CyberShieldGraphic />
+            </div>
+          </div>
+
+          {/* Mobile Profile Display (Inline) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="md:hidden mt-4 sm:mt-8 flex justify-center w-full"
+          >
+            <CyberShieldGraphic />
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Desktop background graphic removed to avoid duplicate profile image; ambient glow remains above. */}
+=======
             </div>
           </motion.div>
         </div>
@@ -213,6 +292,7 @@ export const Hero: React.FC = () => {
       >
         <CyberShieldGraphic />
       </motion.div>
+>>>>>>> f9c9ca0a7ba8a69214a1c68467ff8d4d1f99e180
     </div>
   );
 };

@@ -219,6 +219,44 @@ body {
     radial-gradient(circle at bottom left, rgba(34, 211, 238, 0.05), transparent 40%);
 }
 
+<<<<<<< HEAD
+/* Wallpaper crossfade for theme transitions (Hyprland-like) */
+.wallpaper-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -5;
+  pointer-events: none;
+  overflow: hidden;
+}
+.wallpaper-layer > .wp-light,
+.wallpaper-layer > .wp-dark {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 550ms var(--transition-timing), transform 550ms var(--transition-timing);
+}
+.wallpaper-layer > .wp-light {
+  background-image: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(139,92,246,0.06)), radial-gradient(circle at 10% 20%, rgba(139,92,246,0.06), transparent 20%);
+  opacity: 0;
+  transform: scale(1.02);
+}
+.wallpaper-layer > .wp-dark {
+  background-image: linear-gradient(180deg, rgba(8,5,23,0.35), rgba(34,0,60,0.35));
+  opacity: 1;
+}
+
+/* When theme is light, show light wallpaper, otherwise dark */
+[data-theme='light'] .wallpaper-layer > .wp-light {
+  opacity: 1;
+  transform: scale(1);
+}
+[data-theme='light'] .wallpaper-layer > .wp-dark {
+  opacity: 0;
+}
+
+=======
+>>>>>>> f9c9ca0a7ba8a69214a1c68467ff8d4d1f99e180
 /* ── Accessibility: visible focus ring ── */
 :focus-visible {
   outline: 2px solid var(--color-accent-cyan);

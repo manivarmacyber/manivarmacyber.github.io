@@ -16,7 +16,11 @@ root.render(
 );
 
 // Service Worker Registration for Production
+<<<<<<< HEAD
+if ((import.meta as any).env?.PROD && 'serviceWorker' in navigator) {
+=======
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+>>>>>>> f9c9ca0a7ba8a69214a1c68467ff8d4d1f99e180
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/firebase-messaging-sw.js')
       .then((registration) => {

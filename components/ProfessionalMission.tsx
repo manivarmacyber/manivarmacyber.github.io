@@ -1,11 +1,70 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Shield } from 'lucide-react';
 import { CyberSphereAnimation } from './CyberSphere';
 
+const BackgroundEffects = () => {
+    const [elements, setElements] = useState<{ id: number; x: number; y: number; text?: string; type: 'particle' | 'text' }[]>([]);
+
+    useEffect(() => {
+        const keywords = ["SCAN", "AUTH", "443", "PORT", "READY", "SYS_ON"];
+        const initialElements = Array.from({ length: 15 }).map((_, i) => ({
+            id: i,
+            x: Math.random() * 100,
+            y: Math.random() * 100,
+            type: Math.random() > 0.8 ? 'text' : 'particle',
+            text: keywords[Math.floor(Math.random() * keywords.length)]
+        }));
+        setElements(initialElements as any);
+    }, []);
+
+    return (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+            {/* Scanning Lines */}
+            <motion.div 
+                animate={{ x: ['-100%', '200%'] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                className="absolute top-1/4 w-32 h-[1px] bg-gradient-to-r from-transparent via-accent-primary/40 to-transparent blur-sm"
+            />
+            <motion.div 
+                animate={{ x: ['200%', '-100%'] }}
+                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                className="absolute top-3/4 w-48 h-[1px] bg-gradient-to-r from-transparent via-purple-500/30 to-transparent blur-sm"
+            />
+
+            {/* Floating Elements */}
+            {elements.map((el) => (
+                <motion.div
+                    key={el.id}
+                    initial={{ opacity: 0 }}
+                    animate={{ 
+                        opacity: [0, 0.5, 0],
+                        y: [0, -20, 0]
+                    }}
+                    transition={{ 
+                        duration: 5 + Math.random() * 5, 
+                        repeat: Infinity,
+                        delay: Math.random() * 5
+                    }}
+                    style={{ left: `${el.x}%`, top: `${el.y}%` }}
+                    className="absolute"
+                >
+                    {el.type === 'particle' ? (
+                        <div className="w-1 h-1 bg-accent-primary rounded-full blur-[1px]" />
+                    ) : (
+                        <span className="font-mono text-[8px] text-accent-primary/60 tracking-widest font-black uppercase">
+                            {el.text}
+                        </span>
+                    )}
+                </motion.div>
+            ))}
+        </div>
+    );
+};
+
 export const ProfessionalMission: React.FC = () => {
     return (
-        <div id="mission" className="py-20">
+        <div id="mission" className="py-20 relative overflow-hidden">
             <div className="container mx-auto px-6 max-w-7xl">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -14,19 +73,13 @@ export const ProfessionalMission: React.FC = () => {
                     className="p-8 md:p-12 lg:p-16 border border-border-color relative overflow-hidden group rounded-[3rem]"
                     style={{ background: 'var(--bg-card)' }}
                 >
-                    {/* Target Watermark Decoration */}
-                    <div className="absolute top-1/2 right-12 -translate-y-1/2 pointer-events-none opacity-[0.03] select-none z-0 hidden lg:block">
-                        <div className="relative w-96 h-96 border-4 border-text-primary rounded-full flex items-center justify-center">
-                            <div className="w-64 h-64 border-4 border-text-primary rounded-full flex items-center justify-center" />
-                            <div className="absolute w-full h-[2px] bg-text-primary top-1/2 left-0" />
-                            <div className="absolute h-full w-[2px] bg-text-primary left-1/2 top-0" />
-                        </div>
-                    </div>
+                    {/* Futuristic Background Effects */}
+                    <BackgroundEffects />
 
-                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         
                         {/* Text Column */}
-                        <div className="lg:col-span-7 space-y-12">
+                        <div className="space-y-12">
                             <div className="space-y-4">
                                 <span className="text-[10px] font-mono text-accent-primary uppercase tracking-[1em] font-black">WEB APPLICATION SECURITY</span>
                                 <h2 className="text-3xl md:text-5xl font-orbitron font-black text-text-primary uppercase tracking-tighter leading-[1.1] italic">
@@ -43,17 +96,15 @@ export const ProfessionalMission: React.FC = () => {
                                     Experienced in identifying and responsibly disclosing security vulnerabilities in real-world applications. Skilled in performing security assessments using tools such as <span className="font-black text-text-primary">Burp Suite, Nmap, Nessus, Metasploit, SQLMap, Nikto, Gobuster, and Wireshark.</span>
                                 </p>
 
-                                <p className="text-base sm:text-lg text-text-muted leading-relaxed font-medium">
-                                    Strong understanding of <span className="font-black text-text-primary">OWASP Top 10 vulnerabilities</span>, HTTP/HTTPS protocols, and practical web application security testing methodologies.
-                                </p>
-
-                                <p className="text-base sm:text-lg text-text-muted leading-relaxed font-medium">
-                                    Certified Ethical Hacker (<span className="font-black text-text-primary underline decoration-accent-primary underline-offset-8">CEH Master v12</span>) with basic exposure to SOC concepts including SIEM monitoring and security event analysis using the Wazuh platform during cybersecurity internship training.
-                                </p>
+                                <div className="p-4 bg-background-light/30 border-l-2 border-accent-primary rounded-r-xl">
+                                    <p className="text-sm sm:text-base text-text-muted italic leading-relaxed">
+                                        "My mission is to harden digital assets and ensure the integrity of web ecosystems through rigorous testing and ethical disclosure."
+                                    </p>
+                                </div>
                             </div>
 
                             {/* Technical Status Footer */}
-                            <div className="pt-12 flex flex-wrap gap-8 sm:gap-12 border-t border-border-color">
+                            <div className="pt-12 flex flex-wrap gap-8 sm:gap-12 border-t border-border-color/50">
                                 <div className="flex items-center gap-4">
                                     <div className="font-mono text-[9px] text-text-muted/40 font-black">01 // 10</div>
                                     <div>
@@ -72,8 +123,8 @@ export const ProfessionalMission: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* 3D Animation Column */}
-                        <div className="lg:col-span-5 w-full flex justify-center items-center lg:h-full min-h-[400px]">
+                        {/* Enlarged Terminal Column */}
+                        <div className="w-full flex justify-center items-center">
                              <CyberSphereAnimation />
                         </div>
 

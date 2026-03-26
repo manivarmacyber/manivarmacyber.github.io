@@ -41,7 +41,6 @@ export default defineConfig(({ mode }) => {
             'vendor-icons': ['lucide-react'],
             'vendor-react': ['react', 'react-dom', 'react-router-dom'],
             'vendor-motion': ['motion'],
-            'vendor-firebase': ['firebase/app', 'firebase/firestore', 'firebase/messaging'],
           },
           assetFileNames: 'assets/[name]-[hash][extname]',
           chunkFileNames: 'assets/[name]-[hash].js',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Lock, Mail, Github, Linkedin, Twitter, BookOpen } from 'lucide-react';
+import { Shield, Lock, Mail, Linkedin } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -25,16 +25,7 @@ export const Footer: React.FC = () => {
             </p>
             <div className="flex items-center gap-4">
               <a href="#" className="p-2 rounded-lg bg-white/5 border border-white/5 text-text-muted hover:text-accent-primary hover:border-accent-primary/20 transition-all">
-                <Twitter size={18} />
-              </a>
-              <a href="#" className="p-2 rounded-lg bg-white/5 border border-white/5 text-text-muted hover:text-accent-primary hover:border-accent-primary/20 transition-all">
                 <Linkedin size={18} />
-              </a>
-              <a href="#" className="p-2 rounded-lg bg-white/5 border border-white/5 text-text-muted hover:text-accent-primary hover:border-accent-primary/20 transition-all">
-                <Github size={18} />
-              </a>
-              <a href="https://securityresearchhub.github.io" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 border border-white/5 text-text-muted hover:text-accent-primary hover:border-accent-primary/20 transition-all" title="Research Blog">
-                <BookOpen size={18} />
               </a>
             </div>
           </div>
@@ -60,33 +51,6 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Legal & Compliance */}
-          <div>
-            <h4 className="font-orbitron font-black text-[10px] text-accent-primary uppercase tracking-[0.3em] mb-8 italic">Registry_Protocols</h4>
-            <ul className="space-y-4">
-              {[
-                { label: 'Privacy Policy', path: '/privacy' },
-                { label: 'Terms of Service', path: '/terms' },
-                { label: 'Disclaimer', path: '/disclaimer' },
-                { label: 'Security Policy', path: '/security-policy' },
-                { label: 'Legal Use Policy', path: '/legal-use' },
-                { label: 'Copyright Notice', path: '/copyright' }
-              ].map((item) => (
-                <li key={item.label}>
-                  <Link to={item.path} className="text-sm font-mono font-black text-text-muted hover:text-text-primary transition-colors flex items-center gap-2 group">
-                    <div className="w-1 h-1 rounded-full bg-accent-primary opacity-0 group-hover:opacity-100 transition-all" />
-                    {item.label.toUpperCase()}
-                  </Link>
-                </li>
-              ))}
-              <li className="pt-4">
-                <div className="px-4 py-2 rounded-xl bg-accent-primary/5 border border-accent-primary/20 inline-flex items-center gap-2">
-                  <Lock size={12} className="text-accent-primary" />
-                  <span className="text-[10px] font-mono font-black text-accent-primary uppercase tracking-widest italic">Encrypted Connection</span>
-                </div>
-              </li>
-            </ul>
-          </div>
         </div>
 
         {/* Bottom Banner */}

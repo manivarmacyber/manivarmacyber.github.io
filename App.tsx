@@ -3,26 +3,25 @@ import emailjs from '@emailjs/browser';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Hero } from './components/Hero';
-import { WhyChooseMe } from './components/WhyChooseMe';
-import { Skills } from './components/Skills';
-import { Projects } from './components/Projects';
-import { ProfessionalCertification } from './components/ProfessionalCertification';
-import { Experience } from './components/Experience';
-import { Contact } from './components/Contact';
 import { Navigation } from './components/Navigation';
 import { ErrorBoundary } from './components/ErrorBoundary';
-
-// Standard dynamic imports (Lazy Loading)
-const About = React.lazy(() => import('./pages/About').then(m => ({ default: m.About })));
 
 import { CookieNotice } from './components/CookieNotice';
 import { motion, AnimatePresence } from 'motion/react';
 
-import { ProfessionalMission } from './components/ProfessionalMission';
-import { OperationalAchievements } from './components/OperationalAchievements';
-import { LiveProjects } from './components/LiveProjects';
-import { EducationSection } from './components/EducationSection';
-import { TacticalProjects } from './components/TacticalProjects';
+// Standard dynamic imports (Lazy Loading)
+const About = React.lazy(() => import('./pages/About').then(m => ({ default: m.About })));
+const WhyChooseMe = React.lazy(() => import('./components/WhyChooseMe').then(m => ({ default: m.WhyChooseMe })));
+const Skills = React.lazy(() => import('./components/Skills').then(m => ({ default: m.Skills })));
+const Projects = React.lazy(() => import('./components/Projects').then(m => ({ default: m.Projects })));
+const ProfessionalCertification = React.lazy(() => import('./components/ProfessionalCertification').then(m => ({ default: m.ProfessionalCertification })));
+const Experience = React.lazy(() => import('./components/Experience').then(m => ({ default: m.Experience })));
+const Contact = React.lazy(() => import('./components/Contact').then(m => ({ default: m.Contact })));
+const ProfessionalMission = React.lazy(() => import('./components/ProfessionalMission').then(m => ({ default: m.ProfessionalMission })));
+const OperationalAchievements = React.lazy(() => import('./components/OperationalAchievements').then(m => ({ default: m.OperationalAchievements })));
+const LiveProjects = React.lazy(() => import('./components/LiveProjects').then(m => ({ default: m.LiveProjects })));
+const EducationSection = React.lazy(() => import('./components/EducationSection').then(m => ({ default: m.EducationSection })));
+const TacticalProjects = React.lazy(() => import('./components/TacticalProjects').then(m => ({ default: m.TacticalProjects })));
 
 const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
@@ -93,6 +92,7 @@ const HomePage = () => (
       <Hero />
     </section>
 
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-accent-primary font-mono tracking-widest text-sm">INITIALIZING_MODULES...</div>}>
       {/* 2. Self Driven */}
       <section id="mission">
         <ProfessionalMission />
@@ -147,6 +147,7 @@ const HomePage = () => (
       <section id="contact">
         <Contact />
       </section>
+    </Suspense>
   </div>
 );
 
